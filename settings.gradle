@@ -1,2 +1,5 @@
 rootProject.name = "Movieee"
 include ':app'
+include ':core'
+include ':data'
+include ':model'

@@ -1,0 +1,40 @@
+import dependencies.Libs
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlinx-serialization'
+apply plugin: 'dagger.hilt.android.plugin'
+
+apply from: rootProject.file('gradle/android.gradle')
+
+android {
+    defaultConfig {
+        buildConfigField 'String', 'API_BASE_URL', propOrDef("MOOP_API_BASE_URL", "\"https://moop-public-api.firebaseio.com/alpha/\"")
+    }
+}
+
+dependencies {
+    implementation Libs.Kotlin.stdlib
+    implementation Libs.Kotlin.serialization
+    implementation Libs.Coroutines.core
+    implementation Libs.Coroutines.android
+
+    implementation Libs.AndroidX.Room.runtime
+    implementation Libs.AndroidX.Room.ktx
+    kapt Libs.AndroidX.Room.compiler
+
+    implementation Libs.AndroidX.core
+
+    implementation Libs.Dagger.hilt
+    kapt Libs.Dagger.hiltCompiler
+
+    implementation Libs.Retrofit.runtime
+    implementation Libs.Retrofit.serialization
+
+    implementation Libs.timber
+
+    testImplementation Libs.Test.junit
+    androidTestImplementation Libs.Test.runner
+    androidTestImplementation Libs.Test.espresso
+}

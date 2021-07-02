@@ -1,0 +1,19 @@
+import dependencies.Libs
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-parcelize'
+apply plugin: 'kotlinx-serialization'
+
+apply from: rootProject.file('gradle/android.gradle')
+
+dependencies {
+    implementation Libs.Kotlin.stdlib
+    implementation Libs.Kotlin.serialization
+    implementation Libs.Coroutines.core
+    implementation Libs.Coroutines.android
+
+    testImplementation Libs.Test.junit
+    androidTestImplementation Libs.Test.runner
+    androidTestImplementation Libs.Test.espresso
+}
