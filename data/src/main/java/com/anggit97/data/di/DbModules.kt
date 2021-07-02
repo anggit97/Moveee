@@ -1,0 +1,41 @@
+package com.anggit97.data.di
+
+import android.content.Context
+import androidx.room.Room
+import com.anggit97.data.db.MoveeeDatabase
+import com.anggit97.data.db.internal.MovieCacheDatabase
+import com.anggit97.data.db.internal.RoomDatabase
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
+
+/**
+ * Created by Anggit Prayogo on 02,July,2021
+ * GitHub : https://github.com/anggit97
+ */
+@Module
+@InstallIn(SingletonComponent::class)
+object DbModules {
+
+    @Singleton
+    @Provides
+    fun provideMoveeeDatabase(
+        @ApplicationContext context: Context
+    ): MoveeeDatabase {
+        val movieCacheDb = createMovieCacheDatabase(context)
+        return RoomDatabase(
+            cacheMovieCacheDao = movieCacheDb.movieCacheDao()
+        )
+    }
+
+    private fun createMovieCacheDatabase(context: Context): MovieCacheDatabase {
+        return Room.databaseBuilder(
+            context.applicationContext,
+            MovieCacheDatabase::class.java,
+            "movie_cache.db"
+        ).build()
+    }
+}
