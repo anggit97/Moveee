@@ -124,6 +124,10 @@ object Libs {
             "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
     }
 
+    object OkHttp{
+        const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:4.9.1"
+    }
+
     object Glide {
         private const val version = "4.12.0"
         const val runtime = "com.github.bumptech.glide:glide:$version"

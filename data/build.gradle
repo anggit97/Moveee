@@ -10,7 +10,7 @@ apply from: rootProject.file('gradle/android.gradle')
 
 android {
     defaultConfig {
-        buildConfigField 'String', 'API_BASE_URL', propOrDef("MOOP_API_BASE_URL", "\"https://moop-public-api.firebaseio.com/alpha/\"")
+        buildConfigField 'String', 'API_BASE_URL_MOVIE', propOrDef("MOVIE_API_BASE_URL", "\"https://api.themoviedb.org/3/\"")
     }
 }
 
@@ -31,6 +31,8 @@ dependencies {
 
     implementation Libs.Retrofit.runtime
     implementation Libs.Retrofit.serialization
+
+    implementation Libs.OkHttp.loggingInterceptor
 
     implementation Libs.timber
 
