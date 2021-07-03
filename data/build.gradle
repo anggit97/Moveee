@@ -1,4 +1,5 @@
 import dependencies.Libs
+import dependencies.Modules
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
@@ -15,6 +16,9 @@ android {
 }
 
 dependencies {
+    implementation project(Modules.Model)
+    implementation project(Modules.Core)
+
     implementation Libs.Kotlin.stdlib
     implementation Libs.Kotlin.serialization
     implementation Libs.Coroutines.core

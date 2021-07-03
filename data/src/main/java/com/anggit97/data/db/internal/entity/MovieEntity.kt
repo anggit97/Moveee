@@ -6,8 +6,8 @@ import kotlinx.serialization.Serializable
 data class MovieEntity(
     val adult: Boolean?,
     val backdropPath: String?,
-    val genreIds: List<Int>?,
-    val id: Int?,
+    val genres: List<String>? = emptyList(),
+    val id: Int,
     val originalLanguage: String?,
     val originalTitle: String?,
     val overview: String?,

@@ -2,7 +2,7 @@ package com.anggit97.data.di
 
 import android.content.Context
 import com.anggit97.data.BuildConfig
-import com.anggit97.data.api.MovieApiService
+import com.anggit97.data.api.MovieeeApiService
 import com.anggit97.data.api.internal.OkHttpInterceptors.createOkHttpInterceptor
 import com.anggit97.data.api.internal.OkHttpInterceptors.createOkHttpNetworkInterceptor
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
@@ -31,7 +31,7 @@ object ApiModule {
     @Singleton
     fun provideMoopApiService(
         okHttpClient: OkHttpClient
-    ): MovieApiService {
+    ): MovieeeApiService {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.API_BASE_URL_MOVIE)
             .addConverterFactory(
@@ -42,7 +42,7 @@ object ApiModule {
             )
             .client(okHttpClient)
             .build()
-            .create(MovieApiService::class.java)
+            .create(MovieeeApiService::class.java)
     }
 
     @Module

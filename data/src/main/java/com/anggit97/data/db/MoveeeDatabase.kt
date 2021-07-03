@@ -1,5 +1,8 @@
 package com.anggit97.data.db
 
+import com.anggit97.model.Movie
+import kotlinx.coroutines.flow.Flow
+
 
 /**
  * Created by Anggit Prayogo on 02,July,2021
@@ -7,4 +10,6 @@ package com.anggit97.data.db
  */
 interface MoveeeDatabase {
 
+    suspend fun saveNowMovieList(movieList: List<Movie>)
+    fun getNowMovieListFlow(): Flow<List<Movie>>
 }
