@@ -13,8 +13,13 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.anggit97.core.ext.consume
+import com.anggit97.core.ext.observeEvent
+import com.anggit97.core.ui.Event
+import com.anggit97.core.ui.base.consumeBackEventInChildFragment
 import com.anggit97.core.util.viewBindings
 import com.anggit97.movieee.databinding.ActivityMainBinding
+import com.anggit97.navigation.SystemEvent
+import com.anggit97.navigation.SystemViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.Insetter
 
@@ -23,11 +28,11 @@ class MainActivity : AppCompatActivity() {
 
     private val binding by viewBindings(ActivityMainBinding::inflate)
 
-    private val viewModel: MainViewModel by viewModels()
-
     private val listener = NavController.OnDestinationChangedListener { _, destination, _ ->
         binding.navigationView.setCheckedItem(destination.id)
     }
+
+    private val systemViewModel: SystemViewModel by viewModels()
 
     private val navHostFragment: Fragment
         get() = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
@@ -35,10 +40,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
-        viewModel.contentsUiModel.observe(this, {
-            it.forEach { it.title }
-        })
 
         WindowCompat.setDecorFitsSystemWindows(window, false)
         Insetter.builder()
@@ -68,6 +69,27 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        systemViewModel.systemEvent.observeEvent(this) {
+            handleEvent(it)
+        }
+    }
+
+    private fun handleEvent(event: SystemEvent) {
+        when (event) {
+            is SystemEvent.OpenDrawerMenuUiEvent -> {
+                binding.drawerLayout.openDrawer(GravityCompat.START)
+            }
+        }
+    }
+
+    override fun onBackPressed() {
+        if (binding.drawerLayout.isDrawerVisible(GravityCompat.START)) {
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+            return
+        }
+        if (navHostFragment.consumeBackEventInChildFragment()) return
+        super.onBackPressed()
     }
 
     override fun onResume() {

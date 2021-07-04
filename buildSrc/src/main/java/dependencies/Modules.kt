@@ -19,4 +19,5 @@ object Modules {
     const val Search = ":feature:search"
     const val Map = ":feature:map"
     const val Settings = ":feature:settings"
+    const val Navigation = ":feature:navigation"
 }

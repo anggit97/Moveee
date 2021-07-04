@@ -27,7 +27,7 @@ abstract class HomeContentsFragment: HomeTabFragment(R.layout.home_tab_fragment)
         listView.adapter?.unregisterAdapterDataObserver(adapterDataObserver)
     }
 
-    protected abstract val viewModel: HomeContentsViewModel
+//    protected abstract val viewModel: HomeContentsViewModel
 
     private val adapterDataObserver = object : RoughAdapterDataObserver(){
         override fun onItemRangeUpdatedRoughly() {
@@ -39,7 +39,7 @@ abstract class HomeContentsFragment: HomeTabFragment(R.layout.home_tab_fragment)
         super.onViewCreated(view, savedInstanceState)
         binding = HomeTabFragmentBinding.bind(view).apply {
             adaptSystemWindowInset()
-            initViewState(viewModel)
+//            initViewState(viewModel)
             listView.adapter?.registerAdapterDataObserver(adapterDataObserver)
         }
     }
@@ -78,10 +78,10 @@ abstract class HomeContentsFragment: HomeTabFragment(R.layout.home_tab_fragment)
         viewModel.isError.observe(viewLifecycleOwner) {
             errorView.root.isVisible = it
         }
-        viewModel.contentsUiModel.observe(viewLifecycleOwner) {
-            noItemsView.isVisible = it.movies.isEmpty()
-            listAdapter.submitList(it.movies)
-        }
+//        viewModel.contentsUiModel.observe(viewLifecycleOwner) {
+//            noItemsView.isVisible = it.movies.isEmpty()
+//            listAdapter.submitList(it.movies)
+//        }
     }
 
     override fun scrollToTop() {

@@ -66,6 +66,7 @@ dependencies {
     implementation project(Modules.Map)
     implementation project(Modules.Search)
     implementation project(Modules.Settings)
+    implementation project(Modules.Navigation)
 
     implementation Libs.Kotlin.stdlib
     implementation Libs.Kotlin.serialization

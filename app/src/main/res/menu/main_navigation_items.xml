@@ -6,20 +6,20 @@
         android:checkableBehavior="single">
 
         <item
-            android:id="@+id/home"
+            android:id="@+id/homeFragment"
             android:checkable="true"
             android:icon="@drawable/ic_round_home"
             android:title="@string/menu_home"
             tools:checked="true" />
 
         <item
-            android:id="@+id/search"
+            android:id="@+id/searchFragment"
             android:checkable="true"
             android:icon="@drawable/ic_round_search"
             android:title="@string/menu_search" />
 
         <item
-            android:id="@+id/theater_map"
+            android:id="@+id/mapsFragment"
             android:checkable="true"
             android:icon="@drawable/ic_round_map"
             android:title="@string/menu_map" />
@@ -29,7 +29,7 @@
         android:checkableBehavior="single">
 
         <item
-            android:id="@+id/settings"
+            android:id="@+id/settingsFragment"
             android:checkable="true"
             android:icon="@drawable/ic_round_settings"
             android:title="@string/menu_settings" />

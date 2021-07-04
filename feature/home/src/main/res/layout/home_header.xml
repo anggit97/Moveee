@@ -26,56 +26,56 @@
                 app:contentInsetStartWithNavigation="0dp"
                 app:navigationIcon="@drawable/ic_round_menu">
 
-                <View
-                    android:id="@+id/tab_divider"
-                    android:layout_width="1dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginBottom="8dp"
-                    android:background="?attr/colorDivider"
-                    android:visibility="invisible"
-                    tools:visibility="visible" />
+<!--                <View-->
+<!--                    android:id="@+id/tab_divider"-->
+<!--                    android:layout_width="1dp"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_marginTop="8dp"-->
+<!--                    android:layout_marginBottom="8dp"-->
+<!--                    android:background="?attr/colorDivider"-->
+<!--                    android:visibility="invisible"-->
+<!--                    tools:visibility="visible" />-->
 
-                <com.google.android.material.tabs.TabLayout
-                    android:id="@+id/tabs"
-                    style="@style/Widget.MaterialComponents.TabLayout.Colored"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/transparent"
-                    android:clipToPadding="false"
-                    android:paddingStart="0dp"
-                    android:paddingEnd="16dp"
-                    app:tabIconTint="@color/selector_home_navigation_text"
-                    app:tabIndicator="@drawable/home_navigation_indicator"
-                    app:tabIndicatorColor="@color/color_secondary_dim"
-                    app:tabIndicatorFullWidth="true"
-                    app:tabIndicatorGravity="center"
-                    app:tabIndicatorHeight="36dp"
-                    app:tabInlineLabel="true"
-                    app:tabMode="scrollable"
-                    app:tabRippleColor="@color/transparent"
-                    app:tabSelectedTextColor="?attr/colorSecondary"
-                    app:tabTextColor="?attr/colorOnSurface">
+<!--                <com.google.android.material.tabs.TabLayout-->
+<!--                    android:id="@+id/tabs"-->
+<!--                    style="@style/Widget.MaterialComponents.TabLayout.Colored"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@color/transparent"-->
+<!--                    android:clipToPadding="false"-->
+<!--                    android:paddingStart="0dp"-->
+<!--                    android:paddingEnd="16dp"-->
+<!--                    app:tabIconTint="@color/selector_home_navigation_text"-->
+<!--                    app:tabIndicator="@drawable/home_navigation_indicator"-->
+<!--                    app:tabIndicatorColor="@color/color_secondary_dim"-->
+<!--                    app:tabIndicatorFullWidth="true"-->
+<!--                    app:tabIndicatorGravity="center"-->
+<!--                    app:tabIndicatorHeight="36dp"-->
+<!--                    app:tabInlineLabel="true"-->
+<!--                    app:tabMode="scrollable"-->
+<!--                    app:tabRippleColor="@color/transparent"-->
+<!--                    app:tabSelectedTextColor="?attr/colorSecondary"-->
+<!--                    app:tabTextColor="?attr/colorOnSurface">-->
 
-                    <com.google.android.material.tabs.TabItem
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:icon="@drawable/ic_home_now"
-                        android:text="@string/menu_now" />
+<!--                    <com.google.android.material.tabs.TabItem-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:icon="@drawable/ic_home_now"-->
+<!--                        android:text="@string/menu_now" />-->
 
-                    <com.google.android.material.tabs.TabItem
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:icon="@drawable/ic_home_plan"
-                        android:text="@string/menu_plan" />
+<!--                    <com.google.android.material.tabs.TabItem-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:icon="@drawable/ic_home_plan"-->
+<!--                        android:text="@string/menu_plan" />-->
 
-                    <com.google.android.material.tabs.TabItem
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:icon="@drawable/ic_favorite_selected"
-                        android:text="@string/menu_favorite" />
+<!--                    <com.google.android.material.tabs.TabItem-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:icon="@drawable/ic_favorite_selected"-->
+<!--                        android:text="@string/menu_favorite" />-->
 
-                </com.google.android.material.tabs.TabLayout>
+<!--                </com.google.android.material.tabs.TabLayout>-->
 
             </com.google.android.material.appbar.MaterialToolbar>
 
