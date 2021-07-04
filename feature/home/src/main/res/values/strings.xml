@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu_now">Now</string>
+    <string name="menu_plan">Plan</string>
+    <string name="menu_favorite">Favourite</string>
+    <string name="no_movies_description">Tidak ada film</string>
+    <string name="common_network_error" />
+</resources>

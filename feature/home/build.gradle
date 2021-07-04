@@ -30,6 +30,7 @@ dependencies {
     implementation Libs.AndroidX.Navigation.fragment
 
     implementation Libs.Dagger.hilt
+    implementation project(path: ':model')
     kapt Libs.Dagger.hiltCompiler
     kapt Libs.AndroidX.Hilt.compiler
 
