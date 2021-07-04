@@ -13,4 +13,9 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="Theme.Movieee.Main">
+<!--        <item name="android:windowExitTransition">@transition/main_exit</item>-->
+<!--        <item name="android:windowReenterTransition">@transition/main_reenter</item>-->
+    </style>
 </resources>
