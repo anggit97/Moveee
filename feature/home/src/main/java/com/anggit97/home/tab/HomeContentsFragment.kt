@@ -5,7 +5,6 @@ import android.view.View
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.anggit97.core.ui.base.OnBackPressedListener
 import com.anggit97.core.util.RoughAdapterDataObserver
@@ -15,7 +14,6 @@ import com.anggit97.home.R
 import com.anggit97.home.databinding.HomeTabFragmentBinding
 import dev.chrisbanes.insetter.Insetter
 import jp.wasabeef.recyclerview.animators.FadeInAnimator
-
 
 /**
  * Created by Anggit Prayogo on 04,July,2021

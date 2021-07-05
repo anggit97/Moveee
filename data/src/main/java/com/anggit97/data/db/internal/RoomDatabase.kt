@@ -4,6 +4,7 @@ import com.anggit97.data.db.MoveeeDatabase
 import com.anggit97.data.db.internal.dao.MovieCacheDao
 import com.anggit97.data.db.internal.entity.MovieListEntity
 import com.anggit97.data.db.internal.entity.MovieListEntity.Companion.TYPE_NOW
+import com.anggit97.data.db.internal.entity.MovieListEntity.Companion.TYPE_POPULAR
 import com.anggit97.data.db.internal.mapper.toMovie
 import com.anggit97.data.db.internal.mapper.toMovieEntity
 import com.anggit97.model.Movie
@@ -41,5 +42,14 @@ internal class RoomDatabase(
         return cacheMovieCacheDao.getMovieListByType(type)
             .map { it -> it.list.map { it.toMovie() } }
             .catch { emit(emptyList()) }
+    }
+
+
+    override suspend fun savePlanMovieList(movieList: List<Movie>) {
+        saveMovieListAs(TYPE_POPULAR, movieList)
+    }
+
+    override fun getPlanMovieListFlow(): Flow<List<Movie>> {
+        return getMovieList(TYPE_POPULAR)
     }
 }

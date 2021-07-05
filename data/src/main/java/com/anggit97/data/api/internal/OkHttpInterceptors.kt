@@ -36,7 +36,7 @@ internal object OkHttpInterceptors {
 
     fun createOkHttpInterceptor() : Interceptor{
         val logging = HttpLoggingInterceptor()
-        logging.setLevel(HttpLoggingInterceptor.Level.BASIC)
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY)
         return logging
     }
 

@@ -20,4 +20,8 @@ object Modules {
     const val Map = ":feature:map"
     const val Settings = ":feature:settings"
     const val Navigation = ":feature:navigation"
+    const val Detail = ":feature:detail"
+
+    //library
+    const val StFalconImageViewer = ":library:stfalcon-imageviewer"
 }

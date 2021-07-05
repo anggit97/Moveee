@@ -31,4 +31,16 @@ internal class DataMoveeeRepository(
     override suspend fun updateAndGetNowMovieList(): List<Movie> {
         return emptyList()
     }
+
+    override fun getPlanMovieList(): Flow<List<Movie>> {
+        return local.getPlanMovieListFlow()
+    }
+
+    override suspend fun updatePlanMovieList() {
+        local.savePlanMovieList(remote.getPopularMovieList().toMovieList())
+    }
+
+    override suspend fun updateAndGetPlanMovieList(): List<Movie> {
+        return emptyList()
+    }
 }

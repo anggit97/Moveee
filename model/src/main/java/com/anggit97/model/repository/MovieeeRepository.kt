@@ -13,4 +13,9 @@ interface MovieeeRepository {
     fun getNowMovieList(): Flow<List<Movie>>
     suspend fun updateNowMovieList()
     suspend fun updateAndGetNowMovieList(): List<Movie>
+
+
+    fun getPlanMovieList(): Flow<List<Movie>>
+    suspend fun updatePlanMovieList()
+    suspend fun updateAndGetPlanMovieList(): List<Movie>
 }
