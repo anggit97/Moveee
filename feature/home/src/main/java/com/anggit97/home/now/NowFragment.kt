@@ -1,7 +1,7 @@
 package com.anggit97.home.now
 
-import androidx.fragment.app.Fragment
-import com.anggit97.home.R
+import androidx.fragment.app.viewModels
+import com.anggit97.home.tab.HomeContentsFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -10,4 +10,7 @@ import dagger.hilt.android.AndroidEntryPoint
  * GitHub : https://github.com/anggit97
  */
 @AndroidEntryPoint
-class NowFragment : Fragment(R.layout.fragment_now)
+class NowFragment : HomeContentsFragment() {
+
+    override val viewModel: HomeNowViewModel by viewModels()
+}

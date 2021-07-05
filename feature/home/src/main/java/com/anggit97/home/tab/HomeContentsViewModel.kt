@@ -16,11 +16,12 @@
 package com.anggit97.home.tab
 
 import androidx.lifecycle.LiveData
+import com.anggit97.home.HomeContentsUiModel
 
 interface HomeContentsViewModel {
 
     val isLoading: LiveData<Boolean>
     val isError: LiveData<Boolean>
-//    val contentsUiModel: LiveData<HomeContentsUiModel>
+    val contentsUiModel: LiveData<HomeContentsUiModel>
     fun refresh()
 }
