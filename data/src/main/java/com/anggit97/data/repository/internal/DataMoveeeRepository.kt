@@ -3,8 +3,10 @@ package com.anggit97.data.repository.internal
 import com.anggit97.core.util.NetworkCheckerHelper
 import com.anggit97.data.api.MovieeeApiService
 import com.anggit97.data.db.MoveeeDatabase
+import com.anggit97.data.repository.internal.mapper.toMovieDetail
 import com.anggit97.data.repository.internal.mapper.toMovieList
 import com.anggit97.model.Movie
+import com.anggit97.model.MovieDetail
 import com.anggit97.model.repository.MovieeeRepository
 import kotlinx.coroutines.flow.Flow
 
@@ -42,5 +44,9 @@ internal class DataMoveeeRepository(
 
     override suspend fun updateAndGetPlanMovieList(): List<Movie> {
         return emptyList()
+    }
+
+    override suspend fun getMovieById(id: String): MovieDetail {
+        return remote.getMovieById(id).toMovieDetail()
     }
 }

@@ -1,6 +1,7 @@
 package com.anggit97.model.repository
 
 import com.anggit97.model.Movie
+import com.anggit97.model.MovieDetail
 import kotlinx.coroutines.flow.Flow
 
 
@@ -18,4 +19,6 @@ interface MovieeeRepository {
     fun getPlanMovieList(): Flow<List<Movie>>
     suspend fun updatePlanMovieList()
     suspend fun updateAndGetPlanMovieList(): List<Movie>
+
+    suspend fun getMovieById(id: String): MovieDetail
 }

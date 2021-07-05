@@ -1,8 +1,9 @@
 package com.anggit97.data.repository.internal.mapper
 
-import com.anggit97.data.api.response.MovieListResponse
-import com.anggit97.data.api.response.MovieResponse
+import com.anggit97.data.api.response.*
+import com.anggit97.model.Genre
 import com.anggit97.model.Movie
+import com.anggit97.model.MovieDetail
 
 
 /**
@@ -26,4 +27,36 @@ private fun MovieResponse.toMovie() = Movie(
     video ?: false,
     voteAverage ?: 0.0,
     voteCount ?: 0
+)
+
+internal fun MovieDetailResponse.toMovieDetail() = MovieDetail(
+    adult,
+    backdropPath,
+    budget,
+    listOf(Genre(0, "Avanture")),
+    homepage,
+    id,
+    imdbId,
+    originalLanguage,
+    originalTitle,
+    overview,
+    popularity,
+    posterPath,
+    emptyList(),
+    emptyList(),
+    releaseDate,
+    revenue,
+    runtime,
+    emptyList(),
+    status,
+    tagline,
+    title,
+    video,
+    voteAverage,
+    voteCount,
+)
+
+internal fun GenreResponse.toGenre() = com.anggit97.model.Genre(
+    id ?: 0,
+    name ?: ""
 )

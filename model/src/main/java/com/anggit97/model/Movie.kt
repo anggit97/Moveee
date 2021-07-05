@@ -9,7 +9,7 @@ import kotlinx.parcelize.Parcelize
  * GitHub : https://github.com/anggit97
  */
 @Parcelize
-data class Movie(
+data class  Movie(
     val adult: Boolean,
     val backdropPath: String,
     val genres: List<String>? = emptyList(),
