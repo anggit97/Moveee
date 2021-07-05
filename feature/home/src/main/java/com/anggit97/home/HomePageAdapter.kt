@@ -12,7 +12,7 @@ import com.anggit97.home.tab.HomeTabFragment
  * Created by Anggit Prayogo on 04,July,2021
  * GitHub : https://github.com/anggit97
  */
-class HomePagerAdapter(fragment: HomeFragment) : FragmentStateAdapter(fragment) {
+class HomePageAdapter(fragment: HomeFragment) : FragmentStateAdapter(fragment) {
 
     private val items = arrayListOf(
         NowFragment(),
@@ -30,5 +30,9 @@ class HomePagerAdapter(fragment: HomeFragment) : FragmentStateAdapter(fragment) 
 
     fun getFragment(position: Int): HomeTabFragment? {
         return items.getOrNull(position) as? HomeTabFragment
+    }
+
+    fun scrollToTop(position: Int) {
+        getFragment(position)?.scrollToTop()
     }
 }
