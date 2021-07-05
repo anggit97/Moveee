@@ -25,6 +25,17 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.RelativeLayout
 import androidx.core.view.GestureDetectorCompat
+import com.anggit97.stfalcon_imageviewer.R
+import com.anggit97.stfalcon_imageviewer.common.extension.*
+import com.anggit97.stfalcon_imageviewer.common.extension.isRectVisible
+import com.anggit97.stfalcon_imageviewer.common.extension.makeInvisible
+import com.anggit97.stfalcon_imageviewer.common.extension.makeVisible
+import com.anggit97.stfalcon_imageviewer.common.gesture.detector.SimpleOnGestureListener
+import com.anggit97.stfalcon_imageviewer.common.gesture.direction.SwipeDirection
+import com.anggit97.stfalcon_imageviewer.common.gesture.direction.SwipeDirectionDetector
+import com.anggit97.stfalcon_imageviewer.common.gesture.dismiss.SwipeToDismissHandler
+import com.anggit97.stfalcon_imageviewer.common.pager.MultiTouchViewPager
+import com.anggit97.stfalcon_imageviewer.loader.ImageLoader
 import com.anggit97.stfalcon_imageviewer.viewer.adapter.ImagesPagerAdapter
 import kotlin.math.abs
 
@@ -248,12 +259,12 @@ internal class ImageViewerView<T> @JvmOverloads constructor(
         directionDetector.handleTouchEvent(event)
 
         return when (swipeDirection) {
-            UP, DOWN -> {
+            SwipeDirection.UP, SwipeDirection.DOWN -> {
                 if (isSwipeToDismissAllowed && !wasScaled && imagesPager.isIdle) {
                     swipeDismissHandler.onTouch(rootContainer, event)
                 } else true
             }
-            LEFT, RIGHT -> {
+            SwipeDirection.LEFT, SwipeDirection.RIGHT -> {
                 imagesPager.dispatchTouchEvent(event)
             }
             else -> true
