@@ -61,6 +61,7 @@ class HomeContentsListAdapter(
                 posterView to R.string.transition_poster,
                 ageBgView to R.string.transition_age_bg
             )
+            sharedElements.add(newView to R.string.transition_new)
 //            if (movie.isNew()) {
 //                sharedElements.add(newView to R.string.transition_new)
 //            }

@@ -12,7 +12,7 @@ apply from: rootProject.file('gradle/android.gradle')
 dependencies {
     implementation project(Modules.Core)
     implementation project(Modules.Data)
-//    implementation project(Modules.StFalconImageViewer)
+    implementation project(Modules.StFalconImageViewer)
 
     implementation Libs.Kotlin.stdlib
 
@@ -28,10 +28,13 @@ dependencies {
     implementation Libs.AndroidX.Navigation.fragment
 
     implementation Libs.Dagger.hilt
+    implementation 'androidx.appcompat:appcompat:1.3.0'
+    implementation 'com.google.android.material:material:1.3.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     kapt Libs.Dagger.hiltCompiler
     kapt Libs.AndroidX.Hilt.compiler
 
-    implementation Libs.Firebase.ads
 
     implementation Libs.timber
 
