@@ -257,4 +257,16 @@ class DetailActivity : AppCompatActivity(), DetailViewRenderer, DetailViewAnimat
             .withHiddenStatusBar(false)
             .show()
     }
+
+    override fun onResume() {
+        super.onResume()
+        binding.draggableFrame.addListener(chromeFader)
+        binding.listView.addOnScrollListener(scrollListener)
+    }
+
+    override fun onPause() {
+        binding.draggableFrame.removeListener(chromeFader)
+        binding.listView.removeOnScrollListener(scrollListener)
+        super.onPause()
+    }
 }
