@@ -24,4 +24,14 @@ data class Movie(
     val video: Boolean,
     val voteAverage: Double,
     val voteCount: Int
-) : Parcelable
+) : Parcelable{
+
+
+    fun getPosterUrl(): String{
+        return "https://image.tmdb.org/t/p/w500$posterPath"
+    }
+
+    fun getBackdropUrl(): String{
+        return "https://image.tmdb.org/t/p/w500$backdropPath"
+    }
+}

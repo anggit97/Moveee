@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.anggit97.core.ext.consume
+import com.anggit97.core.ext.loadAsync
 import com.anggit97.core.ext.showToast
 import com.anggit97.core.util.IdBasedDiffCallback
 import com.anggit97.core.util.setOnDebounceClickListener
@@ -89,7 +90,7 @@ class HomeContentsListAdapter(
 
         fun bind(item: Movie) {
             binding.container.tag = item.id
-//            posterView.loadAsync(item.posterPath, R.drawable.bg_on_surface_dim)
+            posterView.loadAsync(item.getPosterUrl(), R.drawable.bg_on_surface_dim)
             posterView.contentDescription = item.title
 //            ageBgView.setBackgroundResource(item.getAgeBackground())
 //            newView.isVisible = item.isNew()
