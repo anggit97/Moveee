@@ -21,4 +21,9 @@ interface MovieeeRepository {
     suspend fun updateAndGetPlanMovieList(): List<Movie>
 
     suspend fun getMovieById(id: String): MovieDetail
+
+    fun getFavoriteMovieList(): Flow<List<Movie>>
+    suspend fun addFavoriteMovie(movie: Movie)
+    suspend fun removeFavoriteMovie(movieId: Int)
+    suspend fun isFavoriteMovie(movieId: Int): Boolean
 }

@@ -15,4 +15,9 @@ interface MoveeeDatabase {
 
     suspend fun savePlanMovieList(movieList: List<Movie>)
     fun getPlanMovieListFlow(): Flow<List<Movie>>
+
+    suspend fun addFavoriteMovie(movie: Movie)
+    suspend fun removeFavoriteMovie(movieId: Int)
+    fun getFavoriteMovieList(): Flow<List<Movie>>
+    suspend fun isFavoriteMovie(movieId: Int): Boolean
 }

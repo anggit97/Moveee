@@ -50,4 +50,20 @@ internal class DataMoveeeRepository(
     override suspend fun getMovieById(id: String): MovieDetail {
         return remote.getMovieById(id).toMovieDetail()
     }
+
+    override fun getFavoriteMovieList(): Flow<List<Movie>> {
+        return local.getFavoriteMovieList()
+    }
+
+    override suspend fun addFavoriteMovie(movie: Movie) {
+        local.addFavoriteMovie(movie)
+    }
+
+    override suspend fun removeFavoriteMovie(movieId: Int) {
+        local.removeFavoriteMovie(movieId)
+    }
+
+    override suspend fun isFavoriteMovie(movieId: Int): Boolean {
+        return local.isFavoriteMovie(movieId)
+    }
 }

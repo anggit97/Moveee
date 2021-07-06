@@ -6,6 +6,7 @@ import com.anggit97.data.db.internal.dao.MovieCacheDao
 import com.anggit97.data.db.internal.entity.MovieListEntity
 import com.anggit97.data.db.internal.entity.MovieListEntity.Companion.TYPE_NOW
 import com.anggit97.data.db.internal.entity.MovieListEntity.Companion.TYPE_POPULAR
+import com.anggit97.data.db.internal.mapper.toFavouriteEntity
 import com.anggit97.data.db.internal.mapper.toMovie
 import com.anggit97.data.db.internal.mapper.toMovieEntity
 import com.anggit97.model.Movie
@@ -20,7 +21,7 @@ import kotlinx.coroutines.flow.map
  */
 internal class RoomDatabase(
     private val cacheMovieCacheDao: MovieCacheDao,
-    private val movieeeDatabase: FavouriteMovieDao
+    private val favoriteMovieDao: FavouriteMovieDao
 ) : MoveeeDatabase {
 
     override suspend fun saveNowMovieList(movieList: List<Movie>) {
@@ -53,5 +54,23 @@ internal class RoomDatabase(
 
     override fun getPlanMovieListFlow(): Flow<List<Movie>> {
         return getMovieList(TYPE_POPULAR)
+    }
+
+    override suspend fun addFavoriteMovie(movie: Movie) {
+        favoriteMovieDao.insertFavouriteMovie(movie.toFavouriteEntity())
+    }
+
+    override suspend fun removeFavoriteMovie(movieId: Int) {
+        favoriteMovieDao.deleteFavouriteMovie(movieId)
+    }
+
+    override fun getFavoriteMovieList(): Flow<List<Movie>> {
+        return favoriteMovieDao.getFavouriteMovieList().map {
+            it.map { favoriteMovieEntity -> favoriteMovieEntity.toMovie() }
+        }
+    }
+
+    override suspend fun isFavoriteMovie(movieId: Int): Boolean {
+        return favoriteMovieDao.isFavouriteMovie(movieId)
     }
 }

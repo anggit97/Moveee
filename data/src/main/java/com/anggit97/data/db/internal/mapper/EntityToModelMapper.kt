@@ -1,5 +1,6 @@
 package com.anggit97.data.db.internal.mapper
 
+import com.anggit97.data.db.internal.entity.FavouriteMovieEntity
 import com.anggit97.data.db.internal.entity.MovieEntity
 import com.anggit97.model.Movie
 
@@ -23,4 +24,21 @@ internal fun MovieEntity.toMovie() = Movie(
     video ?: false,
     voteAverage ?: 0.0,
     voteCount ?: 0
+)
+
+internal fun FavouriteMovieEntity.toMovie() = Movie(
+    adult,
+    backdropPath ?: "",
+    genres,
+    id,
+    originalLanguage,
+    originalTitle,
+    overview,
+    popularity,
+    posterPath,
+    releaseDate,
+    title,
+    video,
+    voteAverage,
+    voteCount
 )
