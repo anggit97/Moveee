@@ -46,7 +46,7 @@ class DetailViewModel @Inject constructor(
         this.movie = movie
         _headerUiModel.value = HeaderUiModel(movie)
         viewModelScope.launch {
-//            _favoriteUiModel.postValue(repository.isFavoriteMovie(movie.id) ?: false)
+            _favoriteUiModel.postValue(repository.isFavoriteMovie(movie.id))
             val minDelay = async { delay(500) }
             val loadDetail = async {
                 loadDetail(movie)
@@ -77,7 +77,7 @@ class DetailViewModel @Inject constructor(
         _headerUiModel.postValue(
             HeaderUiModel(
                 movie = movie,
-                showTm = 200121212 ?: 0,
+                showTm = 200121212,
                 nations = detail.spoken_languages?.map { it.name ?: "-" }?.toList() ?: emptyList(),
                 companies = detail.production_companies ?: emptyList()
             )
@@ -152,6 +152,16 @@ class DetailViewModel @Inject constructor(
         return ContentUiModel(items)
     }
 
+    fun onFavoriteButtonClick(isFavorite: Boolean) {
+        viewModelScope.launch(Dispatchers.IO) {
+            if (isFavorite) {
+                repository.addFavoriteMovie(movie)
+            } else {
+                repository.removeFavoriteMovie(movie.id)
+            }
+            _favoriteUiModel.postValue(isFavorite)
+        }
+    }
 
     fun onRetryClick() {
         viewModelScope.launch {

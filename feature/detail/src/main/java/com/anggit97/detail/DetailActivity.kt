@@ -136,7 +136,7 @@ class DetailActivity : AppCompatActivity(), DetailViewRenderer, DetailViewAnimat
             }
             favoriteButton.setOnDebounceClickListener {
                 val isFavorite = favoriteButton.isSelected.not()
-//                viewModel.onFavoriteButtonClick(isFavorite)
+                viewModel.onFavoriteButtonClick(isFavorite)
             }
             shareButton.setOnDebounceClickListener {
 //                analytics.clickShare()
