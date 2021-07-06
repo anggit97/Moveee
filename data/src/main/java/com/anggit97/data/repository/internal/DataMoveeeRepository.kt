@@ -39,7 +39,8 @@ internal class DataMoveeeRepository(
     }
 
     override suspend fun updatePlanMovieList() {
-        local.savePlanMovieList(remote.getPopularMovieList().toMovieList())
+        val remoteResult = remote.getPopularMovieList().toMovieList()
+        local.savePlanMovieList(remoteResult)
     }
 
     override suspend fun updateAndGetPlanMovieList(): List<Movie> {
