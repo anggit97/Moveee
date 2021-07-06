@@ -123,7 +123,7 @@ class DetailViewModel @Inject constructor(
 
 
 
-        items.add(PlotItemUiModel(plot = "Maju Mundur"))
+        items.add(PlotItemUiModel(plot = overview ?: "-"))
 
 
         val persons = mutableListOf<PersonUiModel>()

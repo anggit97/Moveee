@@ -26,7 +26,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:singleLine="true"
-            android:text="줄거리"
+            android:text="Overview"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle2"
             android:textColor="?attr/colorOnSurface"
             android:textStyle="bold"

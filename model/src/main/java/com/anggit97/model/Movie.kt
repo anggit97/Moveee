@@ -34,4 +34,16 @@ data class  Movie(
     fun getBackdropUrl(): String{
         return "https://image.tmdb.org/t/p/w500$backdropPath"
     }
+
+    fun getHumanFriendlyReleaseDate(): String{
+        return releaseDate
+    }
+
+    fun getAge(): String{
+        return if(adult){
+            "Dewasa"
+        }else{
+            "Semua Usia"
+        }
+    }
 }

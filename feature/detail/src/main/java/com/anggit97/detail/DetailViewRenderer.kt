@@ -39,12 +39,12 @@ interface DetailViewRenderer {
 //        dDayView.root.isVisible = item.isDDay()
 //        dDayView.root.asyncText(item.getDDayLabel())
 
-//        openDateText.text = uiModel.movie.openDate
-//        val openDateVisible = uiModel.movie.openDate.isNotEmpty()
-//        openDateLabel.isVisible = openDateVisible
-//        openDateText.isVisible = openDateVisible
+        openDateText.text = uiModel.movie.getHumanFriendlyReleaseDate()
+        val openDateVisible = uiModel.movie.getHumanFriendlyReleaseDate().isNotEmpty()
+        openDateLabel.isVisible = openDateVisible
+        openDateText.isVisible = openDateVisible
 
-//        ageText.text = uiModel.movie.getAgeLabel()
+        ageText.text = uiModel.movie.getAge()
 
         val genres = uiModel.movie.genres
         if (genres != null) {
@@ -70,17 +70,17 @@ interface DetailViewRenderer {
         runningTimeLabel.isVisible = showTmVisible
         runningTimeText.isVisible = showTmVisible
 
-//        val companies = uiModel.companies
-//            .asSequence()
-//            .filter { it.companyPartNm.contains("배급") }
-//            .map { it.companyNm }
-//            .joinToString(separator = ", ")
-//        val companiesVisible = companies.isNotBlank()
-//        if (companiesVisible) {
-//            companyText.text = companies
-//        }
-//        companyLabel.isVisible = companiesVisible
-//        companyText.isVisible = companiesVisible
+        val companies = uiModel.companies
+            .asSequence()
+            .filter { it.name?.contains("배급") == true }
+            .map { it.name }
+            .joinToString(separator = ", ")
+        val companiesVisible = companies.isNotBlank()
+        if (companiesVisible) {
+            companyText.text = companies
+        }
+        companyLabel.isVisible = companiesVisible
+        companyText.isVisible = companiesVisible
     }
 
     private fun DetailShareBinding.render(uiModel: HeaderUiModel) {

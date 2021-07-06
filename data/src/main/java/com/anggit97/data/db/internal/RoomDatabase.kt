@@ -1,6 +1,7 @@
 package com.anggit97.data.db.internal
 
 import com.anggit97.data.db.MoveeeDatabase
+import com.anggit97.data.db.internal.dao.FavouriteMovieDao
 import com.anggit97.data.db.internal.dao.MovieCacheDao
 import com.anggit97.data.db.internal.entity.MovieListEntity
 import com.anggit97.data.db.internal.entity.MovieListEntity.Companion.TYPE_NOW
@@ -18,7 +19,8 @@ import kotlinx.coroutines.flow.map
  * GitHub : https://github.com/anggit97
  */
 internal class RoomDatabase(
-    private val cacheMovieCacheDao: MovieCacheDao
+    private val cacheMovieCacheDao: MovieCacheDao,
+    private val movieeeDatabase: FavouriteMovieDao
 ) : MoveeeDatabase {
 
     override suspend fun saveNowMovieList(movieList: List<Movie>) {

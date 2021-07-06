@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.anggit97.data.db.MoveeeDatabase
 import com.anggit97.data.db.internal.MovieCacheDatabase
+import com.anggit97.data.db.internal.MovieDatabase
 import com.anggit97.data.db.internal.RoomDatabase
 import dagger.Module
 import dagger.Provides
@@ -26,9 +27,21 @@ object DbModules {
         @ApplicationContext context: Context
     ): MoveeeDatabase {
         val movieCacheDb = createMovieCacheDatabase(context)
+        val movieeeDb = createMovieeeDatabase(context)
         return RoomDatabase(
-            cacheMovieCacheDao = movieCacheDb.movieCacheDao()
+            cacheMovieCacheDao = movieCacheDb.movieCacheDao(),
+            movieeeDatabase = movieeeDb.favouriteMovieDao()
         )
+    }
+
+    private fun createMovieeeDatabase(
+        @ApplicationContext context: Context
+    ): MovieDatabase {
+        return Room.databaseBuilder(
+            context.applicationContext,
+            MovieDatabase::class.java,
+            "movieee.db"
+        ).build()
     }
 
     private fun createMovieCacheDatabase(context: Context): MovieCacheDatabase {

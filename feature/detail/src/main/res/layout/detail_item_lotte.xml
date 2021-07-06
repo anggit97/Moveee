@@ -23,7 +23,7 @@
             style="@style/Widget.Chip.Lotte"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="롯데시네마"
+            android:text="Lotte"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
