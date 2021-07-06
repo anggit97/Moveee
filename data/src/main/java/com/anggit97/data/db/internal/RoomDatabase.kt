@@ -13,6 +13,7 @@ import com.anggit97.model.Movie
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
+import timber.log.Timber
 
 
 /**
@@ -47,6 +48,24 @@ internal class RoomDatabase(
             .catch { emit(emptyList()) }
     }
 
+    override suspend fun getNowMovieList(): List<Movie> {
+        return getMovieListOf(TYPE_NOW)
+    }
+
+    override suspend fun getPlanMovieList(): List<Movie> {
+        return getMovieListOf(TYPE_POPULAR)
+    }
+
+    private suspend fun getMovieListOf(type: String): List<Movie> {
+        return try {
+            cacheMovieCacheDao.findByType(type).list
+                .map { movieEntity -> movieEntity.toMovie() }
+        } catch (t: Throwable) {
+            Timber.w(t)
+            emptyList()
+        }
+    }
+
 
     override suspend fun savePlanMovieList(movieList: List<Movie>) {
         saveMovieListAs(TYPE_POPULAR, movieList)
@@ -72,5 +91,9 @@ internal class RoomDatabase(
 
     override suspend fun isFavoriteMovie(movieId: Int): Boolean {
         return favoriteMovieDao.isFavouriteMovie(movieId)
+    }
+
+    override suspend fun getAllMovieList(): List<Movie> {
+        return getMovieListOf(TYPE_POPULAR) + getMovieListOf(TYPE_NOW)
     }
 }

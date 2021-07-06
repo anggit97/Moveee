@@ -66,4 +66,15 @@ internal class DataMoveeeRepository(
     override suspend fun isFavoriteMovie(movieId: Int): Boolean {
         return local.isFavoriteMovie(movieId)
     }
+
+    override suspend fun searchMovie(query: String): List<Movie> {
+        return local.getAllMovieList().asSequence()
+            .filter { it.isMatchedWith(query) }
+            .toList()
+    }
+
+
+    private fun Movie.isMatchedWith(query: String): Boolean {
+        return SearchHelper.matched(title, query)
+    }
 }

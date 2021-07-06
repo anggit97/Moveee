@@ -12,9 +12,13 @@ interface MoveeeDatabase {
 
     suspend fun saveNowMovieList(movieList: List<Movie>)
     fun getNowMovieListFlow(): Flow<List<Movie>>
+    suspend fun getNowMovieList(): List<Movie>
 
     suspend fun savePlanMovieList(movieList: List<Movie>)
     fun getPlanMovieListFlow(): Flow<List<Movie>>
+    suspend fun getPlanMovieList(): List<Movie>
+
+    suspend fun getAllMovieList(): List<Movie>
 
     suspend fun addFavoriteMovie(movie: Movie)
     suspend fun removeFavoriteMovie(movieId: Int)

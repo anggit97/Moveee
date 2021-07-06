@@ -19,7 +19,12 @@
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.anggit97.search.SearchFragment"
-        android:label="SearchFragment" />
+        android:label="SearchFragment" >
+
+        <action
+            android:id="@+id/action_to_detail"
+            app:destination="@id/detailActivity" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.anggit97.settings.SettingsFragment"

@@ -13,6 +13,7 @@ dependencies {
     implementation project(Modules.Home)
     implementation project(Modules.Core)
     implementation project(Modules.Data)
+    implementation project(Modules.Model)
 
     implementation Libs.Kotlin.stdlib
 

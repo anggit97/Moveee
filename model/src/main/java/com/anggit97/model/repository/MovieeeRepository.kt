@@ -26,4 +26,6 @@ interface MovieeeRepository {
     suspend fun addFavoriteMovie(movie: Movie)
     suspend fun removeFavoriteMovie(movieId: Int)
     suspend fun isFavoriteMovie(movieId: Int): Boolean
+
+    suspend fun searchMovie(query: String): List<Movie>
 }
