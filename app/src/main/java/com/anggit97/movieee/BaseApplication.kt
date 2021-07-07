@@ -1,7 +1,10 @@
 package com.anggit97.movieee
 
 import android.app.Application
+import com.anggit97.theme.ThemeOptionManager
+import com.jakewharton.threetenabp.AndroidThreeTen
 import dagger.hilt.android.HiltAndroidApp
+import javax.inject.Inject
 
 
 /**
@@ -9,4 +12,14 @@ import dagger.hilt.android.HiltAndroidApp
  * GitHub : https://github.com/anggit97
  */
 @HiltAndroidApp
-class BaseApplication : Application()
+class BaseApplication : Application() {
+
+    @Inject
+    lateinit var themeOptionManager: ThemeOptionManager
+
+    override fun onCreate() {
+        super.onCreate()
+        AndroidThreeTen.init(this)
+        themeOptionManager.initialize()
+    }
+}
