@@ -28,7 +28,18 @@
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.anggit97.settings.SettingsFragment"
-        android:label="SettingsFragment" />
+        android:label="SettingsFragment">
+        <action
+            android:id="@+id/action_to_theme_option"
+            app:destination="@id/theme_option"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"
+            app:popEnterAnim="@anim/fade_in"
+            app:popExitAnim="@anim/fade_out" />
+    </fragment>
+    <fragment
+        android:id="@+id/theme_option"
+        android:name="com.anggit97.theme.ThemeSettingsFragment" />
     <activity
         android:id="@+id/detailActivity"
         android:name="com.anggit97.detail.DetailActivity"

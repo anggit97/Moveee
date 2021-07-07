@@ -10,6 +10,7 @@ import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.anggit97.core.ext.startActivitySafely
 import com.anggit97.core.util.autoCleared
 import com.anggit97.core.util.setOnDebounceClickListener
@@ -81,6 +82,12 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         viewModel.themeUiModel.observe(viewLifecycleOwner) {
             themeItem.themeName.setThemeOptionLabel(it.themeOption)
         }
+        themeItem.editThemeButton.setOnDebounceClickListener {
+            onThemeEditClicked()
+        }
+        themeItem.themeName.setOnDebounceClickListener {
+            onThemeEditClicked()
+        }
 
         // TODO: Apply theater mode
         // tmPrepare.setOnClickListener {
@@ -95,6 +102,11 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         }
     }
 
+    private fun onThemeEditClicked() {
+        findNavController().navigate(
+            SettingsFragmentDirections.actionToThemeOption()
+        )
+    }
 
     private fun createSharedElementsForTheaters(): Array<Pair<View, String>> =
         binding.theaterItem.theaterGroup.run {

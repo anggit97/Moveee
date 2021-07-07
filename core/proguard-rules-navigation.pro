@@ -4,3 +4,4 @@
 -keepnames class com.anggit97.model.Movie
 -keepnames class com.anggit97.search.SearchFragment
 -keepnames class com.anggit97.settings.SettingsFragment
+-keepnames class com.anggit97.theme.ThemeSettingsFragment
