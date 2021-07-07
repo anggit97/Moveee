@@ -50,7 +50,7 @@ fun Context.startActivitySafely(intent: Intent) {
     if (intent.isValid(this)) {
         startActivity(intent)
     } else {
-        showToast("실행할 앱을 찾을 수 없습니다.")
+        showToast("No app found to run.")
     }
 }
 

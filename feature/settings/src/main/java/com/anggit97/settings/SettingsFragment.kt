@@ -92,7 +92,7 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             val intent = Intent(Intent.ACTION_SENDTO)
             intent.data = Uri.parse("mailto:")
             intent.putExtra(Intent.EXTRA_EMAIL, arrayOf(HELP_EMAIL))
-            intent.putExtra(Intent.EXTRA_SUBJECT, "뭅 v${BuildConfig.VERSION_NAME} 버그리포트")
+            intent.putExtra(Intent.EXTRA_SUBJECT, "App v${BuildConfig.VERSION_NAME} bug report")
             it.context.startActivitySafely(intent)
         }
     }

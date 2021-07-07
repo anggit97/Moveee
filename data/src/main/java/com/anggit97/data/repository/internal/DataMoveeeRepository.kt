@@ -70,6 +70,7 @@ internal class DataMoveeeRepository(
     override suspend fun searchMovie(query: String): List<Movie> {
         return local.getAllMovieList().asSequence()
             .filter { it.isMatchedWith(query) }
+            .distinct()
             .toList()
     }
 
