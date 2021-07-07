@@ -4,10 +4,7 @@
 
 ## Table of Content
 - [Apps Feature](#apps-feature)
-- [Clean Architecture](#clean-architecture)
-- [Layer Implementation](#layers)
 - [Demo](#demo)
-- [Mad Scored](#mad-scoreboard)
 - [Tech stack](#built-with)
 - [Support me](#How-to-support-me-?-)
 - [License](#license)
