@@ -4,6 +4,9 @@ import com.anggit97.data.api.response.*
 import com.anggit97.model.Genre
 import com.anggit97.model.Movie
 import com.anggit97.model.MovieDetail
+import com.anggit97.model.ProductionCompany
+import com.anggit97.model.ProductionCountry
+import com.anggit97.model.SpokenLanguage
 
 
 /**
@@ -33,7 +36,7 @@ internal fun MovieDetailResponse.toMovieDetail() = MovieDetail(
     adult,
     backdropPath,
     budget,
-    listOf(Genre(0, "Avanture")),
+    genres?.toGenre() ?: emptyList(),
     homepage,
     id,
     imdbId,
@@ -42,12 +45,12 @@ internal fun MovieDetailResponse.toMovieDetail() = MovieDetail(
     overview,
     popularity,
     posterPath,
-    emptyList(),
-    emptyList(),
+    productionCompanies?.toProductionCompany() ?: emptyList(),
+    productionCountries?.toProductionCountry() ?: emptyList(),
     releaseDate,
     revenue,
     runtime,
-    emptyList(),
+    spokenLanguages?.toSpokenLanguage() ?: emptyList(),
     status,
     tagline,
     title,
@@ -56,7 +59,23 @@ internal fun MovieDetailResponse.toMovieDetail() = MovieDetail(
     voteCount,
 )
 
-internal fun GenreResponse.toGenre() = com.anggit97.model.Genre(
+internal fun List<SpokenLanguageResponse>.toSpokenLanguage(): List<SpokenLanguage> {
+    return map { SpokenLanguage(it.englishName, it.iso6391, it.name) }
+}
+
+internal fun List<ProductionCountryResponse>.toProductionCountry(): List<ProductionCountry> {
+    return map { ProductionCountry(it.iso31661, it.name) }
+}
+
+internal fun List<ProductionCompanyResponse>.toProductionCompany(): List<ProductionCompany> {
+    return map { ProductionCompany(it.id, it.getLogoPathUrl(), it.name, it.originCountry) }
+}
+
+internal fun List<GenreResponse>.toGenre(): List<Genre> {
+    return map { it.toGenre() }
+}
+
+internal fun GenreResponse.toGenre() = Genre(
     id ?: 0,
     name ?: ""
 )

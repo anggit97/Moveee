@@ -31,9 +31,9 @@ data class MovieDetailResponse(
     @SerialName("poster_path")
     val posterPath: String?,
     @SerialName("production_companies")
-    val productionCompanies: List<ProductionCompany>?,
+    val productionCompanies: List<ProductionCompanyResponse>?,
     @SerialName("production_countries")
-    val productionCountries: List<ProductionCountry>?,
+    val productionCountries: List<ProductionCountryResponse>?,
     @SerialName("release_date")
     val releaseDate: String?,
     @SerialName("revenue")
@@ -41,7 +41,7 @@ data class MovieDetailResponse(
     @SerialName("runtime")
     val runtime: Int?,
     @SerialName("spoken_languages")
-    val spokenLanguages: List<SpokenLanguage>?,
+    val spokenLanguages: List<SpokenLanguageResponse>?,
     @SerialName("status")
     val status: String?,
     @SerialName("tagline")

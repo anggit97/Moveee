@@ -9,7 +9,8 @@ data class HeaderUiModel(
     val movie: Movie,
     val showTm: Int = 0,
     val nations: List<String> = emptyList(),
-    val companies: List<ProductionCompany> = emptyList()
+    val companies: List<ProductionCompany> = emptyList(),
+    val genres: List<String> = emptyList()
 )
 
 @Keep

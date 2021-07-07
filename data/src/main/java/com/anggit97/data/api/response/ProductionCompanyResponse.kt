@@ -5,7 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ProductionCompany(
+data class ProductionCompanyResponse(
     @SerialName("id")
     val id: Int?,
     @SerialName("logo_path")
@@ -14,4 +14,7 @@ data class ProductionCompany(
     val name: String?,
     @SerialName("origin_country")
     val originCountry: String?
-)
+) {
+
+    fun getLogoPathUrl() = "https://image.tmdb.org/t/p/w500$logoPath"
+}

@@ -77,9 +77,10 @@ class DetailViewModel @Inject constructor(
         _headerUiModel.postValue(
             HeaderUiModel(
                 movie = movie,
-                showTm = 200121212,
+                showTm = detail.runtime ?: 0,
                 nations = detail.spoken_languages?.map { it.name ?: "-" }?.toList() ?: emptyList(),
-                companies = detail.production_companies ?: emptyList()
+                companies = detail.production_companies ?: emptyList(),
+                genres = detail.genres?.map { it.name ?: "" } ?: emptyList()
             )
         )
         _contentUiModel.postValue(detail.toContentUiModel())
@@ -90,32 +91,32 @@ class DetailViewModel @Inject constructor(
         items.add(HeaderItemUiModel)
         items.add(
             CgvItemUiModel(
-                movieId = "1",
+                movieId = id?.toString() ?: "",
                 hasInfo = true,
-                rating = "5" ?: NO_RATING,
+                rating = vote_average.toString(),
                 webLink = "https://google.com"
             )
         )
         items.add(
             LotteItemUiModel(
-                movieId = "1",
+                movieId = id?.toString() ?: "",
                 hasInfo = true,
-                rating = "5" ?: NO_RATING,
+                rating = vote_average.toString(),
                 webLink = "https://google.com"
             )
         )
         items.add(
             MegaboxItemUiModel(
-                movieId = "1",
+                movieId = id?.toString() ?: "",
                 hasInfo = true,
-                rating = "5" ?: NO_RATING,
+                rating = vote_average.toString(),
                 webLink = "https://google.com"
             )
         )
 
         items.add(
             NaverItemUiModel(
-                rating = "5",
+                rating = vote_average.toString(),
                 webLink = "https://google.com"
             )
         )
@@ -128,16 +129,16 @@ class DetailViewModel @Inject constructor(
 
         val persons = mutableListOf<PersonUiModel>()
         persons.addAll(
-            listOf<PersonUiModel>(
+            listOf(
                 PersonUiModel(
                     name = "Nagato Uchia",
-                    cast = "감독",
-                    query = "감독"
+                    cast = "Samsul",
+                    query = "Ujang"
                 )
             )
         )
         persons.addAll(
-            listOf<PersonUiModel>(
+            listOf(
                 PersonUiModel(
                     name = "Hambali",
                     cast = "Imran",
@@ -167,10 +168,5 @@ class DetailViewModel @Inject constructor(
         viewModelScope.launch {
             movieDetail = loadDetail(movie)?.also { renderDetail(it) }
         }
-    }
-
-    companion object {
-
-        private const val NO_RATING = "평점없음"
     }
 }
