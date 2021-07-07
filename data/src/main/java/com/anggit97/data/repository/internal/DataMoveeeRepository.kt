@@ -30,7 +30,6 @@ internal class DataMoveeeRepository(
     }
 
     override suspend fun updateNowMovieList() {
-        val isNetworkActive = networkChecker.isNetworkActive()
         local.saveNowMovieList(remote.getNowPlayingMovieList().toMovieList())
     }
 
@@ -43,7 +42,7 @@ internal class DataMoveeeRepository(
     }
 
     override suspend fun updatePlanMovieList() {
-        val remoteResult = remote.getPopularMovieList().toMovieList()
+        val remoteResult = remote.getUpcomingMovieList().toMovieList()
         local.savePlanMovieList(remoteResult)
     }
 

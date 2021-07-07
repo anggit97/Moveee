@@ -18,6 +18,9 @@ interface MovieeeApiService {
     @GET("movie/now_playing?api_key=00fadd6af89412de4c1a3ecd7fe631f6&language=id")
     suspend fun getNowPlayingMovieList(): MovieListResponse
 
+    @GET("movie/upcoming?api_key=00fadd6af89412de4c1a3ecd7fe631f6&language=id")
+    suspend fun getUpcomingMovieList(): MovieListResponse
+
     @GET("discover/movie?api_key=00fadd6af89412de4c1a3ecd7fe631f6&language=id")
     suspend fun getDiscoverMovieList(): MovieListResponse
 
