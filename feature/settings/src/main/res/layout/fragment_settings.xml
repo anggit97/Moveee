@@ -55,64 +55,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/themeItem" />
 
             <include
-                android:id="@+id/theaterItem"
-                layout="@layout/settings_item_theater"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/themeItem" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:background="?attr/colorDivider"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/theaterItem" />
-
-            <include
-                android:id="@+id/theaterModeItem"
-                layout="@layout/settings_item_theater_mode"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/theaterItem" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:background="?attr/colorDivider"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/theaterModeItem" />
-
-            <include
-                android:id="@+id/versionItem"
-                layout="@layout/settings_item_version"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/theaterModeItem" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:background="?attr/colorDivider"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/versionItem" />
-
-            <include
                 android:id="@+id/feedbackItem"
                 layout="@layout/settings_item_feedback"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/versionItem" />
+                app:layout_constraintTop_toBottomOf="@+id/themeItem" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
         android:layout_marginEnd="48dp"
-        android:text="개발자에게 버그 신고하기"
+        android:text="@string/report_bug"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body2"
         app:layout_constraintBottom_toBottomOf="@id/bug_report_button"
         app:layout_constraintEnd_toEndOf="parent"

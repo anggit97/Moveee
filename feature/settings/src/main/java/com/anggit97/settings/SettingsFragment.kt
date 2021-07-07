@@ -41,11 +41,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 sharedElements: MutableMap<String, View>
             ) {
                 sharedElements.clear()
-                names.forEach { name ->
-                    binding.theaterItem.theaterGroup.findViewWithTag<View>(name)?.let {
-                        sharedElements[name] = it
-                    }
-                }
             }
         })
     }
@@ -107,14 +102,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             SettingsFragmentDirections.actionToThemeOption()
         )
     }
-
-    private fun createSharedElementsForTheaters(): Array<Pair<View, String>> =
-        binding.theaterItem.theaterGroup.run {
-            (0 until childCount)
-                .mapNotNull { getChildAt(it) }
-                .map { it to it.transitionName }
-                .toTypedArray()
-        }
 
     companion object {
 
