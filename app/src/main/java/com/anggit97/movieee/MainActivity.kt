@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         get() = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.Theme_Moop_Main)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
