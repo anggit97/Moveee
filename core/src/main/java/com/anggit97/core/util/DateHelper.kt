@@ -15,16 +15,16 @@
  */
 package com.anggit97.core.util
 
-import org.threeten.bp.DayOfWeek
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDateTime
-import org.threeten.bp.ZoneId
+import android.annotation.SuppressLint
+import org.threeten.bp.*
 import org.threeten.bp.format.DateTimeFormatter
 import org.threeten.bp.temporal.WeekFields
+import java.util.*
 
-private val ZONE_SEOUL = ZoneId.of("Asia/Seoul")
-fun currentTime(): LocalDateTime = LocalDateTime.now(ZONE_SEOUL)
-fun today(): LocalDate = LocalDate.now(ZONE_SEOUL)
+private val ZONE_JAKARTA = ZoneId.of("Asia/Jakarta")
+private const val LOCALE_ID = "id"
+fun currentTime(): LocalDateTime = LocalDateTime.now(ZONE_JAKARTA)
+fun today(): LocalDate = LocalDate.now(ZONE_JAKARTA)
 fun yesterday(): LocalDate = today().minusDays(1)
 
 /**
@@ -73,12 +73,26 @@ fun DayOfWeek.calculatePlusDaysTo(dayOfWeekToNext: DayOfWeek): Long {
 }
 
 fun LocalDate.MM_DD(): String {
-    return format(DateTimeFormatter.ofPattern("MM.dd"))
+    return formatter("MM.dd")
 }
+
 fun LocalDate.YYYY_MM_DD(): String {
-    return format(DateTimeFormatter.ofPattern("yyyy.MM.dd"))
+    return formatter("yyyy.MM.dd")
+}
+
+fun LocalDate.DD_MM_YYYY(): String {
+    return formatter("dd MMMM yyyy")
+}
+
+fun LocalDate.formatter(pattern: String): String {
+    return format(DateTimeFormatter.ofPattern(pattern, Locale(LOCALE_ID)))
 }
 
 fun LocalDate.weekOfYear(): Int {
     return get(WeekFields.of(java.util.Locale.KOREA).weekOfWeekBasedYear())
+}
+
+@SuppressLint("SimpleDateFormat")
+fun String.toLocalDate(): LocalDate {
+    return LocalDate.parse(this)
 }

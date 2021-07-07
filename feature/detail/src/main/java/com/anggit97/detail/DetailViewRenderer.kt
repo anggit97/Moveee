@@ -17,6 +17,9 @@ package com.anggit97.detail
 
 import androidx.core.view.isVisible
 import com.anggit97.core.ext.loadAsync
+import com.anggit97.core.util.DD_MM_YYYY
+import com.anggit97.core.util.YYYY_MM_DD
+import com.anggit97.core.util.toLocalDate
 import com.anggit97.detail.databinding.ActivityDetailBinding
 import com.anggit97.detail.databinding.DetailHeaderBinding
 import com.anggit97.detail.databinding.DetailShareBinding
@@ -31,8 +34,8 @@ interface DetailViewRenderer {
     private fun DetailHeaderBinding.render(uiModel: HeaderUiModel) {
         titleView.text = uiModel.movie.title
 
-        openDateText.text = uiModel.movie.getHumanFriendlyReleaseDate()
-        val openDateVisible = uiModel.movie.getHumanFriendlyReleaseDate().isNotEmpty()
+        openDateText.text = uiModel.movie.releaseDate.toLocalDate().DD_MM_YYYY()
+        val openDateVisible = uiModel.movie.releaseDate.toLocalDate().DD_MM_YYYY().isNotEmpty()
         openDateLabel.isVisible = openDateVisible
         openDateText.isVisible = openDateVisible
 
@@ -87,7 +90,7 @@ interface DetailViewRenderer {
 //        dDayView.root.isVisible = item.isDDay()
 //        dDayView.root.asyncText(item.getDDayLabel())
 //
-        openDateText.text = uiModel.movie.releaseDate
+        openDateText.text = uiModel.movie.releaseDate.toLocalDate().YYYY_MM_DD()
         val openDateVisible = uiModel.movie.releaseDate.isNotEmpty()
         openDateLabel.isVisible = openDateVisible
         openDateText.isVisible = openDateVisible
