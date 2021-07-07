@@ -39,7 +39,7 @@
             app:layout_constraintEnd_toStartOf="@id/privacy_tip"
             app:layout_constraintStart_toEndOf="@id/brandView"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="\'죠스 예고편\' 검색 결과" />
+            tools:text="\'Film Title" />
 
         <ImageView
             android:id="@+id/privacy_tip"

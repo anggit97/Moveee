@@ -9,7 +9,7 @@
     <string name="audience">%,d</string>
     <string name="screen_days">%d days</string>
 
-    <string name="trailer_search_result">\'%s 예고편\' 검색 결과</string>
+    <string name="trailer_search_result">\'%s Trailer\' Search Result</string>
 
     <string name="trailer_dialog_title">Use of YouTube API Services</string>
     <string name="trailer_dialog_message">This information was collected through YouTube API Services. Follow Google\'s Privacy Policy( https://policies.google.com/privacy ).</string>
@@ -19,4 +19,5 @@
     <string name="label">Label</string>
     <string name="rating">Rating</string>
     <string name="read_more">Read More..</string>
+    <string name="see_more">Lihat Lainnya</string>
 </resources>

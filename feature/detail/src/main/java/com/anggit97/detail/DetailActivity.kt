@@ -22,10 +22,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.anggit97.core.ext.loadAsync
 import com.anggit97.core.ext.observeEvent
 import com.anggit97.core.ext.showToast
-import com.anggit97.core.util.clipToOval
-import com.anggit97.core.util.setOnDebounceClickListener
-import com.anggit97.core.util.spanSizeLookup
-import com.anggit97.core.util.viewBindings
+import com.anggit97.core.util.*
 import com.anggit97.core.widget.ElasticDragDismissFrameLayout
 import com.anggit97.detail.databinding.ActivityDetailBinding
 import com.anggit97.stfalcon_imageviewer.StfalconImageViewer
@@ -142,8 +139,7 @@ class DetailActivity : AppCompatActivity(), DetailViewRenderer, DetailViewAnimat
                 viewModel.onFavoriteButtonClick(isFavorite)
             }
             shareButton.setOnDebounceClickListener {
-//                analytics.clickShare()
-//                binding.toggleShareButton()
+                binding.toggleShareButton()
             }
         }
         binding.errorRetryButton.setOnDebounceClickListener {
@@ -207,21 +203,23 @@ class DetailActivity : AppCompatActivity(), DetailViewRenderer, DetailViewAnimat
 //                    ctx.executeWeb(item.webLink)
                 }
                 is TrailerHeaderItemUiModel -> {
-//                    val message = SpannableString(ctx.getText(R.string.trailer_dialog_message))
-//                    Linkify.addLinks(message, Linkify.WEB_URLS)
-//                    AlertDialog.Builder(ctx, R.style.AlertDialogTheme)
-//                        .setTitle(R.string.trailer_dialog_title)
-//                        .setMessage(message)
-//                        .setPositiveButton(R.string.trailer_dialog_button, null)
-//                        .show()
-//                        .apply {
-//                            findViewById<TextView>(android.R.id.message)?.movementMethod =
-//                                LinkMovementMethod.getInstance()
-//                        }
+                    val message = SpannableString(ctx.getText(R.string.trailer_dialog_message))
+                    Linkify.addLinks(message, Linkify.WEB_URLS)
+                    AlertDialog.Builder(ctx, R.style.AlertDialogTheme)
+                        .setTitle(R.string.trailer_dialog_title)
+                        .setMessage(message)
+                        .setPositiveButton(R.string.trailer_dialog_button, null)
+                        .show()
+                        .apply {
+                            findViewById<TextView>(android.R.id.message)?.movementMethod =
+                                LinkMovementMethod.getInstance()
+                        }
                 }
                 is TrailerFooterItemUiModel -> {
-//                    analytics.clickMoreTrailers()
-//                    YouTube.executeAppWithQuery(ctx, item.movieTitle)
+                    YouTube.executeAppWithQuery(ctx, item.movieTitle)
+                }
+                is TrailerItemUiModel -> {
+                    YouTube.executeApp(ctx, item.trailer)
                 }
             }
         }
@@ -248,6 +246,18 @@ class DetailActivity : AppCompatActivity(), DetailViewRenderer, DetailViewAnimat
         }
         viewModel.isError.observe(this) {
             binding.errorGroup.isVisible = it
+        }
+    }
+
+    private fun ActivityDetailBinding.toggleShareButton() {
+        share.root.let {
+            if (it.isActivated) {
+                it.isActivated = false
+                it.hideShareViewTo(header.shareButton)
+            } else {
+                it.isActivated = true
+                it.showShareViewFrom(header.shareButton)
+            }
         }
     }
 

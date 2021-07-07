@@ -21,6 +21,8 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
+import com.anggit97.core.ext.startActivitySafely
+import com.anggit97.model.Video
 import timber.log.Timber
 
 //private fun Context.isInstalledApp(pkgName: String): Boolean {
@@ -124,72 +126,72 @@ import timber.log.Timber
 //    private const val packageName = "com.kakao.talk"
 //}
 //
-//object YouTube {
-//
-//    private const val packageName = "com.google.android.youtube"
-//
-//    fun executeApp(ctx: Context, trailer: Trailer) {
-//        val id = trailer.youtubeId
-//        try {
-//            ctx.startActivity(createTrailerAppIntent(id))
-//        } catch (e: ActivityNotFoundException) {
-//            Timber.w(e)
-//            ctx.startActivitySafely(
-//                createTrailerWebIntent(
-//                    id
-//                )
-//            )
-//        }
-//    }
-//
-//    private fun createTrailerAppIntent(id: String): Intent = Intent(
-//        Intent.ACTION_VIEW,
-//        Uri.parse("vnd.youtube:$id")
-//    ).apply {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//            flags = Intent.FLAG_ACTIVITY_NEW_TASK or
-//                Intent.FLAG_ACTIVITY_MULTIPLE_TASK or
-//                Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT
-//        } else {
-//            flags = Intent.FLAG_ACTIVITY_NEW_TASK
-//        }
-//    }
-//
-//    private fun createTrailerWebIntent(id: String): Intent = Intent(
-//        Intent.ACTION_VIEW,
-//        Uri.parse("https://www.youtube.com/watch?v=$id")
-//    )
-//
-//    fun executeAppWithQuery(ctx: Context, movieTitle: String) {
-//        val query = "$movieTitle 예고편"
-//        try {
-//            ctx.startActivity(createSearchAppIntent(query))
-//        } catch (e: ActivityNotFoundException) {
-//            Timber.w(e)
-//            ctx.startActivitySafely(
-//                createSearchWebIntent(
-//                    query
-//                )
-//            )
-//        }
-//    }
-//
-//    private fun createSearchAppIntent(query: String): Intent = Intent(
-//        Intent.ACTION_SEARCH
-//    )
-//        .setPackage(packageName)
-//        .putExtra("query", query).apply {
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//                flags = Intent.FLAG_ACTIVITY_NEW_TASK or
-//                    Intent.FLAG_ACTIVITY_MULTIPLE_TASK or
-//                    Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT
-//            } else {
-//                flags = Intent.FLAG_ACTIVITY_NEW_TASK
-//            }
-//        }
-//
-//    private fun createSearchWebIntent(query: String): Intent = Intent(
-//        Intent.ACTION_VIEW,
-//        Uri.parse("https://www.youtube.com/results?search_query=$query")
-//    )
-//}
+object YouTube {
+
+    private const val packageName = "com.google.android.youtube"
+
+    fun executeApp(ctx: Context, trailer: Video) {
+        val id = trailer.key
+        try {
+            ctx.startActivity(createTrailerAppIntent(id))
+        } catch (e: ActivityNotFoundException) {
+            Timber.w(e)
+            ctx.startActivitySafely(
+                createTrailerWebIntent(
+                    id
+                )
+            )
+        }
+    }
+
+    private fun createTrailerAppIntent(id: String): Intent = Intent(
+        Intent.ACTION_VIEW,
+        Uri.parse("vnd.youtube:$id")
+    ).apply {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                Intent.FLAG_ACTIVITY_MULTIPLE_TASK or
+                Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT
+        } else {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+    }
+
+    private fun createTrailerWebIntent(id: String): Intent = Intent(
+        Intent.ACTION_VIEW,
+        Uri.parse("https://www.youtube.com/watch?v=$id")
+    )
+
+    fun executeAppWithQuery(ctx: Context, movieTitle: String) {
+        val query = "$movieTitle Trailer"
+        try {
+            ctx.startActivity(createSearchAppIntent(query))
+        } catch (e: ActivityNotFoundException) {
+            Timber.w(e)
+            ctx.startActivitySafely(
+                createSearchWebIntent(
+                    query
+                )
+            )
+        }
+    }
+
+    private fun createSearchAppIntent(query: String): Intent = Intent(
+        Intent.ACTION_SEARCH
+    )
+        .setPackage(packageName)
+        .putExtra("query", query).apply {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or
+                    Intent.FLAG_ACTIVITY_MULTIPLE_TASK or
+                    Intent.FLAG_ACTIVITY_LAUNCH_ADJACENT
+            } else {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            }
+        }
+
+    private fun createSearchWebIntent(query: String): Intent = Intent(
+        Intent.ACTION_VIEW,
+        Uri.parse("https://www.youtube.com/results?search_query=$query")
+    )
+}
