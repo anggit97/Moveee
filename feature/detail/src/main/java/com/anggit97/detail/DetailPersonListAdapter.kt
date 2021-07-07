@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.core.view.isGone
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.anggit97.core.ext.executeWeb
 import com.anggit97.core.ext.loadAsync
 import com.anggit97.core.ext.loadAsyncCircle
 import com.anggit97.core.util.AlwaysDiffCallback
@@ -21,7 +22,7 @@ internal class DetailPersonListAdapter : ListAdapter<PersonUiModel, DetailPerson
         return ViewHolder(binding).apply {
             itemView.setOnDebounceClickListener {
                 val query = getItem(bindingAdapterPosition).query
-//                it.context.executeWeb("https://m.search.naver.com/search.naver?query=$query")
+                it.context.executeWeb("https://m.search.naver.com/search.naver?query=$query")
             }
         }
     }

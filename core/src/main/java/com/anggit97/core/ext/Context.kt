@@ -58,21 +58,21 @@ private fun Intent.isValid(ctx: Context): Boolean {
     return resolveActivity(ctx.packageManager) != null
 }
 
-//fun Context.executeWeb(url: String?) {
-//    if (url == null) return
-//    startNonBrowserActivity(url, fallback = { startBrowserActivity(url) })
-//}
+fun Context.executeWeb(url: String?) {
+    if (url == null) return
+    startNonBrowserActivity(url, fallback = { startBrowserActivity(url) })
+}
 
-//private fun Context.startBrowserActivity(url: String) {
-//    CustomTabsIntent.Builder()
-//        .setShareState(CustomTabsIntent.SHARE_STATE_ON)
-//        .setColorScheme(CustomTabsIntent.COLOR_SCHEME_SYSTEM)
-//        .setShowTitle(true)
-//        .setStartAnimations(this, R.anim.fade_in, R.anim.fade_out)
-//        .setExitAnimations(this, R.anim.fade_in, R.anim.fade_out)
-//        .build()
-//        .launchUrl(this, Uri.parse(url))
-//}
+private fun Context.startBrowserActivity(url: String) {
+    CustomTabsIntent.Builder()
+        .setShareState(CustomTabsIntent.SHARE_STATE_ON)
+        .setColorScheme(CustomTabsIntent.COLOR_SCHEME_SYSTEM)
+        .setShowTitle(true)
+        .setStartAnimations(this, R.anim.fade_in, R.anim.fade_out)
+        .setExitAnimations(this, R.anim.fade_in, R.anim.fade_out)
+        .build()
+        .launchUrl(this, Uri.parse(url))
+}
 
 private fun Context.startNonBrowserActivity(url: String, fallback: () -> Unit) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
