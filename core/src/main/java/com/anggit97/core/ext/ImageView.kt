@@ -26,9 +26,12 @@ import com.anggit97.core.glide.GlideRequest
 import com.bumptech.glide.Priority
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade
 import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
+import jp.wasabeef.glide.transformations.CropCircleTransformation
 import java.io.File
 
 /** ImageView */
@@ -46,6 +49,25 @@ fun ImageView.loadAsync(url: String?, @DrawableRes placeholder: Int? = null) {
                     placeholder(placeholder)
                 }
                 transition(withCrossFade())
+            }
+        )
+    }
+}
+
+fun ImageView.loadAsyncCircle(url: String?, @DrawableRes placeholder: Int? = null) {
+    if (url == null) {
+        GlideApp.with(context)
+            .load(placeholder)
+            .into(this)
+    } else {
+        loadAsync(
+            url,
+            block = {
+                if (placeholder != null) {
+                    placeholder(placeholder)
+                }
+                transition(withCrossFade())
+                .apply(RequestOptions.bitmapTransform(CircleCrop()))
             }
         )
     }

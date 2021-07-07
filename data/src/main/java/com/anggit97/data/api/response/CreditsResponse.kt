@@ -5,11 +5,9 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CreditsListResponse(
+data class CreditsResponse(
     @SerialName("cast")
     val cast: List<CastResponse>?,
-    @SerialName("crew")
-    val crew: List<CrewResponse>?,
     @SerialName("id")
     val id: Int?
 )

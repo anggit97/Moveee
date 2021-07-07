@@ -2,6 +2,7 @@ package com.anggit97.data.repository.internal.mapper
 
 import com.anggit97.data.api.response.*
 import com.anggit97.model.*
+import com.anggit97.model.Cast
 
 
 /**
@@ -53,6 +54,25 @@ internal fun MovieDetailResponse.toMovieDetail() = MovieDetail(
     voteAverage,
     voteCount,
     emptyList()
+)
+
+internal fun CreditsListResponse.toCastList(): List<Cast> {
+    return cast?.map { it.toCast() } ?: emptyList()
+}
+
+internal fun CastResponse.toCast() = Cast(
+    adult,
+    castId,
+    character,
+    creditId,
+    gender,
+    id,
+    knownForDepartment,
+    name,
+    order,
+    originalName,
+    popularity,
+    profilePath
 )
 
 internal fun MovieVideosResponse.toMovieVideos(): List<Video> {

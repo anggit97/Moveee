@@ -1,5 +1,6 @@
 package com.anggit97.data.api
 
+import com.anggit97.data.api.response.CreditsListResponse
 import com.anggit97.data.api.response.MovieDetailResponse
 import com.anggit97.data.api.response.MovieListResponse
 import com.anggit97.data.api.response.MovieVideosResponse
@@ -31,4 +32,7 @@ interface MovieeeApiService {
 
     @GET("movie/{id}/videos?api_key=00fadd6af89412de4c1a3ecd7fe631f6")
     suspend fun getMovieVideos(@Path("id") id: String): MovieVideosResponse
+
+    @GET("movie/{id}/credits?api_key=00fadd6af89412de4c1a3ecd7fe631f6")
+    suspend fun getMovieCredits(@Path("id") id: String): CreditsListResponse
 }

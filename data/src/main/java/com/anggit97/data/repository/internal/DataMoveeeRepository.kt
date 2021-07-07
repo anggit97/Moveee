@@ -3,9 +3,11 @@ package com.anggit97.data.repository.internal
 import com.anggit97.core.util.NetworkCheckerHelper
 import com.anggit97.data.api.MovieeeApiService
 import com.anggit97.data.db.MoveeeDatabase
+import com.anggit97.data.repository.internal.mapper.toCastList
 import com.anggit97.data.repository.internal.mapper.toMovieDetail
 import com.anggit97.data.repository.internal.mapper.toMovieList
 import com.anggit97.data.repository.internal.mapper.toMovieVideos
+import com.anggit97.model.Cast
 import com.anggit97.model.Movie
 import com.anggit97.model.MovieDetail
 import com.anggit97.model.Video
@@ -87,5 +89,13 @@ internal class DataMoveeeRepository(
      */
     override suspend fun getMovieVideos(id: String): List<Video> {
         return remote.getMovieVideos(id).toMovieVideos()
+    }
+
+
+    /**
+     * Movie Credits
+     */
+    override suspend fun getMovieCredits(id: String): List<Cast> {
+        return remote.getMovieCredits(id).toCastList()
     }
 }

@@ -1,5 +1,6 @@
 package com.anggit97.model.repository
 
+import com.anggit97.model.Cast
 import com.anggit97.model.Movie
 import com.anggit97.model.MovieDetail
 import com.anggit97.model.Video
@@ -31,4 +32,6 @@ interface MovieeeRepository {
     suspend fun searchMovie(query: String): List<Movie>
 
     suspend fun getMovieVideos(id: String): List<Video>
+
+    suspend fun getMovieCredits(id: String): List<Cast>
 }

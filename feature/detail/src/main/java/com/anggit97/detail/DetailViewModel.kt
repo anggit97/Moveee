@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.anggit97.core.ui.EventLiveData
 import com.anggit97.core.ui.MutableEventLiveData
+import com.anggit97.model.Cast
 import com.anggit97.model.Movie
 import com.anggit97.model.MovieDetail
 import com.anggit97.model.Video
@@ -49,19 +50,33 @@ class DetailViewModel @Inject constructor(
         viewModelScope.launch {
             _favoriteUiModel.postValue(repository.isFavoriteMovie(movie.id))
             val minDelay = async { delay(500) }
-            val loadDetail = async {
-                loadDetail(movie)
-            }
-            val loadVideos = async {
-                loadVideo(movie)
-            }
+            val loadDetail = async { loadDetail(movie) }
+            val loadVideos = async { loadVideo(movie) }
+            val loadCast = async { loadCast(movie) }
+
             val videos = loadVideos.await()
+            val casts = loadCast.await()
             minDelay.await()
+
             movieDetail = loadDetail.await()?.also {
                 it.videos = videos
+                it.casts = casts
                 renderDetail(it)
             }
         }
+    }
+
+    private suspend fun loadCast(movie: Movie): List<Cast>? {
+        _isError.postValue(false)
+        try {
+            return withContext(Dispatchers.IO) {
+                repository.getMovieCredits(movie.id.toString())
+            }
+        } catch (t: Throwable) {
+            Timber.w(t)
+            _isError.postValue(true)
+        }
+        return null
     }
 
     private suspend fun loadVideo(movie: Movie): List<Video>? {
@@ -147,24 +162,11 @@ class DetailViewModel @Inject constructor(
 
 
         val persons = mutableListOf<PersonUiModel>()
-        persons.addAll(
-            listOf(
-                PersonUiModel(
-                    name = "Nagato Uchia",
-                    cast = "Samsul",
-                    query = "Ujang"
-                )
+        casts?.map {
+            persons.add(
+                PersonUiModel(it.name ?: "-", it.character ?: "-", it.profile_path ?: "-", it.original_name ?: "-")
             )
-        )
-        persons.addAll(
-            listOf(
-                PersonUiModel(
-                    name = "Hambali",
-                    cast = "Imran",
-                    query = "Nani Corre"
-                )
-            )
-        )
+        }
         if (persons.isNotEmpty()) {
             items.add(CastItemUiModel(persons = persons))
         }

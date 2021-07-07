@@ -25,5 +25,6 @@ data class MovieDetail(
     val video: Boolean?,
     val vote_average: Double?,
     val vote_count: Int?,
-    var videos: List<Video>?
+    var videos: List<Video>? = emptyList(),
+    var casts: List<Cast>? = emptyList()
 )

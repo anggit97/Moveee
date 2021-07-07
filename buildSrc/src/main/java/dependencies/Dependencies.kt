@@ -132,6 +132,7 @@ object Libs {
         private const val version = "4.12.0"
         const val runtime = "com.github.bumptech.glide:glide:$version"
         const val compiler = "com.github.bumptech.glide:compiler:$version"
+        const val transformation = "jp.wasabeef:glide-transformations:4.3.0"
     }
 
     object Firebase {

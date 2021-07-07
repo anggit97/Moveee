@@ -96,6 +96,7 @@ class CastItemUiModel(
 class PersonUiModel(
     val name: String,
     val cast: String,
+    val avatar: String,
     val query: String
 )
 
