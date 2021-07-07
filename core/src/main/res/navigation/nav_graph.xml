@@ -13,10 +13,6 @@
             app:destination="@id/detailActivity" />
     </fragment>
     <fragment
-        android:id="@+id/mapsFragment"
-        android:name="com.anggit97.map.MapsFragment"
-        android:label="MapsFragment" />
-    <fragment
         android:id="@+id/searchFragment"
         android:name="com.anggit97.search.SearchFragment"
         android:label="SearchFragment">
