@@ -8,6 +8,7 @@ import com.anggit97.core.ui.EventLiveData
 import com.anggit97.core.ui.MutableEventLiveData
 import com.anggit97.model.Movie
 import com.anggit97.model.MovieDetail
+import com.anggit97.model.Video
 import com.anggit97.model.repository.MovieeeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
@@ -51,11 +52,29 @@ class DetailViewModel @Inject constructor(
             val loadDetail = async {
                 loadDetail(movie)
             }
+            val loadVideos = async {
+                loadVideo(movie)
+            }
+            val videos = loadVideos.await()
             minDelay.await()
             movieDetail = loadDetail.await()?.also {
+                it.videos = videos
                 renderDetail(it)
             }
         }
+    }
+
+    private suspend fun loadVideo(movie: Movie): List<Video>? {
+        _isError.postValue(false)
+        try {
+            return withContext(Dispatchers.IO) {
+                repository.getMovieVideos(movie.id.toString())
+            }
+        } catch (t: Throwable) {
+            Timber.w(t)
+            _isError.postValue(true)
+        }
+        return null
     }
 
     private suspend fun loadDetail(movie: Movie): MovieDetail? {
@@ -148,6 +167,17 @@ class DetailViewModel @Inject constructor(
         )
         if (persons.isNotEmpty()) {
             items.add(CastItemUiModel(persons = persons))
+        }
+
+        val trailers = videos.orEmpty()
+        if (trailers.isNotEmpty()) {
+            items.add(TrailerHeaderItemUiModel(movieTitle = title ?: "-"))
+            items.addAll(
+                trailers.map {
+                    TrailerItemUiModel(trailer = it)
+                }
+            )
+            items.add(TrailerFooterItemUiModel(movieTitle = title ?: "-"))
         }
 
         return ContentUiModel(items)

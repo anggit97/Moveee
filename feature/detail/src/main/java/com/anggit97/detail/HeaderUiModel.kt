@@ -3,6 +3,7 @@ package com.anggit97.detail
 import androidx.annotation.Keep
 import com.anggit97.model.Movie
 import com.anggit97.model.ProductionCompany
+import com.anggit97.model.Video
 
 @Keep
 data class HeaderUiModel(
@@ -80,6 +81,12 @@ class PlotItemUiModel(
     var isExpanded: Boolean = false
 }
 
+
+@Keep
+class TrailerItemUiModel(
+    val trailer: Video
+) : ContentItemUiModel()
+
 @Keep
 class CastItemUiModel(
     val persons: List<PersonUiModel>
@@ -115,5 +122,6 @@ val ContentItemUiModel.id: String
         is CastItemUiModel -> "cast"
         is TrailerHeaderItemUiModel -> "t_header"
         is TrailerFooterItemUiModel -> "t_footer"
+        is TrailerItemUiModel -> "t_${trailer.key}"
     }
 

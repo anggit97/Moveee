@@ -1,12 +1,7 @@
 package com.anggit97.data.repository.internal.mapper
 
 import com.anggit97.data.api.response.*
-import com.anggit97.model.Genre
-import com.anggit97.model.Movie
-import com.anggit97.model.MovieDetail
-import com.anggit97.model.ProductionCompany
-import com.anggit97.model.ProductionCountry
-import com.anggit97.model.SpokenLanguage
+import com.anggit97.model.*
 
 
 /**
@@ -57,7 +52,23 @@ internal fun MovieDetailResponse.toMovieDetail() = MovieDetail(
     video,
     voteAverage,
     voteCount,
+    emptyList()
 )
+
+internal fun MovieVideosResponse.toMovieVideos(): List<Video> {
+    return results?.map {
+        Video(
+            it.id ?: "",
+            it.iso31661 ?: "",
+            it.iso6391 ?: "",
+            it.key ?: "",
+            it.name ?: "",
+            it.site ?: "",
+            it.size ?: 0,
+            it.type ?: ""
+        )
+    } ?: emptyList()
+}
 
 internal fun List<SpokenLanguageResponse>.toSpokenLanguage(): List<SpokenLanguage> {
     return map { SpokenLanguage(it.englishName, it.iso6391, it.name) }

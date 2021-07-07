@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.anggit97.core.ext.loadAsync
 import com.anggit97.core.util.IdBasedDiffCallback
 import com.anggit97.core.util.setOnDebounceClickListener
 import com.anggit97.detail.databinding.*
@@ -120,6 +121,7 @@ internal class DetailListAdapter(
         is CastItemUiModel -> R.layout.detail_item_cast
         is TrailerHeaderItemUiModel -> R.layout.detail_item_trailer_header
         is TrailerFooterItemUiModel -> R.layout.detail_item_trailer_footer
+        is TrailerItemUiModel -> R.layout.detail_item_trailer
     }
 
     fun getSpanSize(position: Int): Int = when (getItem(position)) {
@@ -328,10 +330,10 @@ internal class DetailListAdapter(
         }
 
         override fun bind(item: ContentItemUiModel) {
-//            if (item !is TrailerItemUiModel) return
-//            binding.trailerImage.loadAsync(item.trailer.thumbnailUrl)
-//            binding.titleView.text = item.trailer.title
-//            binding.authorView.text = item.trailer.author
+            if (item !is TrailerItemUiModel) return
+            binding.trailerImage.loadAsync("https://img.youtube.com/vi/${item.trailer.key}/0.jpg")
+            binding.titleView.text = item.trailer.name
+            binding.authorView.text = item.trailer.site
         }
     }
 

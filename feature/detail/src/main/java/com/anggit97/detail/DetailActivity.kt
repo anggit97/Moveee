@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ShareCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.isVisible
@@ -86,9 +87,11 @@ class DetailActivity : AppCompatActivity(), DetailViewRenderer, DetailViewAnimat
             .applyToView(binding.container)
         Insetter.builder()
             .setOnApplyInsetsListener { header, insets, initialState ->
-                header.updatePadding(top = initialState.paddings.top + insets.getInsets(
-                    WindowInsetsCompat.Type.systemBars()
-                ).top)
+                header.updatePadding(
+                    top = initialState.paddings.top + insets.getInsets(
+                        WindowInsetsCompat.Type.systemBars()
+                    ).top
+                )
             }
             .applyToView(binding.header.root)
         Insetter.builder()
@@ -116,7 +119,7 @@ class DetailActivity : AppCompatActivity(), DetailViewRenderer, DetailViewAnimat
         viewModel.init(args.movie)
         viewModel.uiEvent.observeEvent(this) {
             when (it) {
-//                is ShareAction -> executeShareAction(it)
+                is ShareAction -> executeShareAction(it)
                 is ToastAction -> showToast(it.resId)
             }
         }
@@ -268,5 +271,43 @@ class DetailActivity : AppCompatActivity(), DetailViewRenderer, DetailViewAnimat
         binding.draggableFrame.removeListener(chromeFader)
         binding.listView.removeOnScrollListener(scrollListener)
         super.onPause()
+    }
+
+    private fun executeShareAction(action: ShareAction) {
+        val movie = args.movie
+        when (action.target) {
+            ShareTarget.Instagram -> {
+                ShareCompat.IntentBuilder(this)
+                    .setChooserTitle(R.string.action_share_poster)
+                    .setStream(action.imageUri)
+                    .setType(action.mimeType)
+                    .apply {
+                        intent.setPackage("com.instagram.android")
+                    }
+                    .startChooser()
+            }
+//            ShareTarget.Facebook,
+//            ShareTarget.Twitter,
+//            ShareTarget.LINE,
+//            ShareTarget.Others -> {
+//                FirebaseLink.createDetailLink(movie) { link ->
+//                    ShareCompat.IntentBuilder(this)
+//                        .setChooserTitle(R.string.action_share)
+//                        .setText("[뭅] ${movie.title}\n$link")
+//                        .setType("text/plain")
+//                        .apply {
+//                            when (action.target) {
+//                                ShareTarget.Facebook -> "com.facebook.katana"
+//                                ShareTarget.Twitter -> "com.twitter.android"
+//                                ShareTarget.LINE -> "jp.naver.line.android"
+//                                else -> null
+//                            }?.let {
+//                                intent.setPackage(it)
+//                            }
+//                        }
+//                        .startChooser()
+//                }
+//            }
+        }
     }
 }

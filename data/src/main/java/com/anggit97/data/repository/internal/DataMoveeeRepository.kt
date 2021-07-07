@@ -5,8 +5,10 @@ import com.anggit97.data.api.MovieeeApiService
 import com.anggit97.data.db.MoveeeDatabase
 import com.anggit97.data.repository.internal.mapper.toMovieDetail
 import com.anggit97.data.repository.internal.mapper.toMovieList
+import com.anggit97.data.repository.internal.mapper.toMovieVideos
 import com.anggit97.model.Movie
 import com.anggit97.model.MovieDetail
+import com.anggit97.model.Video
 import com.anggit97.model.repository.MovieeeRepository
 import kotlinx.coroutines.flow.Flow
 
@@ -77,5 +79,13 @@ internal class DataMoveeeRepository(
 
     private fun Movie.isMatchedWith(query: String): Boolean {
         return SearchHelper.matched(title, query)
+    }
+
+
+    /**
+     * Movie Video
+     */
+    override suspend fun getMovieVideos(id: String): List<Video> {
+        return remote.getMovieVideos(id).toMovieVideos()
     }
 }

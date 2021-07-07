@@ -2,6 +2,7 @@ package com.anggit97.model.repository
 
 import com.anggit97.model.Movie
 import com.anggit97.model.MovieDetail
+import com.anggit97.model.Video
 import kotlinx.coroutines.flow.Flow
 
 
@@ -28,4 +29,6 @@ interface MovieeeRepository {
     suspend fun isFavoriteMovie(movieId: Int): Boolean
 
     suspend fun searchMovie(query: String): List<Movie>
+
+    suspend fun getMovieVideos(id: String): List<Video>
 }
