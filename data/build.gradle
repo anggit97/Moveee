@@ -33,6 +33,8 @@ dependencies {
     implementation Libs.Dagger.hilt
     kapt Libs.Dagger.hiltCompiler
 
+    implementation Libs.AndroidX.Paging.runtime
+
     implementation Libs.Retrofit.runtime
     implementation Libs.Retrofit.serialization
 

@@ -39,36 +39,36 @@ import com.anggit97.stfalcon_imageviewer.loader.ImageLoader
 import com.anggit97.stfalcon_imageviewer.viewer.adapter.ImagesPagerAdapter
 import kotlin.math.abs
 
-internal class ImageViewerView<T> @JvmOverloads constructor(
+class ImageViewerView<T> @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr) {
 
-    internal var isZoomingAllowed = true
-    internal var isSwipeToDismissAllowed = true
+    var isZoomingAllowed = true
+    var isSwipeToDismissAllowed = true
 
-    internal var currentPosition: Int
+    var currentPosition: Int
         get() = imagesPager.currentItem
         set(value) {
             imagesPager.currentItem = value
         }
 
-    internal var onDismiss: (() -> Unit)? = null
-    internal var onPageChange: ((position: Int) -> Unit)? = null
+    var onDismiss: (() -> Unit)? = null
+    var onPageChange: ((position: Int) -> Unit)? = null
 
-    internal val isScaled
+    val isScaled
         get() = imagesAdapter?.isScaled(currentPosition) ?: false
 
-    internal var containerPadding = intArrayOf(0, 0, 0, 0)
+    var containerPadding = intArrayOf(0, 0, 0, 0)
 
-    internal var imagesMargin
+    var imagesMargin
         get() = imagesPager.pageMargin
         set(value) {
             imagesPager.pageMargin = value
         }
 
-    internal var overlayView: View? = null
+    var overlayView: View? = null
         set(value) {
             field = value
             value?.let { rootContainer.addView(it) }
@@ -169,7 +169,7 @@ internal class ImageViewerView<T> @JvmOverloads constructor(
         findViewById<View>(R.id.backgroundView).setBackgroundColor(color)
     }
 
-    internal fun setImages(images: List<T>, startPosition: Int, imageLoader: ImageLoader<T>) {
+    fun setImages(images: List<T>, startPosition: Int, imageLoader: ImageLoader<T>) {
         this.images = images
         this.imageLoader = imageLoader
         this.imagesAdapter = ImagesPagerAdapter(context, images, imageLoader, isZoomingAllowed)
@@ -177,7 +177,7 @@ internal class ImageViewerView<T> @JvmOverloads constructor(
         this.startPosition = startPosition
     }
 
-    internal fun open(transitionImageView: ImageView?, animate: Boolean) {
+    fun open(transitionImageView: ImageView?, animate: Boolean) {
         prepareViewsForTransition()
 
         externalTransitionImageView = transitionImageView
@@ -192,7 +192,7 @@ internal class ImageViewerView<T> @JvmOverloads constructor(
         if (animate) animateOpen() else prepareViewsForViewer()
     }
 
-    internal fun close() {
+    fun close() {
         if (shouldDismissToBottom) {
             swipeDismissHandler.initiateDismissToBottom()
         } else {
@@ -200,12 +200,12 @@ internal class ImageViewerView<T> @JvmOverloads constructor(
         }
     }
 
-    internal fun updateImages(images: List<T>) {
+    fun updateImages(images: List<T>) {
         this.images = images
         imagesAdapter?.updateImages(images)
     }
 
-    internal fun updateTransitionImage(imageView: ImageView?) {
+    fun updateTransitionImage(imageView: ImageView?) {
         externalTransitionImageView?.makeVisible()
         imageView?.makeInvisible()
 
@@ -215,7 +215,7 @@ internal class ImageViewerView<T> @JvmOverloads constructor(
         imageLoader?.loadImage(transitionImageView, images[startPosition])
     }
 
-    internal fun resetScale() {
+    fun resetScale() {
         imagesAdapter?.resetScale(currentPosition)
     }
 

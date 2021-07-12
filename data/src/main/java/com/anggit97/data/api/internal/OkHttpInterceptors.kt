@@ -20,9 +20,7 @@ import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 
 
-
-
-internal object OkHttpInterceptors {
+object OkHttpInterceptors {
 
     private const val HEADER_CACHE_CONTROL = "Cache-Control"
     private const val HEADER_CACHE_MAX_AGE = "public, max-age=${5 * 60}" // 5 minutes
@@ -34,7 +32,7 @@ internal object OkHttpInterceptors {
         return header(HEADER_USE_CACHE_PREFIX) != null
     }
 
-    fun createOkHttpInterceptor() : Interceptor{
+    fun createOkHttpInterceptor(): Interceptor {
         val logging = HttpLoggingInterceptor()
         logging.setLevel(HttpLoggingInterceptor.Level.BODY)
         return logging

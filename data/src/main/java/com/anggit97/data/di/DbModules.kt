@@ -29,8 +29,8 @@ object DbModules {
         val movieCacheDb = createMovieCacheDatabase(context)
         val movieeeDb = createMovieeeDatabase(context)
         return RoomDatabase(
-            cacheMovieCacheDao = movieCacheDb.movieCacheDao(),
-            favoriteMovieDao = movieeeDb.favouriteMovieDao()
+            movieCacheDb,
+            movieeeDb
         )
     }
 

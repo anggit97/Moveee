@@ -22,7 +22,7 @@ import com.anggit97.stfalcon_imageviewer.listeners.OnDismissListener
 import com.anggit97.stfalcon_imageviewer.listeners.OnImageChangeListener
 import com.anggit97.stfalcon_imageviewer.loader.ImageLoader
 
-internal class BuilderData<T>(
+class BuilderData<T>(
     val images: List<T>,
     val imageLoader: ImageLoader<T>
 ) {

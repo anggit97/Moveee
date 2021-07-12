@@ -9,7 +9,7 @@ import com.anggit97.model.Movie
  * Created by Anggit Prayogo on 03,July,2021
  * GitHub : https://github.com/anggit97
  */
-internal fun MovieEntity.toMovie() = Movie(
+fun MovieEntity.toMovie() = Movie(
     adult ?: false,
     backdropPath ?: "",
     genres,
@@ -26,7 +26,7 @@ internal fun MovieEntity.toMovie() = Movie(
     voteCount ?: 0
 )
 
-internal fun FavouriteMovieEntity.toMovie() = Movie(
+fun FavouriteMovieEntity.toMovie() = Movie(
     adult,
     backdropPath ?: "",
     genres,

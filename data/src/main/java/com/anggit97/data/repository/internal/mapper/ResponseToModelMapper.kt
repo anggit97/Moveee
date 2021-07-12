@@ -9,7 +9,7 @@ import com.anggit97.model.Cast
  * Created by Anggit Prayogo on 03,July,2021
  * GitHub : https://github.com/anggit97
  */
-internal fun MovieListResponse.toMovieList() = movies?.map { it.toMovie() } ?: emptyList()
+fun MovieListResponse.toMovieList() = movies?.map { it.toMovie() } ?: emptyList()
 
 private fun MovieResponse.toMovie() = Movie(
     adult ?: false,
@@ -28,7 +28,7 @@ private fun MovieResponse.toMovie() = Movie(
     voteCount ?: 0
 )
 
-internal fun MovieDetailResponse.toMovieDetail() = MovieDetail(
+fun MovieDetailResponse.toMovieDetail() = MovieDetail(
     adult,
     backdropPath,
     budget,
@@ -56,11 +56,11 @@ internal fun MovieDetailResponse.toMovieDetail() = MovieDetail(
     emptyList()
 )
 
-internal fun CreditsListResponse.toCastList(): List<Cast> {
+fun CreditsListResponse.toCastList(): List<Cast> {
     return cast?.map { it.toCast() } ?: emptyList()
 }
 
-internal fun CastResponse.toCast() = Cast(
+fun CastResponse.toCast() = Cast(
     adult,
     castId,
     character,
@@ -75,7 +75,7 @@ internal fun CastResponse.toCast() = Cast(
     profilePath
 )
 
-internal fun MovieVideosResponse.toMovieVideos(): List<Video> {
+fun MovieVideosResponse.toMovieVideos(): List<Video> {
     return results?.map {
         Video(
             it.id ?: "",
@@ -90,23 +90,23 @@ internal fun MovieVideosResponse.toMovieVideos(): List<Video> {
     } ?: emptyList()
 }
 
-internal fun List<SpokenLanguageResponse>.toSpokenLanguage(): List<SpokenLanguage> {
+fun List<SpokenLanguageResponse>.toSpokenLanguage(): List<SpokenLanguage> {
     return map { SpokenLanguage(it.englishName, it.iso6391, it.name) }
 }
 
-internal fun List<ProductionCountryResponse>.toProductionCountry(): List<ProductionCountry> {
+fun List<ProductionCountryResponse>.toProductionCountry(): List<ProductionCountry> {
     return map { ProductionCountry(it.iso31661, it.name) }
 }
 
-internal fun List<ProductionCompanyResponse>.toProductionCompany(): List<ProductionCompany> {
+fun List<ProductionCompanyResponse>.toProductionCompany(): List<ProductionCompany> {
     return map { ProductionCompany(it.id, it.getLogoPathUrl(), it.name, it.originCountry) }
 }
 
-internal fun List<GenreResponse>.toGenre(): List<Genre> {
+fun List<GenreResponse>.toGenre(): List<Genre> {
     return map { it.toGenre() }
 }
 
-internal fun GenreResponse.toGenre() = Genre(
+fun GenreResponse.toGenre() = Genre(
     id ?: 0,
     name ?: ""
 )

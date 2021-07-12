@@ -22,7 +22,7 @@ import com.anggit97.stfalcon_imageviewer.common.gesture.direction.SwipeDirection
 import kotlin.math.atan2
 import kotlin.math.sqrt
 
-internal class SwipeDirectionDetector(
+class SwipeDirectionDetector(
     context: Context,
     private val onDirectionDetected: (SwipeDirection) -> Unit
 ) {

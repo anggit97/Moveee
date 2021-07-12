@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey
  * GitHub : https://github.com/anggit97
  */
 @Entity(tableName = "favourite_movies")
-internal data class FavouriteMovieEntity(
+data class FavouriteMovieEntity(
     @PrimaryKey
     @ColumnInfo(name = "id")
     val id: Int,

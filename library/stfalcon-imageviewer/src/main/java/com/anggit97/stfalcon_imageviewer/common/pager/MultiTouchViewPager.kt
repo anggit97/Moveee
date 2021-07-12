@@ -22,12 +22,12 @@ import android.view.MotionEvent
 import androidx.viewpager.widget.ViewPager
 import com.anggit97.stfalcon_imageviewer.common.extension.addOnPageChangeListener
 
-internal class MultiTouchViewPager @JvmOverloads constructor(
+class MultiTouchViewPager @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null
 ) : ViewPager(context, attrs) {
 
-    internal var isIdle = true
+    var isIdle = true
         private set
 
     private var isInterceptionDisallowed: Boolean = false

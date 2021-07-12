@@ -1,8 +1,8 @@
 package com.anggit97.data.db.internal
 
+import androidx.paging.PagingSource
 import com.anggit97.data.db.MoveeeDatabase
-import com.anggit97.data.db.internal.dao.FavouriteMovieDao
-import com.anggit97.data.db.internal.dao.MovieCacheDao
+import com.anggit97.data.db.internal.entity.MovieEntity
 import com.anggit97.data.db.internal.entity.MovieListEntity
 import com.anggit97.data.db.internal.entity.MovieListEntity.Companion.TYPE_NOW
 import com.anggit97.data.db.internal.entity.MovieListEntity.Companion.TYPE_POPULAR
@@ -20,9 +20,9 @@ import timber.log.Timber
  * Created by Anggit Prayogo on 02,July,2021
  * GitHub : https://github.com/anggit97
  */
-internal class RoomDatabase(
-    private val cacheMovieCacheDao: MovieCacheDao,
-    private val favoriteMovieDao: FavouriteMovieDao
+class RoomDatabase(
+    private val cacheMovieDatabase: MovieCacheDatabase,
+    private val movieDatabase: MovieDatabase
 ) : MoveeeDatabase {
 
     override suspend fun saveNowMovieList(movieList: List<Movie>) {
@@ -30,7 +30,7 @@ internal class RoomDatabase(
     }
 
     private suspend fun saveMovieListAs(type: String, movieList: List<Movie>) {
-        cacheMovieCacheDao.insert(
+        cacheMovieDatabase.movieCacheDao().insert(
             MovieListEntity(
                 type,
                 movieList.map { it.toMovieEntity() }
@@ -38,14 +38,29 @@ internal class RoomDatabase(
         )
     }
 
+    override fun getMovieCacheDatabase(): MovieCacheDatabase {
+        return cacheMovieDatabase
+    }
+
+    override fun getMovieeeDatabase(): MovieDatabase {
+        return movieDatabase
+    }
+
+    override fun getNowMovieListNowPaging(): PagingSource<Int, MovieEntity> {
+        return cacheMovieDatabase.movieCacheDao().getMovieListByTypePaging(TYPE_NOW)
+    }
+
     override fun getNowMovieListFlow(): Flow<List<Movie>> {
         return getMovieList(TYPE_NOW)
     }
 
     private fun getMovieList(type: String): Flow<List<Movie>> {
-        return cacheMovieCacheDao.getMovieListByType(type)
-            .map { it -> it.list.map { it.toMovie() } }
-            .catch { emit(emptyList()) }
+        return cacheMovieDatabase.movieCacheDao().getMovieListByType(type)
+            .map { it -> it.list.map { it.toMovie() } }.catch {
+            emit(
+                emptyList()
+            )
+        }
     }
 
     override suspend fun getNowMovieList(): List<Movie> {
@@ -58,7 +73,7 @@ internal class RoomDatabase(
 
     private suspend fun getMovieListOf(type: String): List<Movie> {
         return try {
-            cacheMovieCacheDao.findByType(type).list
+            cacheMovieDatabase.movieCacheDao().findByType(type).list
                 .map { movieEntity -> movieEntity.toMovie() }
         } catch (t: Throwable) {
             Timber.w(t)
@@ -76,21 +91,21 @@ internal class RoomDatabase(
     }
 
     override suspend fun addFavoriteMovie(movie: Movie) {
-        favoriteMovieDao.insertFavouriteMovie(movie.toFavouriteEntity())
+        movieDatabase.favouriteMovieDao().insertFavouriteMovie(movie.toFavouriteEntity())
     }
 
     override suspend fun removeFavoriteMovie(movieId: Int) {
-        favoriteMovieDao.deleteFavouriteMovie(movieId)
+        movieDatabase.favouriteMovieDao().deleteFavouriteMovie(movieId)
     }
 
     override fun getFavoriteMovieList(): Flow<List<Movie>> {
-        return favoriteMovieDao.getFavouriteMovieList().map {
+        return movieDatabase.favouriteMovieDao().getFavouriteMovieList().map {
             it.map { favoriteMovieEntity -> favoriteMovieEntity.toMovie() }
         }
     }
 
     override suspend fun isFavoriteMovie(movieId: Int): Boolean {
-        return favoriteMovieDao.isFavouriteMovie(movieId)
+        return movieDatabase.favouriteMovieDao().isFavouriteMovie(movieId)
     }
 
     override suspend fun getAllMovieList(): List<Movie> {

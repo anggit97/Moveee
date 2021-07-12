@@ -103,6 +103,12 @@ object Libs {
             const val ktx = "androidx.room:room-ktx:$version"
         }
 
+        object Paging {
+            private const val version = "3.0.0"
+
+            const val runtime = "androidx.paging:paging-runtime:$version"
+        }
+
         object WorkManager {
             private const val version = "2.5.0"
             const val runtime = "androidx.work:work-runtime-ktx:$version"
@@ -124,7 +130,7 @@ object Libs {
             "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0"
     }
 
-    object OkHttp{
+    object OkHttp {
         const val loggingInterceptor = "com.squareup.okhttp3:logging-interceptor:4.9.1"
     }
 

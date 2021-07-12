@@ -31,7 +31,6 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withC
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
-import jp.wasabeef.glide.transformations.CropCircleTransformation
 import java.io.File
 
 /** ImageView */

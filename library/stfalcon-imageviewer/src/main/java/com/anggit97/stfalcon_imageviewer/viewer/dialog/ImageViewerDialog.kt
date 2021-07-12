@@ -23,7 +23,7 @@ import com.anggit97.stfalcon_imageviewer.R
 import com.anggit97.stfalcon_imageviewer.viewer.builder.BuilderData
 import com.anggit97.stfalcon_imageviewer.viewer.view.ImageViewerView
 
-internal class ImageViewerDialog<T>(
+class ImageViewerDialog<T>(
     context: Context,
     private val builderData: BuilderData<T>
 ) {

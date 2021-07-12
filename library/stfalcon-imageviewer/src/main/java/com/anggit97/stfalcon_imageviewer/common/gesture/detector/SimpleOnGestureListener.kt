@@ -18,7 +18,7 @@ package com.anggit97.stfalcon_imageviewer.common.gesture.detector
 import android.view.GestureDetector
 import android.view.MotionEvent
 
-internal class SimpleOnGestureListener(
+class SimpleOnGestureListener(
     private val onSingleTap: ((MotionEvent) -> Boolean)? = null,
     private val onDoubleTap: ((MotionEvent) -> Boolean)? = null
 ) : GestureDetector.SimpleOnGestureListener() {

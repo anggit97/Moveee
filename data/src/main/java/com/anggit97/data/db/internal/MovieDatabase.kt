@@ -20,7 +20,7 @@ import com.anggit97.data.db.internal.entity.FavouriteMovieEntity
     exportSchema = false
 )
 @TypeConverters(FavouriteMovieTypeConverters::class)
-internal abstract class MovieDatabase: RoomDatabase() {
+abstract class MovieDatabase: RoomDatabase() {
 
     abstract fun favouriteMovieDao(): FavouriteMovieDao
 }

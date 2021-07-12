@@ -22,6 +22,7 @@ dependencies {
     implementation Libs.AndroidX.core
     implementation Libs.AndroidX.constraintlayout
     implementation Libs.AndroidX.recyclerview
+    implementation Libs.AndroidX.Paging.runtime
 
     implementation Libs.Google.material
 

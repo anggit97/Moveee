@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.Flow
  * GitHub : https://github.com/anggit97
  */
 @Dao
-internal interface FavouriteMovieDao {
+interface FavouriteMovieDao {
 
     @Query("SELECT * FROM favourite_movies")
     fun getFavouriteMovieList(): Flow<List<FavouriteMovieEntity>>

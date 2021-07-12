@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
  * GitHub : https://github.com/anggit97
  */
 @Entity(tableName = "cached_movie_list")
-internal data class MovieListEntity(
+data class MovieListEntity(
     @PrimaryKey
     val type: String,
     val list: List<MovieEntity> = emptyList()

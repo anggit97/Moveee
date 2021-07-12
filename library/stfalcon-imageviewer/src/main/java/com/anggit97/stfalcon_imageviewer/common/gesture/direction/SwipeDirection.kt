@@ -15,7 +15,7 @@
  */
 package com.anggit97.stfalcon_imageviewer.common.gesture.direction
 
-internal enum class SwipeDirection {
+enum class SwipeDirection {
     NOT_DETECTED,
     UP,
     DOWN,

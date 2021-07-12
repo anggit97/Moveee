@@ -1,5 +1,6 @@
 package com.anggit97.model.repository
 
+import androidx.paging.PagingData
 import com.anggit97.model.Cast
 import com.anggit97.model.Movie
 import com.anggit97.model.MovieDetail
@@ -13,10 +14,11 @@ import kotlinx.coroutines.flow.Flow
  */
 interface MovieeeRepository {
 
+
     fun getNowMovieList(): Flow<List<Movie>>
     suspend fun updateNowMovieList()
     suspend fun updateAndGetNowMovieList(): List<Movie>
-
+    fun getNowMovieListPaging(): Flow<PagingData<Movie>>
 
     fun getPlanMovieList(): Flow<List<Movie>>
     suspend fun updatePlanMovieList()
