@@ -25,13 +25,16 @@ import java.io.InvalidObjectException
 @ExperimentalPagingApi
 internal class MovieeeRemoteMediator(
     private val type: String,
-    private val database: MoveeeDatabase,
+    database: MoveeeDatabase,
     private val networkService: MovieeeApiService
 ) : RemoteMediator<Int, MovieEntity>() {
 
     val db = database.getMovieCacheDatabase()
 
-    override suspend fun load(loadType: LoadType, state: PagingState<Int, MovieEntity>): MediatorResult {
+    override suspend fun load(
+        loadType: LoadType,
+        state: PagingState<Int, MovieEntity>
+    ): MediatorResult {
         val pageKeyData = getKeyPageData(loadType, state)
         val page = when (pageKeyData) {
             is MediatorResult.Success -> {

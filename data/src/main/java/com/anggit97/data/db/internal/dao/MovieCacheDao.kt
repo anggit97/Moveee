@@ -3,8 +3,6 @@ package com.anggit97.data.db.internal.dao
 import androidx.paging.PagingSource
 import androidx.room.*
 import com.anggit97.data.db.internal.entity.MovieEntity
-import com.anggit97.data.db.internal.entity.MovieListEntity
-import com.anggit97.model.Movie
 import kotlinx.coroutines.flow.Flow
 
 
@@ -16,19 +14,19 @@ import kotlinx.coroutines.flow.Flow
 interface MovieCacheDao {
 
     @Query("select * from cached_movie_list where type like :type")
-    fun getMovieListByType(type: String): Flow<MovieListEntity>
+    fun getMovieListByType(type: String): Flow<List<MovieEntity>>
 
-    @Query("select list from cached_movie_list where type like :type")
+    @Query("select * from cached_movie_list where type like :type")
     fun getMovieListByTypePaging(type: String): PagingSource<Int, MovieEntity>
 
     @Query("select * from cached_movie_list where type like :type")
-    suspend fun findByType(type: String): MovieListEntity
+    suspend fun findByType(type: String): List<MovieEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(response: MovieListEntity)
+    suspend fun insert(response: List<MovieEntity>)
 
     @Delete
-    suspend fun delete(response: MovieListEntity)
+    suspend fun delete(response: MovieEntity)
 
     @Query("DELETE FROM cached_movie_list")
     suspend fun deleteAll()

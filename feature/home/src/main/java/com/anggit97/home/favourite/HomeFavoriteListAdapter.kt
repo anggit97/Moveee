@@ -59,9 +59,7 @@ class HomeFavoriteListAdapter(
             val sharedElements = mutableListOf(
                 backgroundView to R.string.transition_background,
                 posterView to R.string.transition_poster,
-                ageBgView to R.string.transition_age_bg
             )
-            sharedElements.add(dDayView to R.string.transition_d_day)
             return sharedElements.toTypedArray()
         }
     }
@@ -75,8 +73,6 @@ class HomeFavoriteListAdapter(
 
         val backgroundView = binding.backgroundView
         val posterView = binding.posterView
-        val ageBgView = binding.ageBgView.root
-        val dDayView = binding.dDayView.root
 
         fun bind(item: Movie) {
             binding.container.tag = item.id

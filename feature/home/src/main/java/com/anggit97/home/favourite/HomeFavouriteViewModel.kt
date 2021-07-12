@@ -29,11 +29,11 @@ class HomeFavouriteViewModel @Inject constructor(
         get() = _contentsUiModel
 
     init {
-        repository.getFavoriteMovieList()
-            .onEach {
-                _contentsUiModel.postValue(HomeContentsUiModel(it))
-            }
-            .flowOn(Dispatchers.IO)
-            .launchIn(viewModelScope)
+//        repository.getFavoriteMovieList()
+//            .onEach {
+//                _contentsUiModel.postValue(HomeContentsUiModel(it))
+//            }
+//            .flowOn(Dispatchers.IO)
+//            .launchIn(viewModelScope)
     }
 }

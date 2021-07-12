@@ -4,30 +4,31 @@ import com.anggit97.data.db.internal.entity.FavouriteMovieEntity
 import com.anggit97.data.db.internal.entity.MovieEntity
 import com.anggit97.model.Movie
 
-
-private val Movie.movieEntity: MovieEntity
-    get() = MovieEntity(
-        adult,
-        backdropPath,
-        genres,
-        id,
-        originalLanguage,
-        originalTitle,
-        overview,
-        popularity,
-        posterPath,
-        releaseDate,
-        title,
-        video,
-        voteAverage,
-        voteCount
-    )
-
 /**
  * Created by Anggit Prayogo on 03,July,2021
  * GitHub : https://github.com/anggit97
  */
-fun Movie.toMovieEntity(): MovieEntity {
+fun List<Movie>.toMovieEntityList(type: String): List<MovieEntity> = map {
+    MovieEntity(
+        it.adult,
+        it.backdropPath,
+        it.genres,
+        it.id,
+        it.originalLanguage,
+        it.originalTitle,
+        it.overview,
+        it.popularity,
+        it.posterPath,
+        it.releaseDate,
+        it.title,
+        it.video,
+        it.voteAverage,
+        it.voteCount,
+        type
+    )
+}
+
+fun Movie.toMovieEntity(type: String): MovieEntity {
     return MovieEntity(
         adult,
         backdropPath,
@@ -42,7 +43,8 @@ fun Movie.toMovieEntity(): MovieEntity {
         title,
         video,
         voteAverage,
-        voteCount
+        voteCount,
+        type
     )
 }
 

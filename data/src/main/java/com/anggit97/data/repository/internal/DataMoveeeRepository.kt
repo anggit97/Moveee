@@ -5,7 +5,6 @@ import com.anggit97.core.util.NetworkCheckerHelper
 import com.anggit97.data.api.MovieeeApiService
 import com.anggit97.data.db.MoveeeDatabase
 import com.anggit97.data.db.internal.MovieeeRemoteMediator
-import com.anggit97.data.db.internal.entity.MovieListEntity
 import com.anggit97.data.db.internal.entity.MovieListEntity.Companion.TYPE_NOW
 import com.anggit97.data.db.internal.mapper.toMovie
 import com.anggit97.data.repository.internal.mapper.toCastList
@@ -17,6 +16,7 @@ import com.anggit97.model.Movie
 import com.anggit97.model.MovieDetail
 import com.anggit97.model.Video
 import com.anggit97.model.repository.MovieeeRepository
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.mapLatest
 
@@ -35,6 +35,7 @@ class DataMoveeeRepository(
         return local.getNowMovieListFlow()
     }
 
+    @ExperimentalCoroutinesApi
     @ExperimentalPagingApi
     override fun getNowMovieListPaging(): Flow<PagingData<Movie>> {
         val pagingSourceFactory = { local.getNowMovieListNowPaging() }
@@ -44,7 +45,7 @@ class DataMoveeeRepository(
             config = pageConfig,
             remoteMediator = MovieeeRemoteMediator(TYPE_NOW, local, remote),
             pagingSourceFactory = pagingSourceFactory,
-        ).flow.mapLatest { it.map { it.toMovie() } }
+        ).flow.mapLatest { it.map { movieEntity -> movieEntity.toMovie() } }
     }
 
     fun getDefaultPageConfig(): PagingConfig {
@@ -122,6 +123,6 @@ class DataMoveeeRepository(
 
     companion object {
         const val DEFAULT_PAGE_INDEX = 1
-        const val DEFAULT_PAGE_SIZE = 20
+        const val DEFAULT_PAGE_SIZE = 10
     }
 }

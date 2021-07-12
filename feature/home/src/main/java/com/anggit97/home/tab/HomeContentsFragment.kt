@@ -6,6 +6,7 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.ActivityNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +19,10 @@ import com.anggit97.home.R
 import com.anggit97.home.databinding.HomeTabFragmentBinding
 import dev.chrisbanes.insetter.Insetter
 import jp.wasabeef.recyclerview.animators.FadeInAnimator
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.launch
 
 /**
  * Created by Anggit Prayogo on 04,July,2021
@@ -34,7 +39,7 @@ abstract class HomeContentsFragment : HomeTabFragment(R.layout.home_tab_fragment
 
     private val adapterDataObserver = object : RoughAdapterDataObserver() {
         override fun onItemRangeUpdatedRoughly() {
-            getListView()?.scrollToTopInternal(force = true)
+//            getListView()?.scrollToTopInternal(force = true)
         }
     }
 
@@ -69,7 +74,8 @@ abstract class HomeContentsFragment : HomeTabFragment(R.layout.home_tab_fragment
         }
         listView.apply {
             setItemViewCacheSize(20)
-            adapter = listAdapter
+            val loaderStateAdapter = LoaderMovieListAdapter { listAdapter.retry() }
+            adapter = listAdapter.withLoadStateFooter(loaderStateAdapter)
             itemAnimator = FadeInAnimator()
         }
         errorView.root.setOnDebounceClickListener {
@@ -81,14 +87,21 @@ abstract class HomeContentsFragment : HomeTabFragment(R.layout.home_tab_fragment
         viewModel.isError.observe(viewLifecycleOwner) {
             errorView.root.isVisible = it
         }
-        viewModel.contentsUiModel.observe(viewLifecycleOwner) {
-            noItemsView.isVisible = it.movies.isEmpty()
-            listAdapter.submitList(it.movies)
+//        viewModel.contentsUiModel.observe(viewLifecycleOwner) {
+//            lifecycleScope.launch {
+//                listAdapter.submitData(it.movies)
+//            }
+//        }
+
+        lifecycleScope.launch {
+            viewModel.fetchNowMovieList().distinctUntilChanged().collectLatest {
+                listAdapter.submitData(it)
+            }
         }
     }
 
     override fun scrollToTop() {
-        getListView()?.scrollToTopInternal()
+//        getListView()?.scrollToTopInternal()
     }
 
     override fun onBackPressed(): Boolean {

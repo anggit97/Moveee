@@ -4,12 +4,19 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.PagingDataAdapter
+import androidx.paging.cachedIn
 import com.anggit97.home.HomeContentsUiModel
 import com.anggit97.home.tab.HomeContentsViewModel
+import com.anggit97.model.Movie
 import com.anggit97.model.repository.MovieeeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -38,11 +45,15 @@ class HomeNowViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            updateList()
-            repository.getNowMovieList().collect {
+//            updateList()
+            repository.getNowMovieListPaging().distinctUntilChanged().collectLatest {
                 _contentsUiModel.postValue(HomeContentsUiModel(it))
             }
         }
+    }
+
+    override fun fetchNowMovieList(): Flow<PagingData<Movie>>{
+        return repository.getNowMovieListPaging().cachedIn(viewModelScope)
     }
 
     override fun refresh() {

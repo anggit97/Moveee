@@ -9,6 +9,7 @@ import com.anggit97.data.db.internal.entity.MovieListEntity.Companion.TYPE_POPUL
 import com.anggit97.data.db.internal.mapper.toFavouriteEntity
 import com.anggit97.data.db.internal.mapper.toMovie
 import com.anggit97.data.db.internal.mapper.toMovieEntity
+import com.anggit97.data.db.internal.mapper.toMovieEntityList
 import com.anggit97.model.Movie
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -31,10 +32,7 @@ class RoomDatabase(
 
     private suspend fun saveMovieListAs(type: String, movieList: List<Movie>) {
         cacheMovieDatabase.movieCacheDao().insert(
-            MovieListEntity(
-                type,
-                movieList.map { it.toMovieEntity() }
-            )
+            movieList.toMovieEntityList(type)
         )
     }
 
@@ -56,11 +54,12 @@ class RoomDatabase(
 
     private fun getMovieList(type: String): Flow<List<Movie>> {
         return cacheMovieDatabase.movieCacheDao().getMovieListByType(type)
-            .map { it -> it.list.map { it.toMovie() } }.catch {
-            emit(
-                emptyList()
-            )
-        }
+            .map { it.map { it.toMovie() } }
+            .catch {
+                emit(
+                    emptyList()
+                )
+            }
     }
 
     override suspend fun getNowMovieList(): List<Movie> {
@@ -73,7 +72,7 @@ class RoomDatabase(
 
     private suspend fun getMovieListOf(type: String): List<Movie> {
         return try {
-            cacheMovieDatabase.movieCacheDao().findByType(type).list
+            cacheMovieDatabase.movieCacheDao().findByType(type)
                 .map { movieEntity -> movieEntity.toMovie() }
         } catch (t: Throwable) {
             Timber.w(t)

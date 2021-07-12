@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.core.util.Pair
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -22,7 +23,7 @@ class HomeContentsListAdapter(
     context: Context,
     diffCallback: DiffUtil.ItemCallback<Movie> = IdBasedDiffCallback { it.id.toString() },
     private val listener: (Movie, Array<Pair<View, String>>) -> Unit
-) : ListAdapter<Movie, HomeContentsListAdapter.MovieViewHolder>(diffCallback) {
+) : PagingDataAdapter<Movie, HomeContentsListAdapter.MovieViewHolder>(diffCallback) {
 
     private val layoutInflater = LayoutInflater.from(context)
 
@@ -32,15 +33,15 @@ class HomeContentsListAdapter(
             itemView.setOnDebounceClickListener(delay = 150L) {
                 val index = bindingAdapterPosition
                 if (index in 0..itemCount) {
-                    val movie: Movie = getItem(index)
-                    listener(movie, createSharedElements(movie))
+                    val movie: Movie? = getItem(index)
+                    movie?.let { it1 -> listener(it1, createSharedElements(movie)) }
                 }
             }
             itemView.setOnLongClickListener {
                 consume {
                     val index = bindingAdapterPosition
                     if (index in 0..itemCount) {
-                        val movie: Movie = getItem(index)
+                        val movie: Movie = getItem(index)!!
                         it?.context?.showToast(movie.title)
                     }
                 }
@@ -49,7 +50,7 @@ class HomeContentsListAdapter(
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        getItem(position)?.let { (holder as? MovieViewHolder)?.bind(item = it) }
     }
 
     override fun getItemViewType(position: Int) = R.layout.home_item_movie
@@ -59,18 +60,7 @@ class HomeContentsListAdapter(
             val sharedElements = mutableListOf(
                 backgroundView to R.string.transition_background,
                 posterView to R.string.transition_poster,
-                ageBgView to R.string.transition_age_bg
             )
-            sharedElements.add(newView to R.string.transition_new)
-//            if (movie.isNew()) {
-//                sharedElements.add(newView to R.string.transition_new)
-//            }
-//            if (movie.isBest()) {
-//                sharedElements.add(bestView to R.string.transition_best)
-//            }
-//            if (movie.isDDay()) {
-//                sharedElements.add(dDayView to R.string.transition_d_day)
-//            }
             return sharedElements.toTypedArray()
         }
     }
@@ -84,20 +74,11 @@ class HomeContentsListAdapter(
 
         val backgroundView = binding.backgroundView
         val posterView = binding.posterView
-        val ageBgView = binding.ageBgView.root
-        val newView = binding.newView.root
-        val bestView = binding.bestView.root
-        val dDayView = binding.dDayView.root
 
         fun bind(item: Movie) {
             binding.container.tag = item.id
             posterView.loadAsync(item.getPosterUrl(), R.drawable.bg_on_surface_dim)
             posterView.contentDescription = item.title
-//            ageBgView.setBackgroundResource(item.getAgeBackground())
-//            newView.isVisible = item.isNew()
-//            bestView.isVisible = item.isBest()
-//            dDayView.isVisible = item.isDDay()
-//            dDayView.asyncText(item.getDDayLabel())
         }
     }
 }

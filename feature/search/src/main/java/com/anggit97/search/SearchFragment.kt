@@ -112,16 +112,16 @@ class SearchFragment: Fragment(R.layout.fragment_search) {
             )
         }
         listView.apply {
-            adapter = listAdapter
-            itemAnimator?.apply {
-                addDuration = 300
-                changeDuration = 0
-                moveDuration = 0
-                removeDuration = 300
-            }
+//            adapter = listAdapter
+//            itemAnimator?.apply {
+//                addDuration = 300
+//                changeDuration = 0
+//                moveDuration = 0
+//                removeDuration = 300
+//            }
         }
         viewModel.uiModel.observe(viewLifecycleOwner) {
-            listAdapter.submitList(it.movies)
+//            listAdapter.submitList(it.movies)
             noItemsView.isVisible = it.hasNoItem
         }
     }

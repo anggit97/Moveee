@@ -16,17 +16,14 @@
 package com.anggit97.data.db.internal.converter
 
 import androidx.room.TypeConverter
-import com.anggit97.data.db.internal.entity.MovieEntity
-import com.anggit97.data.db.internal.entity.MovieListEntity
-import com.anggit97.model.Movie
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-internal class CacheDatabaseTypeConverter {
+class CacheDatabaseTypeConverter {
 
     @TypeConverter
-    fun fromString(string: String?): List<MovieEntity> {
+    fun fromString(string: String?): List<String> {
         if (string == null) {
             return emptyList()
         }
@@ -34,7 +31,7 @@ internal class CacheDatabaseTypeConverter {
     }
 
     @TypeConverter
-    fun toString(movies: List<MovieEntity>): String {
-        return Json.encodeToString(movies)
+    fun toString(genres: List<String>?): String {
+        return Json.encodeToString(genres)
     }
 }

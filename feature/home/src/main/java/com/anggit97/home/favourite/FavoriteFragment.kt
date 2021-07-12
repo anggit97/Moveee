@@ -46,14 +46,14 @@ class FavoriteFragment : HomeTabFragment(R.layout.home_tab_favourite){
                 )
             )
         }
-        listView.apply {
-            adapter = listAdapter
-            itemAnimator = FadeInAnimator()
-        }
-        viewModel.contentsUiModel.observe(viewLifecycleOwner) {
-            noItemsView.isVisible = it.movies.isEmpty()
-            listAdapter.submitList(it.movies)
-        }
+//        listView.apply {
+//            adapter = listAdapter
+//            itemAnimator = FadeInAnimator()
+//        }
+//        viewModel.contentsUiModel.observe(viewLifecycleOwner) {
+//            noItemsView.isVisible = it.movies.isEmpty()
+//            listAdapter.submitList(it.movies)
+//        }
     }
 
     override fun scrollToTop() {

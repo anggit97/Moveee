@@ -39,44 +39,5 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/avatars" />
 
-        <include
-            android:id="@+id/ageBgView"
-            layout="@layout/movie_tag_age_bg"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:layout_margin="7dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <include
-            android:id="@+id/newView"
-            layout="@layout/movie_tag_new"
-            android:layout_width="@dimen/tag_width"
-            android:layout_height="@dimen/tag_height"
-            android:layout_margin="4dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:visibility="gone" />
-
-        <include
-            android:id="@+id/bestView"
-            layout="@layout/movie_tag_best"
-            android:layout_width="@dimen/tag_width"
-            android:layout_height="@dimen/tag_height"
-            android:layout_margin="4dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:visibility="visible" />
-
-        <include
-            android:id="@+id/dDayView"
-            layout="@layout/movie_tag_d_day"
-            android:layout_width="@dimen/tag_width"
-            android:layout_height="@dimen/tag_height"
-            android:layout_margin="4dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            tools:visibility="gone" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>
