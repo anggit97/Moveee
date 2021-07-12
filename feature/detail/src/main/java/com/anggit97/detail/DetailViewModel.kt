@@ -1,9 +1,11 @@
 package com.anggit97.detail
 
+import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.anggit97.core.device.ImageUriProvider
 import com.anggit97.core.ui.EventLiveData
 import com.anggit97.core.ui.MutableEventLiveData
 import com.anggit97.model.Cast
@@ -19,6 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val repository: MovieeeRepository,
+    private val imageUriProvider: ImageUriProvider
 ) : ViewModel() {
 
     private lateinit var movie: Movie
@@ -199,6 +202,13 @@ class DetailViewModel @Inject constructor(
     fun onRetryClick() {
         viewModelScope.launch {
             movieDetail = loadDetail(movie)?.also { renderDetail(it) }
+        }
+    }
+
+    fun requestShareImage(target: ShareTarget, bitmap: Bitmap) {
+        viewModelScope.launch {
+            val uri = imageUriProvider(bitmap)
+            _uiEvent.event = ShareAction(target, uri, "image/*")
         }
     }
 }

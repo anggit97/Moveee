@@ -1,6 +1,7 @@
 package com.anggit97.detail
 
 import android.content.Context
+import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.SpannableString
@@ -11,10 +12,7 @@ import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ShareCompat
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.isVisible
-import androidx.core.view.updatePadding
+import androidx.core.view.*
 import androidx.navigation.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.anggit97.core.ext.loadAsync
 import com.anggit97.core.ext.observeEvent
 import com.anggit97.core.ext.showToast
+import com.anggit97.core.spec.FirebaseLink
 import com.anggit97.core.util.*
 import com.anggit97.core.widget.ElasticDragDismissFrameLayout
 import com.anggit97.detail.databinding.ActivityDetailBinding
@@ -148,10 +147,10 @@ class DetailActivity : AppCompatActivity(), DetailViewRenderer, DetailViewAnimat
         }
         binding.share.apply {
             fun onShareClick(target: ShareTarget) {
-//                viewModel.requestShareImage(target, movieCard.drawToBitmap())
+                viewModel.requestShareImage(target, movieCard.drawToBitmap())
             }
             root.setOnDebounceClickListener {
-//                binding.toggleShareButton()
+                binding.toggleShareButton()
             }
             facebookShareButton.clipToOval(true)
             facebookShareButton.setOnDebounceClickListener {
@@ -168,10 +167,6 @@ class DetailActivity : AppCompatActivity(), DetailViewRenderer, DetailViewAnimat
             lineShareButton.clipToOval(true)
             lineShareButton.setOnDebounceClickListener {
                 onShareClick(ShareTarget.LINE)
-            }
-            kakaoTalkShareButton.clipToOval(true)
-            kakaoTalkShareButton.setOnDebounceClickListener {
-                onShareClick(ShareTarget.KakaoLink)
             }
             etcShareButton.clipToOval(true)
             etcShareButton.setOnDebounceClickListener {
@@ -296,28 +291,28 @@ class DetailActivity : AppCompatActivity(), DetailViewRenderer, DetailViewAnimat
                     }
                     .startChooser()
             }
-//            ShareTarget.Facebook,
-//            ShareTarget.Twitter,
-//            ShareTarget.LINE,
-//            ShareTarget.Others -> {
-//                FirebaseLink.createDetailLink(movie) { link ->
-//                    ShareCompat.IntentBuilder(this)
-//                        .setChooserTitle(R.string.action_share)
-//                        .setText("[뭅] ${movie.title}\n$link")
-//                        .setType("text/plain")
-//                        .apply {
-//                            when (action.target) {
-//                                ShareTarget.Facebook -> "com.facebook.katana"
-//                                ShareTarget.Twitter -> "com.twitter.android"
-//                                ShareTarget.LINE -> "jp.naver.line.android"
-//                                else -> null
-//                            }?.let {
-//                                intent.setPackage(it)
-//                            }
-//                        }
-//                        .startChooser()
-//                }
-//            }
+            ShareTarget.Facebook,
+            ShareTarget.Twitter,
+            ShareTarget.LINE,
+            ShareTarget.Others -> {
+                FirebaseLink.createDetailLink(movie) { link ->
+                    ShareCompat.IntentBuilder(this)
+                        .setChooserTitle(R.string.action_share)
+                        .setText("[Moveee] ${movie.title}\n$link")
+                        .setType("text/plain")
+                        .apply {
+                            when (action.target) {
+                                ShareTarget.Facebook -> "com.facebook.katana"
+                                ShareTarget.Twitter -> "com.twitter.android"
+                                ShareTarget.LINE -> "jp.naver.line.android"
+                                else -> null
+                            }?.let {
+                                intent.setPackage(it)
+                            }
+                        }
+                        .startChooser()
+                }
+            }
         }
     }
 }

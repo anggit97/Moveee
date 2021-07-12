@@ -31,39 +31,39 @@ import java.io.File
 /**
  * A class responsible for resolving an image as identified by Url into a sharable [Uri].
  */
-//class ImageUriProviderImpl(context: Context) :
-//    ImageUriProvider {
-//
-//    // Only hold the app context to avoid leaks
-//    private val appContext = context.applicationContext
-//
-//    override suspend operator fun invoke(url: String): Uri {
-//        // Retrieve the image from Glide (hopefully cached) as a File
-//        val file = appContext.loadAsync(url)
-//
-//        // Glide cache uses an unfriendly & extension-less name. Massage it based on the original.
-//        val fileName = url.substring(url.lastIndexOf('/') + 1)
-//        return File(file.parent, fileName)
-//            .apply { file.renameTo(this) }
-//            .toImageUri()
-//    }
-//
-//    override suspend operator fun invoke(file: File): Uri {
-//        return file.toImageUri()
-//    }
-//
-//    override suspend operator fun invoke(bitmap: Bitmap): Uri {
-//        return bitmap.toCacheFile(
-//            appContext,
-//            folderName = "image_manager_disk_cache",
-//            fileName = "share.jpg"
-//        ).toImageUri()
-//    }
-//
-//    @WorkerThread
-//    private suspend fun File.toImageUri(): Uri {
-//        return withContext(Dispatchers.IO) {
-//            FileProvider.getUriForFile(appContext, BuildConfig.FILES_AUTHORITY, this@toImageUri)
-//        }
-//    }
-//}
+class ImageUriProviderImpl(context: Context) :
+    ImageUriProvider {
+
+    // Only hold the app context to avoid leaks
+    private val appContext = context.applicationContext
+
+    override suspend operator fun invoke(url: String): Uri {
+        // Retrieve the image from Glide (hopefully cached) as a File
+        val file = appContext.loadAsync(url)
+
+        // Glide cache uses an unfriendly & extension-less name. Massage it based on the original.
+        val fileName = url.substring(url.lastIndexOf('/') + 1)
+        return File(file.parent, fileName)
+            .apply { file.renameTo(this) }
+            .toImageUri()
+    }
+
+    override suspend operator fun invoke(file: File): Uri {
+        return file.toImageUri()
+    }
+
+    override suspend operator fun invoke(bitmap: Bitmap): Uri {
+        return bitmap.toCacheFile(
+            appContext,
+            folderName = "image_manager_disk_cache",
+            fileName = "share.jpg"
+        ).toImageUri()
+    }
+
+    @WorkerThread
+    private suspend fun File.toImageUri(): Uri {
+        return withContext(Dispatchers.IO) {
+            FileProvider.getUriForFile(appContext, BuildConfig.FILES_AUTHORITY, this@toImageUri)
+        }
+    }
+}

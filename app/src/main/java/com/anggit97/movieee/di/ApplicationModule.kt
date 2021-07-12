@@ -16,7 +16,9 @@
 package com.anggit97.movieee.di
 
 import android.content.Context
+import com.anggit97.core.device.ImageUriProvider
 import com.anggit97.core.settings.AppSettings
+import com.anggit97.movieee.device.ImageUriProviderImpl
 import com.anggit97.movieee.settings.AppSettingsImpl
 import com.anggit97.theme.ThemeOptionManager
 import com.anggit97.theme.ThemeOptionStore
@@ -47,6 +49,13 @@ class ApplicationModule {
         }
     })
 
+    @Singleton
+    @Provides
+    fun provideImageUriProvider(
+        @ApplicationContext context: Context
+    ): ImageUriProvider {
+        return ImageUriProviderImpl(context)
+    }
 
     @Singleton
     @Provides

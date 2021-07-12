@@ -2,6 +2,7 @@ package com.anggit97.movieee
 
 import android.app.Application
 import com.anggit97.theme.ThemeOptionManager
+import com.google.firebase.FirebaseApp
 import com.jakewharton.threetenabp.AndroidThreeTen
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "965743820234",
+    "project_id": "moveee-3416f",
+    "storage_bucket": "moveee-3416f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:965743820234:android:214068f648fdedea1ba333",
+        "android_client_info": {
+          "package_name": "com.anggit97.movieee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "965743820234-q2sha748h3j8mls01aaeer6gm07sp0rj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.anggit97.movieee",
+            "certificate_hash": "e722f881dd98b28f8a348abfb0e095e1f7355652"
+          }
+        },
+        {
+          "client_id": "965743820234-0ultipgure4jvdb7e3tn8c44pavmgudh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBI7lXlLLmt09lbMGZcXl6PkUWiahJSNhQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "965743820234-0ultipgure4jvdb7e3tn8c44pavmgudh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

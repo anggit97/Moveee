@@ -41,6 +41,14 @@ android {
     }
 
     buildTypes {
+        debug {
+            def filesAuthorityValue = 'com.anggit97.moveee.debug.shareprovider'
+            buildConfigField 'String', 'FILES_AUTHORITY', "\"${filesAuthorityValue}\""
+            manifestPlaceholders = [
+                    filesAuthority     : filesAuthorityValue,
+                    crashlytics_enabled: false
+            ]
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
