@@ -47,7 +47,7 @@ object FirebaseLink {
 
     fun createDetailLink(movie: Movie, onResult: (Uri?) -> Unit) {
         FirebaseDynamicLinks.getInstance().createDynamicLink()
-            .setLink(Uri.parse("https://moveee.link/$PATH_DETAIL?$MOVIE_ID=${movie.id}"))
+            .setLink(Uri.parse("https://moveee.link/$PATH_DETAIL?$MOVIE_ID=${movie.movieId}"))
             .setDomainUriPrefix("https://moveee.page.link")
             .setAndroidParameters(
                 DynamicLink.AndroidParameters.Builder("com.anggit97.moveee")

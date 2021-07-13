@@ -10,10 +10,11 @@ import com.anggit97.model.Movie
  */
 fun List<Movie>.toMovieEntityList(type: String): List<MovieEntity> = map {
     MovieEntity(
+        it.id,
         it.adult,
         it.backdropPath,
         it.genres,
-        it.id,
+        it.movieId,
         it.originalLanguage,
         it.originalTitle,
         it.overview,
@@ -30,10 +31,11 @@ fun List<Movie>.toMovieEntityList(type: String): List<MovieEntity> = map {
 
 fun Movie.toMovieEntity(type: String): MovieEntity {
     return MovieEntity(
+        id,
         adult,
         backdropPath,
         genres,
-        id,
+        movieId,
         originalLanguage,
         originalTitle,
         overview,
@@ -50,7 +52,7 @@ fun Movie.toMovieEntity(type: String): MovieEntity {
 
 internal fun Movie.toFavouriteEntity(): FavouriteMovieEntity {
     return FavouriteMovieEntity(
-        id,
+        movieId,
         adult,
         backdropPath,
         genres,

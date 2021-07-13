@@ -10,10 +10,11 @@ import com.anggit97.model.Movie
  * GitHub : https://github.com/anggit97
  */
 fun MovieEntity.toMovie() = Movie(
+    id,
     adult ?: false,
     backdropPath ?: "",
     genres,
-    id,
+    movieId,
     originalLanguage,
     originalTitle ?: "-",
     overview ?: "-",
@@ -27,10 +28,11 @@ fun MovieEntity.toMovie() = Movie(
 )
 
 fun FavouriteMovieEntity.toMovie() = Movie(
+    id.toLong(),
     adult,
     backdropPath ?: "",
     genres,
-    id,
+    id.toLong(),
     originalLanguage,
     originalTitle,
     overview,

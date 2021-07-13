@@ -13,19 +13,19 @@ fun MovieListResponse.toMovieListEntity(type: String): List<MovieEntity> =
     this.movies?.map { it.toMovieEntity(type) } ?: emptyList()
 
 fun MovieResponse.toMovieEntity(type: String): MovieEntity = MovieEntity(
-    adult,
-    backdropPath,
-    genreIds?.map { genre -> genre.toString() },
-    id ?: 0,
-    originalLanguage,
-    originalTitle,
-    overview,
-    popularity,
-    posterPath,
-    releaseDate,
-    title,
-    video,
-    voteAverage,
-    voteCount,
-    type
+    adult = adult,
+    backdropPath = backdropPath,
+    genres = genreIds?.map { genre -> genre.toString() },
+    movieId = id ?:0L,
+    originalLanguage = originalLanguage,
+    originalTitle = originalTitle,
+    overview = overview,
+    popularity = popularity,
+    posterPath = posterPath,
+    releaseDate = releaseDate,
+    title = title,
+    video = video,
+    voteAverage = voteAverage,
+    voteCount = voteCount,
+    type = type
 )

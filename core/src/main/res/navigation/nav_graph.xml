@@ -48,4 +48,10 @@
 
     </activity>
 
+    <activity
+        android:id="@+id/testPaging"
+        android:name="com.anggit97.home.test.TestPaging"
+        android:label="TestPaging" />
+
+
 </navigation>

@@ -3,12 +3,10 @@ package com.anggit97.data.db.internal
 import androidx.paging.PagingSource
 import com.anggit97.data.db.MoveeeDatabase
 import com.anggit97.data.db.internal.entity.MovieEntity
-import com.anggit97.data.db.internal.entity.MovieListEntity
 import com.anggit97.data.db.internal.entity.MovieListEntity.Companion.TYPE_NOW
 import com.anggit97.data.db.internal.entity.MovieListEntity.Companion.TYPE_POPULAR
 import com.anggit97.data.db.internal.mapper.toFavouriteEntity
 import com.anggit97.data.db.internal.mapper.toMovie
-import com.anggit97.data.db.internal.mapper.toMovieEntity
 import com.anggit97.data.db.internal.mapper.toMovieEntityList
 import com.anggit97.model.Movie
 import kotlinx.coroutines.flow.Flow
@@ -31,7 +29,7 @@ class RoomDatabase(
     }
 
     private suspend fun saveMovieListAs(type: String, movieList: List<Movie>) {
-        cacheMovieDatabase.movieCacheDao().insert(
+        cacheMovieDatabase.movieCacheDao().insertAll(
             movieList.toMovieEntityList(type)
         )
     }
@@ -93,7 +91,7 @@ class RoomDatabase(
         movieDatabase.favouriteMovieDao().insertFavouriteMovie(movie.toFavouriteEntity())
     }
 
-    override suspend fun removeFavoriteMovie(movieId: Int) {
+    override suspend fun removeFavoriteMovie(movieId: Long) {
         movieDatabase.favouriteMovieDao().deleteFavouriteMovie(movieId)
     }
 
@@ -103,7 +101,7 @@ class RoomDatabase(
         }
     }
 
-    override suspend fun isFavoriteMovie(movieId: Int): Boolean {
+    override suspend fun isFavoriteMovie(movieId: Long): Boolean {
         return movieDatabase.favouriteMovieDao().isFavouriteMovie(movieId)
     }
 

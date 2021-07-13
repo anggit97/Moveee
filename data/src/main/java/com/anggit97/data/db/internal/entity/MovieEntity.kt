@@ -8,15 +8,16 @@ import kotlinx.serialization.Serializable
 @Entity(tableName = "cached_movie_list")
 @Serializable
 data class MovieEntity(
+    @PrimaryKey(autoGenerate = true)
+    val id: Long = 0,
     @ColumnInfo(name = "adult")
     val adult: Boolean?,
     @ColumnInfo(name = "backdropPath")
     val backdropPath: String?,
     @ColumnInfo(name = "genres")
     val genres: List<String>? = emptyList(),
-    @PrimaryKey
-    @ColumnInfo(name = "id")
-    val id: Int,
+    @ColumnInfo(name = "movieId")
+    val movieId: Long,
     @ColumnInfo(name = "originalLanguage")
     val originalLanguage: String?,
     @ColumnInfo(name = "originalTitle")

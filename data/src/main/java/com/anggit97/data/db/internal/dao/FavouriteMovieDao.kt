@@ -26,12 +26,12 @@ interface FavouriteMovieDao {
     suspend fun updateAll(movies: List<FavouriteMovieEntity>)
 
     @Query("DELETE FROM favourite_movies WHERE id=:movieId")
-    suspend fun deleteFavouriteMovie(movieId: Int)
+    suspend fun deleteFavouriteMovie(movieId: Long)
 
     @Query("SELECT COUNT(id) FROM FAVOURITE_MOVIES WHERE id=:movieId")
-    suspend fun getCountForFavouriteMovie(movieId: Int): Int
+    suspend fun getCountForFavouriteMovie(movieId: Long): Int
 
-    suspend fun isFavouriteMovie(movieId: Int): Boolean {
+    suspend fun isFavouriteMovie(movieId: Long): Boolean {
         return getCountForFavouriteMovie(movieId = movieId) > 0
     }
 }

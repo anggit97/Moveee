@@ -28,8 +28,8 @@ interface MovieeeRepository {
 
     fun getFavoriteMovieList(): Flow<List<Movie>>
     suspend fun addFavoriteMovie(movie: Movie)
-    suspend fun removeFavoriteMovie(movieId: Int)
-    suspend fun isFavoriteMovie(movieId: Int): Boolean
+    suspend fun removeFavoriteMovie(movieId: Long)
+    suspend fun isFavoriteMovie(movieId: Long): Boolean
 
     suspend fun searchMovie(query: String): List<Movie>
 

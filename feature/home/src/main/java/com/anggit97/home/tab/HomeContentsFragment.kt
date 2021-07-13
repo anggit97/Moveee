@@ -1,6 +1,7 @@
 package com.anggit97.home.tab
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
@@ -9,6 +10,7 @@ import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.ActivityNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.paging.map
 import androidx.recyclerview.widget.RecyclerView
 import com.anggit97.core.ui.base.OnBackPressedListener
 import com.anggit97.core.util.RoughAdapterDataObserver
@@ -73,10 +75,9 @@ abstract class HomeContentsFragment : HomeTabFragment(R.layout.home_tab_fragment
             )
         }
         listView.apply {
-            setItemViewCacheSize(20)
             val loaderStateAdapter = LoaderMovieListAdapter { listAdapter.retry() }
             adapter = listAdapter.withLoadStateFooter(loaderStateAdapter)
-            itemAnimator = FadeInAnimator()
+//            itemAnimator = FadeInAnimator()
         }
         errorView.root.setOnDebounceClickListener {
             viewModel.refresh()
@@ -89,13 +90,14 @@ abstract class HomeContentsFragment : HomeTabFragment(R.layout.home_tab_fragment
         }
         lifecycleScope.launch {
             viewModel.fetchNowMovieList().distinctUntilChanged().collectLatest {
+                Log.d("HomeContentFragment", "initViewState: ${it.map { it.title }}")
                 listAdapter.submitData(it)
             }
         }
     }
 
     override fun scrollToTop() {
-//        getListView()?.scrollToTopInternal()
+        getListView()?.scrollToTopInternal()
     }
 
     override fun onBackPressed(): Boolean {

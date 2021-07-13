@@ -12,20 +12,20 @@ import com.anggit97.model.Cast
 fun MovieListResponse.toMovieList() = movies?.map { it.toMovie() } ?: emptyList()
 
 private fun MovieResponse.toMovie() = Movie(
-    adult ?: false,
-    backdropPath ?: "",
-    genreIds?.map { it.toString() }?.toList(),
-    id ?: 0,
-    originalLanguage,
-    originalTitle ?: "",
-    overview ?: "",
-    popularity,
-    posterPath ?: "",
-    releaseDate ?: "",
-    title ?: "",
-    video ?: false,
-    voteAverage ?: 0.0,
-    voteCount ?: 0
+    adult = adult ?: false,
+    backdropPath = backdropPath ?: "",
+    genres = genreIds?.map { it.toString() }?.toList(),
+    movieId = id ?: 0,
+    originalLanguage = originalLanguage,
+    originalTitle = originalTitle ?: "",
+    overview = overview ?: "",
+    popularity = popularity,
+    posterPath = posterPath ?: "",
+    releaseDate = releaseDate ?: "",
+    title = title ?: "",
+    video = video ?: false,
+    voteAverage = voteAverage ?: 0.0,
+    voteCount = voteCount ?: 0
 )
 
 fun MovieDetailResponse.toMovieDetail() = MovieDetail(

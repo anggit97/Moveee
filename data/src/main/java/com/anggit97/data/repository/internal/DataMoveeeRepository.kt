@@ -47,7 +47,12 @@ class DataMoveeeRepository(
     }
 
     private fun getDefaultPageConfig(): PagingConfig {
-        return PagingConfig(pageSize = DEFAULT_PAGE_SIZE, enablePlaceholders = true)
+        return PagingConfig(
+            pageSize = DEFAULT_PAGE_SIZE,
+            enablePlaceholders = false,
+            prefetchDistance = 1,
+            initialLoadSize = DEFAULT_PAGE_SIZE
+        )
     }
 
     override suspend fun updateNowMovieList() {
@@ -83,11 +88,11 @@ class DataMoveeeRepository(
         local.addFavoriteMovie(movie)
     }
 
-    override suspend fun removeFavoriteMovie(movieId: Int) {
+    override suspend fun removeFavoriteMovie(movieId: Long) {
         local.removeFavoriteMovie(movieId)
     }
 
-    override suspend fun isFavoriteMovie(movieId: Int): Boolean {
+    override suspend fun isFavoriteMovie(movieId: Long): Boolean {
         return local.isFavoriteMovie(movieId)
     }
 
@@ -110,7 +115,6 @@ class DataMoveeeRepository(
     override suspend fun getMovieVideos(id: String): List<Video> {
         return remote.getMovieVideos(id).toMovieVideos()
     }
-
 
     /**
      * Movie Credits

@@ -16,4 +16,7 @@ data class MovieListResponse(
     val totalPages: Int?,
     @SerialName("total_results")
     val totalResults: Int?
-)
+) {
+
+    val endOfPage = totalPages == page
+}

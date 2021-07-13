@@ -8,7 +8,6 @@ import androidx.annotation.StringRes
 import androidx.core.util.Pair
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.anggit97.core.ext.consume
 import com.anggit97.core.ext.loadAsync
@@ -21,7 +20,7 @@ import com.anggit97.model.Movie
 
 class HomeContentsListAdapter(
     context: Context,
-    diffCallback: DiffUtil.ItemCallback<Movie> = IdBasedDiffCallback { it.id.toString() },
+    diffCallback: DiffUtil.ItemCallback<Movie> = IdBasedDiffCallback { it.movieId.toString() },
     private val listener: (Movie, Array<Pair<View, String>>) -> Unit
 ) : PagingDataAdapter<Movie, HomeContentsListAdapter.MovieViewHolder>(diffCallback) {
 
@@ -76,7 +75,7 @@ class HomeContentsListAdapter(
         val posterView = binding.posterView
 
         fun bind(item: Movie) {
-            binding.container.tag = item.id
+            binding.container.tag = item.movieId
             posterView.loadAsync(item.getPosterUrl(), R.drawable.bg_on_surface_dim)
             posterView.contentDescription = item.title
         }

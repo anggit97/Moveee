@@ -10,10 +10,11 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class  Movie(
+    val id: Long = 0,
     val adult: Boolean,
     val backdropPath: String,
     val genres: List<String>? = emptyList(),
-    val id: Int,
+    val movieId: Long,
     val originalLanguage: String?,
     val originalTitle: String,
     val overview: String,

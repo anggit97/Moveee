@@ -20,7 +20,7 @@ import com.anggit97.model.Movie
 
 class HomeFavoriteListAdapter(
     context: Context,
-    diffCallback: DiffUtil.ItemCallback<Movie> = IdBasedDiffCallback { it.id.toString() },
+    diffCallback: DiffUtil.ItemCallback<Movie> = IdBasedDiffCallback { it.movieId.toString() },
     private val listener: (Movie, Array<Pair<View, String>>) -> Unit
 ) : ListAdapter<Movie, HomeFavoriteListAdapter.MovieViewHolder>(diffCallback) {
 
@@ -75,7 +75,7 @@ class HomeFavoriteListAdapter(
         val posterView = binding.posterView
 
         fun bind(item: Movie) {
-            binding.container.tag = item.id
+            binding.container.tag = item.movieId
             posterView.loadAsync(item.getPosterUrl(), R.drawable.bg_on_surface_dim)
             posterView.contentDescription = item.title
         }

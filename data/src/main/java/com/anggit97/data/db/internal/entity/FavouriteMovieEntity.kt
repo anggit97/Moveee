@@ -13,7 +13,7 @@ import androidx.room.PrimaryKey
 data class FavouriteMovieEntity(
     @PrimaryKey
     @ColumnInfo(name = "id")
-    val id: Int,
+    val id: Long,
     @ColumnInfo(name = "adult")
     val adult: Boolean,
     @ColumnInfo(name = "backdropPath")

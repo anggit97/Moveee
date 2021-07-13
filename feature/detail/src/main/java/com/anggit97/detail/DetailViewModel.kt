@@ -51,7 +51,7 @@ class DetailViewModel @Inject constructor(
         this.movie = movie
         _headerUiModel.value = HeaderUiModel(movie)
         viewModelScope.launch {
-            _favoriteUiModel.postValue(repository.isFavoriteMovie(movie.id))
+            _favoriteUiModel.postValue(repository.isFavoriteMovie(movie.movieId))
             val minDelay = async { delay(500) }
             val loadDetail = async { loadDetail(movie) }
             val loadVideos = async { loadVideo(movie) }
@@ -73,7 +73,7 @@ class DetailViewModel @Inject constructor(
         _isError.postValue(false)
         try {
             return withContext(Dispatchers.IO) {
-                repository.getMovieCredits(movie.id.toString())
+                repository.getMovieCredits(movie.movieId.toString())
             }
         } catch (t: Throwable) {
             Timber.w(t)
@@ -86,7 +86,7 @@ class DetailViewModel @Inject constructor(
         _isError.postValue(false)
         try {
             return withContext(Dispatchers.IO) {
-                repository.getMovieVideos(movie.id.toString())
+                repository.getMovieVideos(movie.movieId.toString())
             }
         } catch (t: Throwable) {
             Timber.w(t)
@@ -99,7 +99,7 @@ class DetailViewModel @Inject constructor(
         _isError.postValue(false)
         try {
             return withContext(Dispatchers.IO) {
-                repository.getMovieById(movie.id.toString())
+                repository.getMovieById(movie.movieId.toString())
             }
         } catch (t: Throwable) {
             Timber.w(t)
@@ -193,7 +193,7 @@ class DetailViewModel @Inject constructor(
             if (isFavorite) {
                 repository.addFavoriteMovie(movie)
             } else {
-                repository.removeFavoriteMovie(movie.id)
+                repository.removeFavoriteMovie(movie.movieId)
             }
             _favoriteUiModel.postValue(isFavorite)
         }

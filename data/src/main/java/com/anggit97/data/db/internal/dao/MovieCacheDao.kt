@@ -23,7 +23,7 @@ interface MovieCacheDao {
     suspend fun findByType(type: String): List<MovieEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(response: List<MovieEntity>)
+    suspend fun insertAll(response: List<MovieEntity>)
 
     @Delete
     suspend fun delete(response: MovieEntity)

@@ -32,7 +32,7 @@ interface MoveeeDatabase {
     suspend fun getAllMovieList(): List<Movie>
 
     suspend fun addFavoriteMovie(movie: Movie)
-    suspend fun removeFavoriteMovie(movieId: Int)
+    suspend fun removeFavoriteMovie(movieId: Long)
     fun getFavoriteMovieList(): Flow<List<Movie>>
-    suspend fun isFavoriteMovie(movieId: Int): Boolean
+    suspend fun isFavoriteMovie(movieId: Long): Boolean
 }
