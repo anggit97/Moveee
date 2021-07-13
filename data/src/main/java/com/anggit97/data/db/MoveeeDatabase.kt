@@ -26,7 +26,7 @@ interface MoveeeDatabase {
     fun getNowMovieListNowPaging(): PagingSource<Int, MovieEntity>
 
     suspend fun savePlanMovieList(movieList: List<Movie>)
-    fun getPlanMovieListFlow(): Flow<List<Movie>>
+    fun getPlanMovieListFlow(): PagingSource<Int, MovieEntity>
     suspend fun getPlanMovieList(): List<Movie>
 
     suspend fun getAllMovieList(): List<Movie>

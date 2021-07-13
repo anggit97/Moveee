@@ -9,7 +9,7 @@ import androidx.room.PrimaryKey
  * GitHub : https://github.com/anggit97
  */
 @Entity(tableName = "remote_keys")
-data class RemoteKeys(
+data class MovieNowRemoteKeys(
     @PrimaryKey val movieId: Long,
     val prevKey: Int?,
     val nextKey: Int?

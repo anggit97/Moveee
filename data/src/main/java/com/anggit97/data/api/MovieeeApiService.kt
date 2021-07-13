@@ -20,7 +20,7 @@ interface MovieeeApiService {
     suspend fun getNowPlayingMovieList(@Query("page") page: String): MovieListResponse
 
     @GET("movie/upcoming?api_key=00fadd6af89412de4c1a3ecd7fe631f6&language=id")
-    suspend fun getUpcomingMovieList(): MovieListResponse
+    suspend fun getUpcomingMovieList(@Query("page") page: String): MovieListResponse
 
     @GET("discover/movie?api_key=00fadd6af89412de4c1a3ecd7fe631f6&language=id")
     suspend fun getDiscoverMovieList(): MovieListResponse

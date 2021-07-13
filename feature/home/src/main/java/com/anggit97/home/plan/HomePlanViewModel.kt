@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.anggit97.home.HomeContentsUiModel
 import com.anggit97.home.tab.HomeContentsViewModel
 import com.anggit97.model.Movie
@@ -13,11 +14,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
-
 
 /**
  * Created by Anggit Prayogo on 05,July,2021
@@ -42,37 +40,18 @@ class HomePlanViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            updateList()
-//            repository.getPlanMovieList()
-//                .collect {
-//                    _contentsUiModel.postValue(HomeContentsUiModel(it))
-//                }
+            repository.getPlanMovieList()
+                .collect {
+                    _contentsUiModel.postValue(HomeContentsUiModel(it))
+                }
         }
     }
 
     override fun fetchNowMovieList(): Flow<PagingData<Movie>> {
-        return emptyFlow()
+        return repository.getPlanMovieList().cachedIn(viewModelScope)
     }
 
     override fun refresh() {
-        viewModelScope.launch(Dispatchers.IO) {
-            updateList()
-        }
-    }
-
-    private suspend fun updateList() {
-        if (_isLoading.value == true) {
-            return
-        }
-        _isLoading.postValue(true)
-        try {
-            repository.updatePlanMovieList()
-            _isLoading.postValue(false)
-            _isError.postValue(false)
-        } catch (t: Throwable) {
-            Timber.w(t)
-            _isLoading.postValue(false)
-            _isError.postValue(true)
-        }
+        viewModelScope.launch(Dispatchers.IO) {}
     }
 }

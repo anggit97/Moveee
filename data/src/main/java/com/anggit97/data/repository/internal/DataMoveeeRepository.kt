@@ -3,8 +3,10 @@ package com.anggit97.data.repository.internal
 import androidx.paging.*
 import com.anggit97.data.api.MovieeeApiService
 import com.anggit97.data.db.MoveeeDatabase
-import com.anggit97.data.db.internal.MovieeeRemoteMediator
+import com.anggit97.data.db.internal.MovieNowRemoteMediator
+import com.anggit97.data.db.internal.MoviePlanRemoteMediator
 import com.anggit97.data.db.internal.entity.MovieListEntity.Companion.TYPE_NOW
+import com.anggit97.data.db.internal.entity.MovieListEntity.Companion.TYPE_POPULAR
 import com.anggit97.data.db.internal.mapper.toMovie
 import com.anggit97.data.repository.internal.mapper.toCastList
 import com.anggit97.data.repository.internal.mapper.toMovieDetail
@@ -41,7 +43,7 @@ class DataMoveeeRepository(
 
         return Pager(
             config = pageConfig,
-            remoteMediator = MovieeeRemoteMediator(TYPE_NOW, local, remote),
+            remoteMediator = MovieNowRemoteMediator(local, remote),
             pagingSourceFactory = pagingSourceFactory,
         ).flow.mapLatest { it.map { movieEntity -> movieEntity.toMovie() } }
     }
@@ -63,13 +65,21 @@ class DataMoveeeRepository(
         return emptyList()
     }
 
-    override fun getPlanMovieList(): Flow<List<Movie>> {
-        return local.getPlanMovieListFlow()
+    @ExperimentalPagingApi
+    override fun getPlanMovieList(): Flow<PagingData<Movie>> {
+        val pagingSourceFactory = { local.getPlanMovieListFlow() }
+        val pageConfig = getDefaultPageConfig()
+
+        return Pager(
+            config = pageConfig,
+            remoteMediator = MoviePlanRemoteMediator(local, remote),
+            pagingSourceFactory = pagingSourceFactory,
+        ).flow.mapLatest { it.map { movieEntity -> movieEntity.toMovie() } }
     }
 
     override suspend fun updatePlanMovieList() {
-        val remoteResult = remote.getUpcomingMovieList().toMovieList()
-        local.savePlanMovieList(remoteResult)
+//        val remoteResult = remote.getUpcomingMovieList().toMovieList()
+//        local.savePlanMovieList(remoteResult)
     }
 
     override suspend fun updateAndGetPlanMovieList(): List<Movie> {

@@ -28,6 +28,6 @@ interface MovieCacheDao {
     @Delete
     suspend fun delete(response: MovieEntity)
 
-    @Query("DELETE FROM cached_movie_list")
-    suspend fun deleteAll()
+    @Query("DELETE FROM cached_movie_list WHERE type=:type")
+    suspend fun deleteAllByType(type: String)
 }

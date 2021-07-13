@@ -20,7 +20,7 @@ interface MovieeeRepository {
     suspend fun updateAndGetNowMovieList(): List<Movie>
     fun getNowMovieListPaging(): Flow<PagingData<Movie>>
 
-    fun getPlanMovieList(): Flow<List<Movie>>
+    fun getPlanMovieList(): Flow<PagingData<Movie>>
     suspend fun updatePlanMovieList()
     suspend fun updateAndGetPlanMovieList(): List<Movie>
 

@@ -45,7 +45,6 @@ class HomeNowViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-//            updateList()
             repository.getNowMovieListPaging().distinctUntilChanged().collectLatest {
                 _contentsUiModel.postValue(HomeContentsUiModel(it))
             }
@@ -57,24 +56,6 @@ class HomeNowViewModel @Inject constructor(
     }
 
     override fun refresh() {
-        viewModelScope.launch(Dispatchers.IO) {
-            updateList()
-        }
-    }
-
-    private suspend fun updateList() {
-        if (_isLoading.value == true) {
-            return
-        }
-        _isLoading.postValue(true)
-        try {
-            repository.updateNowMovieList()
-            _isLoading.postValue(false)
-            _isError.postValue(false)
-        } catch (t: Throwable) {
-            Timber.w(t)
-            _isLoading.postValue(false)
-            _isError.postValue(true)
-        }
+        viewModelScope.launch(Dispatchers.IO) {}
     }
 }

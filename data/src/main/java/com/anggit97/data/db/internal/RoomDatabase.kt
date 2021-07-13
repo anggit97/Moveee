@@ -83,8 +83,8 @@ class RoomDatabase(
         saveMovieListAs(TYPE_POPULAR, movieList)
     }
 
-    override fun getPlanMovieListFlow(): Flow<List<Movie>> {
-        return getMovieList(TYPE_POPULAR)
+    override fun getPlanMovieListFlow(): PagingSource<Int, MovieEntity> {
+        return cacheMovieDatabase.movieCacheDao().getMovieListByTypePaging(TYPE_POPULAR)
     }
 
     override suspend fun addFavoriteMovie(movie: Movie) {

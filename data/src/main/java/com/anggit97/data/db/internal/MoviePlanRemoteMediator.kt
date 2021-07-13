@@ -8,7 +8,8 @@ import androidx.room.withTransaction
 import com.anggit97.data.api.MovieeeApiService
 import com.anggit97.data.db.MoveeeDatabase
 import com.anggit97.data.db.internal.entity.MovieEntity
-import com.anggit97.data.db.internal.entity.RemoteKeys
+import com.anggit97.data.db.internal.entity.MovieNowRemoteKeys
+import com.anggit97.data.db.internal.entity.MoviePlanRemoteKeys
 import com.anggit97.data.repository.internal.mapper.toMovieListEntity
 import java.io.InvalidObjectException
 
@@ -17,8 +18,7 @@ import java.io.InvalidObjectException
  * GitHub : https://github.com/anggit97
  */
 @ExperimentalPagingApi
-internal class MovieeeRemoteMediator(
-    private val type: String,
+internal class MoviePlanRemoteMediator(
     database: MoveeeDatabase,
     private val networkService: MovieeeApiService
 ) : RemoteMediator<Int, MovieEntity>() {
@@ -57,25 +57,26 @@ internal class MovieeeRemoteMediator(
         }
 
         try {
-            val response = networkService.getNowPlayingMovieList(page.toString())
+            val response = networkService.getUpcomingMovieList(page.toString())
 
             db.withTransaction {
                 if (loadType == LoadType.REFRESH) {
-                    db.remoteKeysDao().clearRemoteKeys()
-                    db.movieCacheDao().deleteAll()
+                    db.moviePlanRemoteKeysDao().clearRemoteKeys()
+                    db.movieCacheDao().deleteAllByType(MovieEntity.TYPE_POPULAR)
                 }
 
                 val prevKey = if (page == 1) null else page - 1
                 val nextKey = if (response.endOfPage) null else page + 1
                 val keys = response.movies?.map {
-                    RemoteKeys(
+                    MoviePlanRemoteKeys(
                         movieId = it.id ?: 0L,
                         prevKey = prevKey,
                         nextKey = nextKey
                     )
                 }
-                keys?.let { db.remoteKeysDao().insertAll(it) }
-                db.movieCacheDao().insertAll(response = response.toMovieListEntity(type))
+                keys?.let { db.moviePlanRemoteKeysDao().insertAll(it) }
+                db.movieCacheDao()
+                    .insertAll(response = response.toMovieListEntity(MovieEntity.TYPE_POPULAR))
             }
 
             return MediatorResult.Success(endOfPaginationReached = response.endOfPage)
@@ -89,10 +90,10 @@ internal class MovieeeRemoteMediator(
      */
     private suspend fun getRemoteKeyClosestToCurrentPosition(
         state: PagingState<Int, MovieEntity>
-    ): RemoteKeys? {
+    ): MoviePlanRemoteKeys? {
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.movieId?.let { id ->
-                db.remoteKeysDao().remoteKeysMovieId(id)
+                db.moviePlanRemoteKeysDao().remoteKeysMovieId(id)
             }
         }
     }
@@ -100,22 +101,22 @@ internal class MovieeeRemoteMediator(
     /**
      * get the last remote key inserted which had the data
      */
-    private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, MovieEntity>): RemoteKeys? {
+    private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, MovieEntity>): MoviePlanRemoteKeys? {
         // Get the last page that was retrieved, that contained items.
         // From that last page, get the last item
         return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()?.let { repo ->
-            db.remoteKeysDao().remoteKeysMovieId(repo.movieId)
+            db.moviePlanRemoteKeysDao().remoteKeysMovieId(repo.movieId)
         }
     }
 
     /**
      * get the first remote key inserted which had the data
      */
-    private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, MovieEntity>): RemoteKeys? {
+    private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, MovieEntity>): MoviePlanRemoteKeys? {
         // Get the first page that was retrieved, that contained items.
         // From that first page, get the first item
         return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()?.let { movie ->
-            db.remoteKeysDao().remoteKeysMovieId(movie.movieId)
+            db.moviePlanRemoteKeysDao().remoteKeysMovieId(movie.movieId)
         }
     }
 }
