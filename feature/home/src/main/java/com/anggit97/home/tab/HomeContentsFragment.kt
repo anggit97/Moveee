@@ -10,6 +10,7 @@ import androidx.core.view.updatePadding
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.ActivityNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.paging.map
 import androidx.recyclerview.widget.RecyclerView
 import com.anggit97.core.ui.base.OnBackPressedListener
@@ -21,7 +22,6 @@ import com.anggit97.home.R
 import com.anggit97.home.databinding.HomeTabFragmentBinding
 import dev.chrisbanes.insetter.Insetter
 import jp.wasabeef.recyclerview.animators.FadeInAnimator
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
@@ -64,6 +64,7 @@ abstract class HomeContentsFragment : HomeTabFragment(R.layout.home_tab_fragment
             .applyToView(listView)
     }
 
+    //NOTE: https://stackoverflow.com/questions/66471381/how-to-use-android-androidx-paging-pagingdataadapter-loadstateflow-to-show-empty
     private fun HomeTabFragmentBinding.initViewState(viewModel: HomeContentsViewModel) {
         val listAdapter = HomeContentsListAdapter(root.context) { movie, sharedElements ->
             findNavController().navigate(
@@ -73,24 +74,26 @@ abstract class HomeContentsFragment : HomeTabFragment(R.layout.home_tab_fragment
                         .makeSceneTransitionAnimation(requireActivity(), *sharedElements)
                 )
             )
+        }.also {
+            lifecycleScope.launch {
+                it.loadStateFlow.collectLatest { loadState ->
+                    loadingView.isInProgress =
+                        loadState.source.refresh is LoadState.Loading && it.itemCount == 0
+                }
+            }
         }
+
         listView.apply {
-            val loaderStateAdapter = LoaderMovieListAdapter { listAdapter.retry() }
-            adapter = listAdapter.withLoadStateFooter(loaderStateAdapter)
+            val footerLoaderStateAdapter = FooterLoaderMovieListAdapter { listAdapter.retry() }
+            adapter = listAdapter.withLoadStateFooter(footerLoaderStateAdapter)
             itemAnimator = FadeInAnimator()
         }
         errorView.root.setOnDebounceClickListener {
             viewModel.refresh()
         }
-        viewModel.isLoading.observe(viewLifecycleOwner) {
-            loadingView.isInProgress = it
-        }
-        viewModel.isError.observe(viewLifecycleOwner) {
-            errorView.root.isVisible = it
-        }
+
         lifecycleScope.launch {
             viewModel.fetchNowMovieList().distinctUntilChanged().collectLatest {
-                Log.d("HomeContentFragment", "initViewState: ${it.map { it.title }}")
                 listAdapter.submitData(it)
             }
         }

@@ -10,8 +10,8 @@ import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.anggit97.home.R
 
-class LoaderMovieListAdapter(private val retry: () -> Unit) :
-    LoadStateAdapter<LoaderMovieListAdapter.LoaderViewHolder>() {
+class FooterLoaderMovieListAdapter(private val retry: () -> Unit) :
+    LoadStateAdapter<FooterLoaderMovieListAdapter.LoaderViewHolder>() {
 
     override fun onBindViewHolder(holder: LoaderViewHolder, loadState: LoadState) {
         holder.bind(loadState)

@@ -6,13 +6,12 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
-import androidx.paging.flatMap
 import androidx.paging.map
 import com.anggit97.core.util.viewBindings
 import com.anggit97.home.databinding.ActivityTestPagingBinding
 import com.anggit97.home.now.HomeNowViewModel
 import com.anggit97.home.tab.HomeContentsListAdapter
-import com.anggit97.home.tab.LoaderMovieListAdapter
+import com.anggit97.home.tab.FooterLoaderMovieListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.animators.FadeInAnimator
 import kotlinx.coroutines.flow.collectLatest
@@ -42,7 +41,7 @@ class TestPaging : AppCompatActivity() {
         }
 
         listView.apply {
-            val loaderStateAdapter = LoaderMovieListAdapter { listAdapter.retry() }
+            val loaderStateAdapter = FooterLoaderMovieListAdapter { listAdapter.retry() }
             adapter = listAdapter.withLoadStateFooter(loaderStateAdapter)
             itemAnimator = FadeInAnimator()
         }
