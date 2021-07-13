@@ -1,5 +1,6 @@
 package com.anggit97.data.db.internal.dao
 
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
@@ -17,7 +18,7 @@ import kotlinx.coroutines.flow.Flow
 interface FavouriteMovieDao {
 
     @Query("SELECT * FROM favourite_movies")
-    fun getFavouriteMovieList(): Flow<List<FavouriteMovieEntity>>
+    fun getFavouriteMovieList(): PagingSource<Int, FavouriteMovieEntity>
 
     @Insert(onConflict = REPLACE)
     suspend fun insertFavouriteMovie(movie: FavouriteMovieEntity)

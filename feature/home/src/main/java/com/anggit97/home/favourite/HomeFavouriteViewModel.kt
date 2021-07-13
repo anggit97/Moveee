@@ -4,11 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.anggit97.home.HomeContentsUiModel
 import com.anggit97.model.Movie
 import com.anggit97.model.repository.MovieeeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -29,11 +32,13 @@ class HomeFavouriteViewModel @Inject constructor(
         get() = _contentsUiModel
 
     init {
-//        repository.getFavoriteMovieList()
-//            .onEach {
-//                _contentsUiModel.postValue(HomeContentsUiModel(it))
-//            }
-//            .flowOn(Dispatchers.IO)
-//            .launchIn(viewModelScope)
+        repository.getFavoriteMovieList()
+            .onEach {
+                _contentsUiModel.postValue(HomeContentsUiModel(it))
+            }
+            .flowOn(Dispatchers.IO)
+            .launchIn(viewModelScope)
     }
+
+    fun fetchMovieFavourite(): Flow<PagingData<Movie>> = repository.getFavoriteMovieList().cachedIn(viewModelScope)
 }

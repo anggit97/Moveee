@@ -4,6 +4,7 @@ import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import com.anggit97.data.db.internal.MovieCacheDatabase
 import com.anggit97.data.db.internal.MovieDatabase
+import com.anggit97.data.db.internal.entity.FavouriteMovieEntity
 import com.anggit97.data.db.internal.entity.MovieEntity
 import com.anggit97.data.db.internal.entity.MovieListEntity
 import com.anggit97.model.Movie
@@ -33,6 +34,6 @@ interface MoveeeDatabase {
 
     suspend fun addFavoriteMovie(movie: Movie)
     suspend fun removeFavoriteMovie(movieId: Long)
-    fun getFavoriteMovieList(): Flow<List<Movie>>
+    fun getFavoriteMovieList(): PagingSource<Int, FavouriteMovieEntity>
     suspend fun isFavoriteMovie(movieId: Long): Boolean
 }

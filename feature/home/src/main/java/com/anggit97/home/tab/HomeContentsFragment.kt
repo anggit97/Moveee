@@ -77,7 +77,7 @@ abstract class HomeContentsFragment : HomeTabFragment(R.layout.home_tab_fragment
         listView.apply {
             val loaderStateAdapter = LoaderMovieListAdapter { listAdapter.retry() }
             adapter = listAdapter.withLoadStateFooter(loaderStateAdapter)
-//            itemAnimator = FadeInAnimator()
+            itemAnimator = FadeInAnimator()
         }
         errorView.root.setOnDebounceClickListener {
             viewModel.refresh()

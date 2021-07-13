@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.StringRes
 import androidx.core.util.Pair
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -22,7 +23,7 @@ class HomeFavoriteListAdapter(
     context: Context,
     diffCallback: DiffUtil.ItemCallback<Movie> = IdBasedDiffCallback { it.movieId.toString() },
     private val listener: (Movie, Array<Pair<View, String>>) -> Unit
-) : ListAdapter<Movie, HomeFavoriteListAdapter.MovieViewHolder>(diffCallback) {
+) : PagingDataAdapter<Movie, HomeFavoriteListAdapter.MovieViewHolder>(diffCallback) {
 
     private val layoutInflater = LayoutInflater.from(context)
 
@@ -32,16 +33,16 @@ class HomeFavoriteListAdapter(
             itemView.setOnDebounceClickListener(delay = 150L) {
                 val index = bindingAdapterPosition
                 if (index in 0..itemCount) {
-                    val movie: Movie = getItem(index)
-                    listener(movie, createSharedElements(movie))
+                    val movie: Movie? = getItem(index)
+                    movie?.let { it1 -> listener(it1, createSharedElements(movie)) }
                 }
             }
             itemView.setOnLongClickListener {
                 consume {
                     val index = bindingAdapterPosition
                     if (index in 0..itemCount) {
-                        val movie: Movie = getItem(index)
-                        it?.context?.showToast(movie.title)
+                        val movie: Movie? = getItem(index)
+                        it?.context?.showToast(movie?.title ?: "-")
                     }
                 }
             }
@@ -49,7 +50,7 @@ class HomeFavoriteListAdapter(
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        getItem(position)?.let { holder.bind(it) }
     }
 
     override fun getItemViewType(position: Int) = R.layout.home_item_movie

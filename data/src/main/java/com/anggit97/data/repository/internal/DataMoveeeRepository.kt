@@ -65,6 +65,7 @@ class DataMoveeeRepository(
         return emptyList()
     }
 
+    @ExperimentalCoroutinesApi
     @ExperimentalPagingApi
     override fun getPlanMovieList(): Flow<PagingData<Movie>> {
         val pagingSourceFactory = { local.getPlanMovieListFlow() }
@@ -90,8 +91,15 @@ class DataMoveeeRepository(
         return remote.getMovieById(id).toMovieDetail()
     }
 
-    override fun getFavoriteMovieList(): Flow<List<Movie>> {
-        return local.getFavoriteMovieList()
+    @ExperimentalCoroutinesApi
+    override fun getFavoriteMovieList(): Flow<PagingData<Movie>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 10
+            ),
+        ) {
+            local.getFavoriteMovieList()
+        }.flow.mapLatest { it.map { favouriteMovieEntity -> favouriteMovieEntity.toMovie() } }
     }
 
     override suspend fun addFavoriteMovie(movie: Movie) {

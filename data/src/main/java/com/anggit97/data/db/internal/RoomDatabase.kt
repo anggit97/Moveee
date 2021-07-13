@@ -2,6 +2,7 @@ package com.anggit97.data.db.internal
 
 import androidx.paging.PagingSource
 import com.anggit97.data.db.MoveeeDatabase
+import com.anggit97.data.db.internal.entity.FavouriteMovieEntity
 import com.anggit97.data.db.internal.entity.MovieEntity
 import com.anggit97.data.db.internal.entity.MovieListEntity.Companion.TYPE_NOW
 import com.anggit97.data.db.internal.entity.MovieListEntity.Companion.TYPE_POPULAR
@@ -95,10 +96,8 @@ class RoomDatabase(
         movieDatabase.favouriteMovieDao().deleteFavouriteMovie(movieId)
     }
 
-    override fun getFavoriteMovieList(): Flow<List<Movie>> {
-        return movieDatabase.favouriteMovieDao().getFavouriteMovieList().map {
-            it.map { favoriteMovieEntity -> favoriteMovieEntity.toMovie() }
-        }
+    override fun getFavoriteMovieList(): PagingSource<Int, FavouriteMovieEntity> {
+        return movieDatabase.favouriteMovieDao().getFavouriteMovieList()
     }
 
     override suspend fun isFavoriteMovie(movieId: Long): Boolean {

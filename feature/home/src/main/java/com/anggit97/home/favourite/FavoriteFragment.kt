@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.ActivityNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +17,9 @@ import com.anggit97.home.databinding.HomeTabFragmentBinding
 import com.anggit97.home.tab.HomeTabFragment
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.animators.FadeInAnimator
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.launch
 
 
 /**
@@ -46,14 +50,16 @@ class FavoriteFragment : HomeTabFragment(R.layout.home_tab_favourite){
                 )
             )
         }
-//        listView.apply {
-//            adapter = listAdapter
-//            itemAnimator = FadeInAnimator()
-//        }
-//        viewModel.contentsUiModel.observe(viewLifecycleOwner) {
-//            noItemsView.isVisible = it.movies.isEmpty()
-//            listAdapter.submitList(it.movies)
-//        }
+        listView.apply {
+            adapter = listAdapter
+            itemAnimator = FadeInAnimator()
+        }
+
+        lifecycleScope.launch {
+            viewModel.fetchMovieFavourite().distinctUntilChanged().collectLatest {
+                listAdapter.submitData(it)
+            }
+        }
     }
 
     override fun scrollToTop() {
