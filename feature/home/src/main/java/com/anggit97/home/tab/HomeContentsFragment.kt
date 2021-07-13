@@ -1,5 +1,7 @@
 package com.anggit97.home.tab
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -7,21 +9,22 @@ import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
 import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.ActivityNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
 import androidx.paging.map
 import androidx.recyclerview.widget.RecyclerView
+import com.anggit97.core.ext.shareWhileObserved
 import com.anggit97.core.ui.base.OnBackPressedListener
-import com.anggit97.core.util.RoughAdapterDataObserver
-import com.anggit97.core.util.autoCleared
-import com.anggit97.core.util.setOnDebounceClickListener
+import com.anggit97.core.util.*
 import com.anggit97.home.HomeFragmentDirections
 import com.anggit97.home.R
 import com.anggit97.home.databinding.HomeTabFragmentBinding
 import dev.chrisbanes.insetter.Insetter
 import jp.wasabeef.recyclerview.animators.FadeInAnimator
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.launch
@@ -39,10 +42,17 @@ abstract class HomeContentsFragment : HomeTabFragment(R.layout.home_tab_fragment
 
     protected abstract val viewModel: HomeContentsViewModel
 
+    private lateinit var connectionState: Flow<ConnectionState>
+
     private val adapterDataObserver = object : RoughAdapterDataObserver() {
         override fun onItemRangeUpdatedRoughly() {
 //            getListView()?.scrollToTopInternal(force = true)
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        observeConnectivity()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,6 +61,48 @@ abstract class HomeContentsFragment : HomeTabFragment(R.layout.home_tab_fragment
             adaptSystemWindowInset()
             initViewState(viewModel)
             listView.adapter?.registerAdapterDataObserver(adapterDataObserver)
+        }
+    }
+
+    private fun observeConnectivity() {
+        connectionState = requireActivity().applicationContext
+            .observeConnectivityAsFlow()
+            .shareWhileObserved(viewLifecycleOwner.lifecycleScope)
+            .also { flow ->
+                flow.asLiveData().observe(viewLifecycleOwner) { state ->
+                    when (state) {
+                        ConnectionState.Available -> onConnectivityAvailable()
+                        ConnectionState.Unavailable -> onConnectivityUnavailable()
+                    }
+                }
+            }
+    }
+
+    private fun onConnectivityUnavailable() {
+        binding.errorView.root.apply {
+            animate()
+                .alpha(1f)
+                .setDuration(ANIMATION_DURATION)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        val layout = this@apply
+                        layout.isVisible = true
+                    }
+                })
+        }
+    }
+
+    private fun onConnectivityAvailable() {
+        binding.errorView.root.apply {
+            animate()
+                .alpha(0f)
+                .setDuration(ANIMATION_DURATION)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        val layout = this@apply
+                        layout.isVisible = false
+                    }
+                })
         }
     }
 
@@ -109,5 +161,9 @@ abstract class HomeContentsFragment : HomeTabFragment(R.layout.home_tab_fragment
 
     private fun getListView(): RecyclerView? {
         return runCatching { binding.listView }.getOrNull()
+    }
+
+    companion object {
+        const val ANIMATION_DURATION = 1000L
     }
 }
