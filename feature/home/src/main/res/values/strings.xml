@@ -3,8 +3,8 @@
     <string name="menu_now">Now</string>
     <string name="menu_plan">Plan</string>
     <string name="menu_favorite">Favourite</string>
-    <string name="no_movies_description">Tidak ada film</string>
-    <string name="common_network_error" />
+    <string name="no_movies_description">No Film</string>
+    <string name="common_network_error">Hey! your internet is loss :(</string>
     <string name="button_retry">Retry</string>
     <string name="label_error">Something went wrong, please try again</string>
 </resources>
