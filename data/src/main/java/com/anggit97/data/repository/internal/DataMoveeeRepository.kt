@@ -48,10 +48,10 @@ class DataMoveeeRepository(
 
     private fun getDefaultPageConfig(): PagingConfig {
         return PagingConfig(
-            pageSize = DEFAULT_PAGE_SIZE,
-            enablePlaceholders = false,
-            prefetchDistance = 1,
-            initialLoadSize = DEFAULT_PAGE_SIZE
+            pageSize = 20,
+            enablePlaceholders = true,
+            prefetchDistance = 5,
+            initialLoadSize = 40
         )
     }
 
