@@ -20,6 +20,9 @@ interface RemoteKeysDao {
     @Query("SELECT * FROM remote_keys WHERE movieId=:movieId")
     suspend fun remoteKeysMovieId(movieId: String): RemoteKeys?
 
+    @Query("SELECT * FROM remote_keys ")
+    suspend fun allRemoteKeys(): List<RemoteKeys?>
+
     @Query("DELETE FROM remote_keys")
     suspend fun clearRemoteKeys()
 }

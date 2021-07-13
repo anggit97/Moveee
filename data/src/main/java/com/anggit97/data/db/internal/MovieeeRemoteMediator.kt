@@ -1,5 +1,6 @@
 package com.anggit97.data.db.internal
 
+import android.util.Log
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
@@ -8,14 +9,14 @@ import androidx.room.withTransaction
 import com.anggit97.data.api.MovieeeApiService
 import com.anggit97.data.db.MoveeeDatabase
 import com.anggit97.data.db.internal.entity.MovieEntity
-import com.anggit97.data.db.internal.entity.MovieListEntity
 import com.anggit97.data.db.internal.entity.RemoteKeys
 import com.anggit97.data.repository.internal.DataMoveeeRepository.Companion.DEFAULT_PAGE_INDEX
 import com.anggit97.data.repository.internal.mapper.toMovieListEntity
-import com.anggit97.model.Movie
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import retrofit2.HttpException
+import timber.log.Timber
 import java.io.IOException
-import java.io.InvalidObjectException
 
 
 /**
@@ -31,11 +32,20 @@ internal class MovieeeRemoteMediator(
 
     val db = database.getMovieCacheDatabase()
 
+    override suspend fun initialize(): InitializeAction {
+        // Launch remote refresh as soon as paging starts and do not trigger remote prepend or
+        // append until refresh has succeeded. In cases where we don't mind showing out-of-date,
+        // cached offline data, we can return SKIP_INITIAL_REFRESH instead to prevent paging
+        // triggering remote refresh.
+        return InitializeAction.LAUNCH_INITIAL_REFRESH
+    }
+
     override suspend fun load(
         loadType: LoadType,
         state: PagingState<Int, MovieEntity>
     ): MediatorResult {
         val pageKeyData = getKeyPageData(loadType, state)
+        Log.d(TAG, "load: $pageKeyData")
         val page = when (pageKeyData) {
             is MediatorResult.Success -> {
                 return pageKeyData
@@ -44,6 +54,8 @@ internal class MovieeeRemoteMediator(
                 pageKeyData as Int
             }
         }
+
+        Log.d(TAG, "load 2: $page")
 
         try {
             val response = networkService.getNowPlayingMovieList(page.toString())
@@ -58,7 +70,8 @@ internal class MovieeeRemoteMediator(
                 val nextKey = if (isEndOfList) null else page + 1
                 val keys = response.movies?.map {
                     RemoteKeys(movieId = it.id.toString(), prevKey = prevKey, nextKey = nextKey)
-                } ?: emptyList()
+                }?: emptyList()
+                keys.map { Log.d(TAG, "load: KEYS ${it.movieId} + prev key ${it.prevKey} + next key ${it.nextKey}") }
                 db.remoteKeysDao().insertAll(keys)
                 db.movieCacheDao().insert(response = response.toMovieListEntity(type))
             }
@@ -73,23 +86,35 @@ internal class MovieeeRemoteMediator(
     /**
      * this returns the page key or the final end of list success result
      */
-    suspend fun getKeyPageData(loadType: LoadType, state: PagingState<Int, MovieEntity>): Any? {
+    private suspend fun getKeyPageData(loadType: LoadType, state: PagingState<Int, MovieEntity>): Any {
+        Log.d(TAG, "getKeyPageData: 1")
         return when (loadType) {
             LoadType.REFRESH -> {
-                val remoteKeys = getClosestRemoteKey(state)
-                remoteKeys?.nextKey?.minus(1) ?: DEFAULT_PAGE_INDEX
+                Log.d(TAG, "getKeyPageData 2: ")
+                val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
+                val key = remoteKeys?.nextKey?.minus(1) ?: DEFAULT_PAGE_INDEX
+                Log.d(TAG, "getKeyPageData 6: $key")
+                key
             }
             LoadType.APPEND -> {
-                val remoteKeys = getLastRemoteKey(state)
-                    ?: throw InvalidObjectException("Remote key should not be null for $loadType")
-                remoteKeys.nextKey
+                Timber.d("getKeyPageData 3")
+                val key = db.withTransaction {
+                    db.remoteKeysDao().allRemoteKeys().lastOrNull() // Workaround
+                }
+                key?.nextKey ?: return MediatorResult.Success(true)
+//                val remoteKeys = getRemoteKeyForLastItem(state)
+//                val nextKey = remoteKeys?.nextKey
+//                    ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
+//                Log.d(TAG, "getKeyPageData 5: $nextKey")
+//                nextKey
             }
             LoadType.PREPEND -> {
-                val remoteKeys = getFirstRemoteKey(state)
-                    ?: throw InvalidObjectException("Invalid state, key should not be null")
-                //end of list condition reached
-                remoteKeys.prevKey ?: return MediatorResult.Success(endOfPaginationReached = true)
-                remoteKeys.prevKey
+                Timber.d("getKeyPageData 4")
+                val remoteKeys = getRemoteKeyForFirstItem(state)
+                val prevKey = remoteKeys?.prevKey
+                    ?: return MediatorResult.Success(endOfPaginationReached = remoteKeys != null)
+                Log.d(TAG, "getKeyPageData 7: $prevKey")
+                prevKey
             }
         }
     }
@@ -97,7 +122,9 @@ internal class MovieeeRemoteMediator(
     /**
      * get the closest remote key inserted which had the data
      */
-    private suspend fun getClosestRemoteKey(state: PagingState<Int, MovieEntity>): RemoteKeys? {
+    private suspend fun getRemoteKeyClosestToCurrentPosition(
+        state: PagingState<Int, MovieEntity>
+    ): RemoteKeys? {
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.id?.let { repoId ->
                 db.remoteKeysDao().remoteKeysMovieId(repoId.toString())
@@ -108,20 +135,30 @@ internal class MovieeeRemoteMediator(
     /**
      * get the last remote key inserted which had the data
      */
-    private suspend fun getLastRemoteKey(state: PagingState<Int, MovieEntity>): RemoteKeys? {
-        return state.pages
-            .lastOrNull { it.data.isNotEmpty() }
-            ?.data?.lastOrNull()
-            ?.let { movie -> db.remoteKeysDao().remoteKeysMovieId(movie.id.toString()) }
+    private suspend fun getRemoteKeyForLastItem(state: PagingState<Int, MovieEntity>): RemoteKeys? {
+        // Get the last page that was retrieved, that contained items.
+        // From that last page, get the last item
+        Log.d(TAG, "getRemoteKeyForLastItem: 1")
+        return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()
+            ?.let { repo ->
+                // Get the remote keys of the last item retrieved
+                Log.d(TAG, "getRemoteKeyForLastItem: 2 - ${repo.id}")
+                db.remoteKeysDao().remoteKeysMovieId(repo.id.toString())
+            }
     }
 
     /**
      * get the first remote key inserted which had the data
      */
-    private suspend fun getFirstRemoteKey(state: PagingState<Int, MovieEntity>): RemoteKeys? {
-        return state.pages
-            .firstOrNull { it.data.isNotEmpty() }
-            ?.data?.firstOrNull()
-            ?.let { movie -> db.remoteKeysDao().remoteKeysMovieId(movie.id.toString()) }
+    private suspend fun getRemoteKeyForFirstItem(state: PagingState<Int, MovieEntity>): RemoteKeys? {
+        // Get the first page that was retrieved, that contained items.
+        // From that first page, get the first item
+        return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()
+            ?.let { repo ->
+                // Get the remote keys of the first items retrieved
+                db.remoteKeysDao().remoteKeysMovieId(repo.id.toString())
+            }
     }
+
+    private val TAG = "MovieeeRemote"
 }

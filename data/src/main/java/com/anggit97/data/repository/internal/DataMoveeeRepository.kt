@@ -1,7 +1,6 @@
 package com.anggit97.data.repository.internal
 
 import androidx.paging.*
-import com.anggit97.core.util.NetworkCheckerHelper
 import com.anggit97.data.api.MovieeeApiService
 import com.anggit97.data.db.MoveeeDatabase
 import com.anggit97.data.db.internal.MovieeeRemoteMediator
@@ -27,8 +26,7 @@ import kotlinx.coroutines.flow.mapLatest
  */
 class DataMoveeeRepository(
     private val local: MoveeeDatabase,
-    private val remote: MovieeeApiService,
-    private val networkChecker: NetworkCheckerHelper
+    private val remote: MovieeeApiService
 ) : MovieeeRepository {
 
     override fun getNowMovieList(): Flow<List<Movie>> {
@@ -48,7 +46,7 @@ class DataMoveeeRepository(
         ).flow.mapLatest { it.map { movieEntity -> movieEntity.toMovie() } }
     }
 
-    fun getDefaultPageConfig(): PagingConfig {
+    private fun getDefaultPageConfig(): PagingConfig {
         return PagingConfig(pageSize = DEFAULT_PAGE_SIZE, enablePlaceholders = true)
     }
 
@@ -123,6 +121,6 @@ class DataMoveeeRepository(
 
     companion object {
         const val DEFAULT_PAGE_INDEX = 1
-        const val DEFAULT_PAGE_SIZE = 10
+        const val DEFAULT_PAGE_SIZE = 20
     }
 }

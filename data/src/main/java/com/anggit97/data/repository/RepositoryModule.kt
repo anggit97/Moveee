@@ -1,6 +1,5 @@
 package com.anggit97.data.repository
 
-import com.anggit97.core.util.NetworkCheckerHelper
 import com.anggit97.data.api.MovieeeApiService
 import com.anggit97.data.db.MoveeeDatabase
 import com.anggit97.data.repository.internal.DataMoveeeRepository
@@ -24,13 +23,11 @@ object RepositoryModule {
     @Singleton
     fun provideMoveeeRepository(
         movieDatabase: MoveeeDatabase,
-        movieeeApiService: MovieeeApiService,
-        networkChecker: NetworkCheckerHelper
+        movieeeApiService: MovieeeApiService
     ): MovieeeRepository {
         return DataMoveeeRepository(
             local = movieDatabase,
             remote = movieeeApiService,
-            networkChecker = networkChecker,
         )
     }
 }

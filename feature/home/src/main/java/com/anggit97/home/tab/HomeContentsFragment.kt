@@ -87,12 +87,6 @@ abstract class HomeContentsFragment : HomeTabFragment(R.layout.home_tab_fragment
         viewModel.isError.observe(viewLifecycleOwner) {
             errorView.root.isVisible = it
         }
-//        viewModel.contentsUiModel.observe(viewLifecycleOwner) {
-//            lifecycleScope.launch {
-//                listAdapter.submitData(it.movies)
-//            }
-//        }
-
         lifecycleScope.launch {
             viewModel.fetchNowMovieList().distinctUntilChanged().collectLatest {
                 listAdapter.submitData(it)
