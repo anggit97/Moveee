@@ -31,7 +31,7 @@ interface MovieeeRepository {
     suspend fun removeFavoriteMovie(movieId: Long)
     suspend fun isFavoriteMovie(movieId: Long): Boolean
 
-    suspend fun searchMovie(query: String): List<Movie>
+    suspend fun searchMovie(query: String): Flow<PagingData<Movie>>
 
     suspend fun getMovieVideos(id: String): List<Video>
 

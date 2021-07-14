@@ -5,6 +5,7 @@ import com.anggit97.data.api.MovieeeApiService
 import com.anggit97.data.db.MoveeeDatabase
 import com.anggit97.data.db.internal.MovieNowRemoteMediator
 import com.anggit97.data.db.internal.MoviePlanRemoteMediator
+import com.anggit97.data.db.internal.SearchMoviePagingSource
 import com.anggit97.data.db.internal.entity.MovieListEntity.Companion.TYPE_NOW
 import com.anggit97.data.db.internal.entity.MovieListEntity.Companion.TYPE_POPULAR
 import com.anggit97.data.db.internal.mapper.toMovie
@@ -114,11 +115,16 @@ class DataMoveeeRepository(
         return local.isFavoriteMovie(movieId)
     }
 
-    override suspend fun searchMovie(query: String): List<Movie> {
-        return local.getAllMovieList().asSequence()
-            .filter { it.isMatchedWith(query) }
-            .distinct()
-            .toList()
+    override suspend fun searchMovie(query: String): Flow<PagingData<Movie>> {
+        return Pager(
+            config = PagingConfig(
+                pageSize = 20,
+                enablePlaceholders = true,
+                prefetchDistance = 5,
+                initialLoadSize = 40
+            ),
+            pagingSourceFactory = { SearchMoviePagingSource(remote, query) }
+        ).flow
     }
 
 

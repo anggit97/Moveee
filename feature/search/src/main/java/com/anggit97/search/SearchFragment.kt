@@ -18,6 +18,7 @@ import com.anggit97.core.util.AlwaysDiffCallback
 import com.anggit97.core.util.ImeUtil
 import com.anggit97.core.util.autoCleared
 import com.anggit97.core.util.setOnDebounceClickListener
+import com.anggit97.home.tab.FooterLoaderMovieListAdapter
 import com.anggit97.home.tab.HomeContentsListAdapter
 import com.anggit97.search.databinding.FragmentSearchBinding
 import com.anggit97.search.databinding.SearchContentsBinding
@@ -25,6 +26,7 @@ import com.anggit97.search.databinding.SearchHeaderBinding
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.Insetter
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 /**
@@ -32,11 +34,13 @@ import kotlinx.coroutines.launch
  * GitHub : https://github.com/anggit97
  */
 @AndroidEntryPoint
-class SearchFragment: Fragment(R.layout.fragment_search) {
+class SearchFragment : Fragment(R.layout.fragment_search) {
 
     private var binding: FragmentSearchBinding by autoCleared()
 
     private val viewModel: SearchViewModel by viewModels()
+
+    private lateinit var listAdapter: HomeContentsListAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -90,7 +94,9 @@ class SearchFragment: Fragment(R.layout.fragment_search) {
                 lifecycleScope.launch {
                     delay(300)
                     if (searchText == lastQuery) {
-                        viewModel.searchFor(query)
+                        viewModel.searchFor(query).collectLatest {
+                            listAdapter.submitData(it)
+                        }
                     }
                 }
                 return true
@@ -102,27 +108,25 @@ class SearchFragment: Fragment(R.layout.fragment_search) {
     }
 
     private fun SearchContentsBinding.setup() {
-        val listAdapter = HomeContentsListAdapter(root.context, AlwaysDiffCallback()) { movie, sharedElements ->
-            findNavController().navigate(
-                SearchFragmentDirections.actionToDetail(movie),
-                ActivityNavigatorExtras(
-                    activityOptions = ActivityOptionsCompat
-                        .makeSceneTransitionAnimation(requireActivity(), *sharedElements)
+        listAdapter =
+            HomeContentsListAdapter(root.context, AlwaysDiffCallback()) { movie, sharedElements ->
+                findNavController().navigate(
+                    SearchFragmentDirections.actionToDetail(movie),
+                    ActivityNavigatorExtras(
+                        activityOptions = ActivityOptionsCompat
+                            .makeSceneTransitionAnimation(requireActivity(), *sharedElements)
+                    )
                 )
-            )
-        }
+            }
         listView.apply {
-//            adapter = listAdapter
-//            itemAnimator?.apply {
-//                addDuration = 300
-//                changeDuration = 0
-//                moveDuration = 0
-//                removeDuration = 300
-//            }
-        }
-        viewModel.uiModel.observe(viewLifecycleOwner) {
-//            listAdapter.submitList(it.movies)
-            noItemsView.isVisible = it.hasNoItem
+            val footerLoaderStateAdapter = FooterLoaderMovieListAdapter { listAdapter.retry() }
+            adapter = listAdapter.withLoadStateFooter(footerLoaderStateAdapter)
+            itemAnimator?.apply {
+                addDuration = 300
+                changeDuration = 0
+                moveDuration = 0
+                removeDuration = 300
+            }
         }
     }
 }

@@ -1,34 +1,31 @@
 package com.anggit97.search
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.anggit97.model.Movie
 import com.anggit97.model.repository.MovieeeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val repository: MovieeeRepository
-): ViewModel(){
+) : ViewModel() {
 
-    private val _uiModel = MutableLiveData<SearchContentsUiModel>()
-    val uiModel: LiveData<SearchContentsUiModel>
-        get() = _uiModel
+    private var currentQueryValue: String? = null
+    private var currentSearchResult: Flow<PagingData<Movie>>? = null
 
-    fun searchFor(query: String) {
-        viewModelScope.launch {
-            val movies = withContext(Dispatchers.IO) {
-                repository.searchMovie(query)
-            }
-            _uiModel.value = SearchContentsUiModel(
-                movies = movies,
-                hasNoItem = movies.isEmpty()
-            )
+    suspend fun searchFor(query: String): Flow<PagingData<Movie>> {
+        val lastResult = currentSearchResult
+        if (query == currentQueryValue && lastResult != null) {
+            return lastResult
         }
+        currentQueryValue = query
+        val newResult = repository.searchMovie(query).cachedIn(viewModelScope)
+        currentSearchResult = newResult
+        return newResult
     }
 }
