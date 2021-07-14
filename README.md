@@ -16,9 +16,9 @@
 - Search Movie
 - Support Dark Mode
 - Support Offline Mode
+- Support Multi Language (ID & EN)
 
 ## Upcoming Feature
-- Support Multi Language
 - Reminder Upcoming Movie
 - Connect To Movie DB Api (Using Movie Db Authentication)
 
