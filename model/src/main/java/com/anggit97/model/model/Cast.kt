@@ -1,5 +1,8 @@
 package com.anggit97.model.model
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Cast(
     val adult: Boolean?,
     val cast_id: Int?,

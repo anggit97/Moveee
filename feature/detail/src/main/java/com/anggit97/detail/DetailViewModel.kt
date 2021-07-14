@@ -10,10 +10,8 @@ import com.anggit97.core.ui.EventLiveData
 import com.anggit97.core.ui.MutableEventLiveData
 import com.anggit97.model.domain.moviedetail.MovieDetailUseCase
 import com.anggit97.model.domain.moviefavourite.MovieFavouriteUseCase
-import com.anggit97.model.model.Cast
 import com.anggit97.model.model.Movie
 import com.anggit97.model.model.MovieDetail
-import com.anggit97.model.model.Video
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import timber.log.Timber
@@ -56,45 +54,12 @@ class DetailViewModel @Inject constructor(
             _favoriteUiModel.postValue(favouriteUseCase.isFavoriteMovie(movie.movieId))
             val minDelay = async { delay(500) }
             val loadDetail = async { loadDetail(movie) }
-            val loadVideos = async { loadVideo(movie) }
-            val loadCast = async { loadCast(movie) }
-
-            val videos = loadVideos.await()
-            val casts = loadCast.await()
             minDelay.await()
 
             movieDetail = loadDetail.await()?.also {
-                it.videos = videos
-                it.casts = casts
                 renderDetail(it)
             }
         }
-    }
-
-    private suspend fun loadCast(movie: Movie): List<Cast>? {
-        _isError.postValue(false)
-        try {
-            return withContext(Dispatchers.IO) {
-                useCase.getMovieCredits(movie.movieId.toString())
-            }
-        } catch (t: Throwable) {
-            Timber.w(t)
-            _isError.postValue(true)
-        }
-        return null
-    }
-
-    private suspend fun loadVideo(movie: Movie): List<Video>? {
-        _isError.postValue(false)
-        try {
-            return withContext(Dispatchers.IO) {
-                useCase.getMovieVideos(movie.movieId.toString())
-            }
-        } catch (t: Throwable) {
-            Timber.w(t)
-            _isError.postValue(true)
-        }
-        return null
     }
 
     private suspend fun loadDetail(movie: Movie): MovieDetail? {
