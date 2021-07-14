@@ -15,6 +15,7 @@
  */
 package com.anggit97.data.api.internal
 
+import com.anggit97.core.util.LangUtil
 import com.anggit97.data.BuildConfig
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
@@ -32,6 +33,10 @@ object OkHttpInterceptors {
 
     private const val QUERY_PARAM_API_KEY = "api_key"
 
+    private const val QUERY_PARAM_LANG_KEY = "language"
+    private const val LANG_ID = "id"
+    private const val LANG_EN = "en"
+
     private fun Request.useCache(): Boolean {
         return header(HEADER_USE_CACHE_PREFIX) != null
     }
@@ -48,6 +53,8 @@ object OkHttpInterceptors {
 
         request = appendApiKeyToQueryParam(request)
 
+        request = appendLangToQueryParam(request)
+
         it.proceed(request).apply {
             if (useCache) {
                 newBuilder()
@@ -56,6 +63,13 @@ object OkHttpInterceptors {
                     .build()
             }
         }
+    }
+
+    private fun appendLangToQueryParam(request: Request): Request {
+        val selectedSystemLang = LangUtil.getLanguageCountryCode().lowercase()
+        val url: HttpUrl = request.url.newBuilder()
+            .addQueryParameter(QUERY_PARAM_LANG_KEY, selectedSystemLang).build()
+        return request.newBuilder().url(url).build()
     }
 
     private fun appendApiKeyToQueryParam(request: Request): Request {
