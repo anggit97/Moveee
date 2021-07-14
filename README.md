@@ -36,6 +36,7 @@
     - [Hilt-android](https://dagger.dev/hilt/) Hilt provides a standard way to incorporate Dagger dependency injection into an Android application.
     - [Dagger2](https://dagger.dev/dev-guide/) Dagger is a fully static, compile-time dependency injection framework for both Java and Android (If you want to see this project using dagger, you can go to [this branch](https://github.com/Aditprayogo/GithubUsers/tree/old-dagger))
 - [Retrofit](https://square.github.io/retrofit/) - A type-safe HTTP client for Android and Java.
+- [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html/) - Practical Software Architecture Solutions from the Legendary Robert C. Martin (“Uncle Bob”) By applying universal rules of software architecture
 - [OkHttp](http://square.github.io/okhttp/) An HTTP & HTTP/2 client for Android and Java applications.
 - [Kotlinx Serialization](https://github.com/google/gson) Kotlin serialization consists of a compiler plugin, that generates visitor code for serializable classes, runtime library with core serialization API and support libraries with various serialization formats.
 - [Glide](https://github.com/bumptech/glide) An image loading and caching library for Android focused on smooth scrolling
