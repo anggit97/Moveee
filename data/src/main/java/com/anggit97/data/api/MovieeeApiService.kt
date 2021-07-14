@@ -16,31 +16,31 @@ import retrofit2.http.Query
  */
 interface MovieeeApiService {
 
-    @GET("movie/now_playing?api_key=00fadd6af89412de4c1a3ecd7fe631f6")
+    @GET("movie/now_playing")
     suspend fun getNowPlayingMovieList(@Query("page") page: String): MovieListResponse
 
-    @GET("movie/upcoming?api_key=00fadd6af89412de4c1a3ecd7fe631f6")
+    @GET("movie/upcoming")
     suspend fun getUpcomingMovieList(@Query("page") page: String): MovieListResponse
 
-    @GET("discover/movie?api_key=00fadd6af89412de4c1a3ecd7fe631f6")
+    @GET("discover/movie")
     suspend fun getDiscoverMovieList(): MovieListResponse
 
-    @GET("movie/popular?api_key=00fadd6af89412de4c1a3ecd7fe631f6")
+    @GET("movie/popular")
     suspend fun getPopularMovieList(): MovieListResponse
 
-    @GET("movie/top_rated?api_key=00fadd6af89412de4c1a3ecd7fe631f6")
+    @GET("movie/top_rated")
     suspend fun getTopRatedMovieList(): MovieListResponse
 
-    @GET("movie/{id}?api_key=00fadd6af89412de4c1a3ecd7fe631f6")
+    @GET("movie/{id}")
     suspend fun getMovieById(@Path("id") id: String): MovieDetailResponse
 
-    @GET("movie/{id}/videos?api_key=00fadd6af89412de4c1a3ecd7fe631f6")
+    @GET("movie/{id}/videos")
     suspend fun getMovieVideos(@Path("id") id: String): MovieVideosResponse
 
-    @GET("movie/{id}/credits?api_key=00fadd6af89412de4c1a3ecd7fe631f6")
+    @GET("movie/{id}/credits")
     suspend fun getMovieCredits(@Path("id") id: String): CreditsListResponse
 
-    @GET("search/movie?api_key=00fadd6af89412de4c1a3ecd7fe631f6")
+    @GET("search/movie")
     suspend fun searchMovie(
         @Query("query") query: String,
         @Query("page") page: String

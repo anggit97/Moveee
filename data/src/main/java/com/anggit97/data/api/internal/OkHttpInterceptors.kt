@@ -15,6 +15,8 @@
  */
 package com.anggit97.data.api.internal
 
+import com.anggit97.data.BuildConfig
+import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
@@ -28,6 +30,8 @@ object OkHttpInterceptors {
     private const val HEADER_USE_CACHE_PREFIX = "Use-Cache"
     const val HEADER_USE_CACHE = "$HEADER_USE_CACHE_PREFIX: "
 
+    private const val QUERY_PARAM_API_KEY = "api_key"
+
     private fun Request.useCache(): Boolean {
         return header(HEADER_USE_CACHE_PREFIX) != null
     }
@@ -39,8 +43,14 @@ object OkHttpInterceptors {
     }
 
     fun createOkHttpNetworkInterceptor() = Interceptor {
-        val request = it.request()
+        var request = it.request()
         val useCache = request.useCache()
+
+
+        val url: HttpUrl = request.url.newBuilder()
+            .addQueryParameter(QUERY_PARAM_API_KEY, BuildConfig.API_KEY_MOVIE).build()
+        request = request.newBuilder().url(url).build()
+
         it.proceed(request).apply {
             if (useCache) {
                 newBuilder()
