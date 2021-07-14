@@ -46,10 +46,7 @@ object OkHttpInterceptors {
         var request = it.request()
         val useCache = request.useCache()
 
-
-        val url: HttpUrl = request.url.newBuilder()
-            .addQueryParameter(QUERY_PARAM_API_KEY, BuildConfig.API_KEY_MOVIE).build()
-        request = request.newBuilder().url(url).build()
+        request = appendApiKeyToQueryParam(request)
 
         it.proceed(request).apply {
             if (useCache) {
@@ -59,5 +56,11 @@ object OkHttpInterceptors {
                     .build()
             }
         }
+    }
+
+    private fun appendApiKeyToQueryParam(request: Request): Request {
+        val url: HttpUrl = request.url.newBuilder()
+            .addQueryParameter(QUERY_PARAM_API_KEY, BuildConfig.API_KEY_MOVIE).build()
+        return request.newBuilder().url(url).build()
     }
 }
