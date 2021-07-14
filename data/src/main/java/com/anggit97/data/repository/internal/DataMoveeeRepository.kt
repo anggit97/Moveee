@@ -32,10 +32,6 @@ class DataMoveeeRepository(
     private val remote: MovieeeApiService
 ) : MovieeeRepository {
 
-    override fun getNowMovieList(): Flow<List<Movie>> {
-        return local.getNowMovieListFlow()
-    }
-
     @ExperimentalCoroutinesApi
     @ExperimentalPagingApi
     override fun getNowMovieListPaging(): Flow<PagingData<Movie>> {
@@ -58,14 +54,6 @@ class DataMoveeeRepository(
         )
     }
 
-    override suspend fun updateNowMovieList() {
-        local.saveNowMovieList(remote.getNowPlayingMovieList("1").toMovieList())
-    }
-
-    override suspend fun updateAndGetNowMovieList(): List<Movie> {
-        return emptyList()
-    }
-
     @ExperimentalCoroutinesApi
     @ExperimentalPagingApi
     override fun getPlanMovieList(): Flow<PagingData<Movie>> {
@@ -77,15 +65,6 @@ class DataMoveeeRepository(
             remoteMediator = MoviePlanRemoteMediator(local, remote),
             pagingSourceFactory = pagingSourceFactory,
         ).flow.mapLatest { it.map { movieEntity -> movieEntity.toMovie() } }
-    }
-
-    override suspend fun updatePlanMovieList() {
-//        val remoteResult = remote.getUpcomingMovieList().toMovieList()
-//        local.savePlanMovieList(remoteResult)
-    }
-
-    override suspend fun updateAndGetPlanMovieList(): List<Movie> {
-        return emptyList()
     }
 
     override suspend fun getMovieById(id: String): MovieDetail {

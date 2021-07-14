@@ -1,8 +1,8 @@
 package com.anggit97.movieee
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -14,7 +14,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.anggit97.core.ext.consume
 import com.anggit97.core.ext.observeEvent
-import com.anggit97.core.ui.Event
 import com.anggit97.core.ui.base.consumeBackEventInChildFragment
 import com.anggit97.core.util.viewBindings
 import com.anggit97.movieee.databinding.ActivityMainBinding

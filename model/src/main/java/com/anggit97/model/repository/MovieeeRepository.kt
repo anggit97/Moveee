@@ -14,16 +14,8 @@ import kotlinx.coroutines.flow.Flow
  */
 interface MovieeeRepository {
 
-
-    fun getNowMovieList(): Flow<List<Movie>>
-    suspend fun updateNowMovieList()
-    suspend fun updateAndGetNowMovieList(): List<Movie>
     fun getNowMovieListPaging(): Flow<PagingData<Movie>>
-
     fun getPlanMovieList(): Flow<PagingData<Movie>>
-    suspend fun updatePlanMovieList()
-    suspend fun updateAndGetPlanMovieList(): List<Movie>
-
     suspend fun getMovieById(id: String): MovieDetail
 
     fun getFavoriteMovieList(): Flow<PagingData<Movie>>
