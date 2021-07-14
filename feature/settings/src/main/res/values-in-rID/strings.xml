@@ -4,6 +4,7 @@
     <string name="settings_category_theater">Bioskop Favorit</string>
     <string name="settings_theater_empty_description">Belum ada bioskop favorit</string>
     <string name="settings_category_theme">Tema</string>
+    <string name="settings_lang">Bahasa</string>
     <string name="settings_category_theater_mode">Mode Bioskop</string>
     <string name="settings_category_version">Versi</string>
     <string name="settings_version_current">Saat ini %s</string>

@@ -3,6 +3,7 @@ package com.anggit97.settings
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import androidx.core.app.SharedElementCallback
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
@@ -12,6 +13,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.anggit97.core.ext.startActivitySafely
+import com.anggit97.core.util.LangUtil
 import com.anggit97.core.util.autoCleared
 import com.anggit97.core.util.setOnDebounceClickListener
 import com.anggit97.navigation.SystemViewModel
@@ -95,6 +97,21 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
             intent.putExtra(Intent.EXTRA_SUBJECT, "App v${BuildConfig.VERSION_NAME} bug report")
             it.context.startActivitySafely(intent)
         }
+
+        langItem.editThemeButton.setOnDebounceClickListener {
+            onLangEditClicked()
+        }
+
+        langItem.themeName.setOnDebounceClickListener {
+            onLangEditClicked()
+        }
+
+        langItem.themeName.text = LangUtil.getLanguageName().plus(" (${LangUtil.getLanguageCountryCode()})")
+    }
+
+    private fun onLangEditClicked() {
+        val i = Intent(Settings.ACTION_LOCALE_SETTINGS)
+        startActivity(i)
     }
 
     private fun onThemeEditClicked() {
