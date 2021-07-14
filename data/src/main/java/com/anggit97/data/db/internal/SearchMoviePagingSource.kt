@@ -4,7 +4,7 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.anggit97.data.api.MovieeeApiService
 import com.anggit97.data.repository.internal.mapper.toMovieList
-import com.anggit97.model.Movie
+import com.anggit97.model.model.Movie
 
 
 /**

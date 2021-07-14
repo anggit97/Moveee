@@ -1,9 +1,9 @@
 package com.anggit97.detail
 
 import androidx.annotation.Keep
-import com.anggit97.model.Movie
-import com.anggit97.model.ProductionCompany
-import com.anggit97.model.Video
+import com.anggit97.model.model.Movie
+import com.anggit97.model.model.ProductionCompany
+import com.anggit97.model.model.Video
 
 @Keep
 data class HeaderUiModel(

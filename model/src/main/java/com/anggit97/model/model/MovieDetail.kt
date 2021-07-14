@@ -1,4 +1,4 @@
-package com.anggit97.model
+package com.anggit97.model.model
 
 data class MovieDetail(
     val adult: Boolean?,

@@ -8,11 +8,12 @@ import androidx.lifecycle.viewModelScope
 import com.anggit97.core.device.ImageUriProvider
 import com.anggit97.core.ui.EventLiveData
 import com.anggit97.core.ui.MutableEventLiveData
-import com.anggit97.model.Cast
-import com.anggit97.model.Movie
-import com.anggit97.model.MovieDetail
-import com.anggit97.model.Video
-import com.anggit97.model.repository.MovieeeRepository
+import com.anggit97.model.domain.moviedetail.MovieDetailUseCase
+import com.anggit97.model.domain.moviefavourite.MovieFavouriteUseCase
+import com.anggit97.model.model.Cast
+import com.anggit97.model.model.Movie
+import com.anggit97.model.model.MovieDetail
+import com.anggit97.model.model.Video
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import timber.log.Timber
@@ -20,7 +21,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
-    private val repository: MovieeeRepository,
+    private val useCase: MovieDetailUseCase,
+    private val favouriteUseCase: MovieFavouriteUseCase,
     private val imageUriProvider: ImageUriProvider
 ) : ViewModel() {
 
@@ -51,7 +53,7 @@ class DetailViewModel @Inject constructor(
         this.movie = movie
         _headerUiModel.value = HeaderUiModel(movie)
         viewModelScope.launch {
-            _favoriteUiModel.postValue(repository.isFavoriteMovie(movie.movieId))
+            _favoriteUiModel.postValue(favouriteUseCase.isFavoriteMovie(movie.movieId))
             val minDelay = async { delay(500) }
             val loadDetail = async { loadDetail(movie) }
             val loadVideos = async { loadVideo(movie) }
@@ -73,7 +75,7 @@ class DetailViewModel @Inject constructor(
         _isError.postValue(false)
         try {
             return withContext(Dispatchers.IO) {
-                repository.getMovieCredits(movie.movieId.toString())
+                useCase.getMovieCredits(movie.movieId.toString())
             }
         } catch (t: Throwable) {
             Timber.w(t)
@@ -86,7 +88,7 @@ class DetailViewModel @Inject constructor(
         _isError.postValue(false)
         try {
             return withContext(Dispatchers.IO) {
-                repository.getMovieVideos(movie.movieId.toString())
+                useCase.getMovieVideos(movie.movieId.toString())
             }
         } catch (t: Throwable) {
             Timber.w(t)
@@ -99,7 +101,7 @@ class DetailViewModel @Inject constructor(
         _isError.postValue(false)
         try {
             return withContext(Dispatchers.IO) {
-                repository.getMovieById(movie.movieId.toString())
+                useCase.getMovieById(movie.movieId.toString())
             }
         } catch (t: Throwable) {
             Timber.w(t)
@@ -167,7 +169,12 @@ class DetailViewModel @Inject constructor(
         val persons = mutableListOf<PersonUiModel>()
         casts?.map {
             persons.add(
-                PersonUiModel(it.name ?: "-", it.character ?: "-", it.profile_path ?: "-", it.original_name ?: "-")
+                PersonUiModel(
+                    it.name ?: "-",
+                    it.character ?: "-",
+                    it.profile_path ?: "-",
+                    it.original_name ?: "-"
+                )
             )
         }
         if (persons.isNotEmpty()) {
@@ -191,9 +198,9 @@ class DetailViewModel @Inject constructor(
     fun onFavoriteButtonClick(isFavorite: Boolean) {
         viewModelScope.launch(Dispatchers.IO) {
             if (isFavorite) {
-                repository.addFavoriteMovie(movie)
+                favouriteUseCase.addFavoriteMovie(movie)
             } else {
-                repository.removeFavoriteMovie(movie.movieId)
+                favouriteUseCase.removeFavoriteMovie(movie.movieId)
             }
             _favoriteUiModel.postValue(isFavorite)
         }

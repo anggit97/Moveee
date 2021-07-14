@@ -1,7 +1,7 @@
 package com.anggit97.home
 
 import androidx.paging.PagingData
-import com.anggit97.model.Movie
+import com.anggit97.model.model.Movie
 
 enum class HomeHeaderUiModel {
     Now, Plan, Favorite

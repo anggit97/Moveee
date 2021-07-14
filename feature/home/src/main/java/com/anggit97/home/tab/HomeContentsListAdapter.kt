@@ -16,7 +16,7 @@ import com.anggit97.core.util.IdBasedDiffCallback
 import com.anggit97.core.util.setOnDebounceClickListener
 import com.anggit97.home.R
 import com.anggit97.home.databinding.HomeItemMovieBinding
-import com.anggit97.model.Movie
+import com.anggit97.model.model.Movie
 
 class HomeContentsListAdapter(
     context: Context,

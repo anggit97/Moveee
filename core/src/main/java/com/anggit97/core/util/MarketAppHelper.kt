@@ -18,11 +18,10 @@ package com.anggit97.core.util
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import com.anggit97.core.ext.startActivitySafely
-import com.anggit97.model.Video
+import com.anggit97.model.model.Video
 import timber.log.Timber
 
 //private fun Context.isInstalledApp(pkgName: String): Boolean {

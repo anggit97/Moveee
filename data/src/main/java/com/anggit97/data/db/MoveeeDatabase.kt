@@ -1,15 +1,12 @@
 package com.anggit97.data.db
 
-import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import com.anggit97.data.db.internal.MovieCacheDatabase
 import com.anggit97.data.db.internal.MovieDatabase
 import com.anggit97.data.db.internal.entity.FavouriteMovieEntity
 import com.anggit97.data.db.internal.entity.MovieEntity
-import com.anggit97.data.db.internal.entity.MovieListEntity
-import com.anggit97.model.Movie
+import com.anggit97.model.model.Movie
 import kotlinx.coroutines.flow.Flow
-
 
 /**
  * Created by Anggit Prayogo on 02,July,2021

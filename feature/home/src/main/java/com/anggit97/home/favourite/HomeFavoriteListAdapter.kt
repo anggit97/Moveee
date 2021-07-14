@@ -8,7 +8,6 @@ import androidx.annotation.StringRes
 import androidx.core.util.Pair
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.anggit97.core.ext.consume
 import com.anggit97.core.ext.loadAsync
@@ -17,7 +16,7 @@ import com.anggit97.core.util.IdBasedDiffCallback
 import com.anggit97.core.util.setOnDebounceClickListener
 import com.anggit97.home.R
 import com.anggit97.home.databinding.HomeItemMovieBinding
-import com.anggit97.model.Movie
+import com.anggit97.model.model.Movie
 
 class HomeFavoriteListAdapter(
     context: Context,

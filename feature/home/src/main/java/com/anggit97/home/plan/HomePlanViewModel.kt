@@ -8,7 +8,8 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.anggit97.home.HomeContentsUiModel
 import com.anggit97.home.tab.HomeContentsViewModel
-import com.anggit97.model.Movie
+import com.anggit97.model.domain.movielist.MovieListUseCase
+import com.anggit97.model.model.Movie
 import com.anggit97.model.repository.MovieeeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -23,7 +24,7 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class HomePlanViewModel @Inject constructor(
-    private val repository: MovieeeRepository
+    private val useCase: MovieListUseCase
 ) : ViewModel(), HomeContentsViewModel {
 
     private val _isLoading = MutableLiveData(false)
@@ -40,7 +41,7 @@ class HomePlanViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.getPlanMovieList()
+            useCase.getPlanMovieList()
                 .collect {
                     _contentsUiModel.postValue(HomeContentsUiModel(it))
                 }
@@ -48,7 +49,7 @@ class HomePlanViewModel @Inject constructor(
     }
 
     override fun fetchNowMovieList(): Flow<PagingData<Movie>> {
-        return repository.getPlanMovieList().cachedIn(viewModelScope)
+        return useCase.getPlanMovieList().cachedIn(viewModelScope)
     }
 
     override fun refresh() {

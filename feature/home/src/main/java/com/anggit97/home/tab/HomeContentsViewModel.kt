@@ -18,7 +18,7 @@ package com.anggit97.home.tab
 import androidx.lifecycle.LiveData
 import androidx.paging.PagingData
 import com.anggit97.home.HomeContentsUiModel
-import com.anggit97.model.Movie
+import com.anggit97.model.model.Movie
 import kotlinx.coroutines.flow.Flow
 
 interface HomeContentsViewModel {

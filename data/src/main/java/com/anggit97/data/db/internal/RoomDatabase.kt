@@ -9,7 +9,7 @@ import com.anggit97.data.db.internal.entity.MovieListEntity.Companion.TYPE_POPUL
 import com.anggit97.data.db.internal.mapper.toFavouriteEntity
 import com.anggit97.data.db.internal.mapper.toMovie
 import com.anggit97.data.db.internal.mapper.toMovieEntityList
-import com.anggit97.model.Movie
+import com.anggit97.model.model.Movie
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map

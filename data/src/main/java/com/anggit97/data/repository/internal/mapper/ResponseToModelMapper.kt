@@ -1,8 +1,8 @@
 package com.anggit97.data.repository.internal.mapper
 
 import com.anggit97.data.api.response.*
-import com.anggit97.model.*
-import com.anggit97.model.Cast
+import com.anggit97.model.model.Cast
+import com.anggit97.model.model.*
 
 
 /**

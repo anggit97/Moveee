@@ -4,15 +4,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.anggit97.model.Movie
-import com.anggit97.model.repository.MovieeeRepository
+import com.anggit97.model.domain.moviesearch.MovieSearchUseCase
+import com.anggit97.model.model.Movie
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val repository: MovieeeRepository
+    private val useCase: MovieSearchUseCase
 ) : ViewModel() {
 
     private var currentQueryValue: String? = null
@@ -24,7 +24,7 @@ class SearchViewModel @Inject constructor(
             return lastResult
         }
         currentQueryValue = query
-        val newResult = repository.searchMovie(query).cachedIn(viewModelScope)
+        val newResult = useCase.searchMovie(query).cachedIn(viewModelScope)
         currentSearchResult = newResult
         return newResult
     }

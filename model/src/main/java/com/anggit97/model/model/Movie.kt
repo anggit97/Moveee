@@ -1,4 +1,4 @@
-package com.anggit97.model
+package com.anggit97.model.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

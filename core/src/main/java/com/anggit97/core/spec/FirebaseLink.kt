@@ -17,7 +17,7 @@ package com.anggit97.core.spec
 
 import android.content.Intent
 import android.net.Uri
-import com.anggit97.model.Movie
+import com.anggit97.model.model.Movie
 import com.google.firebase.dynamiclinks.DynamicLink
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import com.google.firebase.dynamiclinks.ShortDynamicLink

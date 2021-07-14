@@ -43,7 +43,7 @@
 
         <argument
             android:name="movie"
-            app:argType="com.anggit97.model.Movie"
+            app:argType="com.anggit97.model.model.Movie"
             app:nullable="false" />
 
     </activity>

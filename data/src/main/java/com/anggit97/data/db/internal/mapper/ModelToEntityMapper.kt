@@ -2,7 +2,7 @@ package com.anggit97.data.db.internal.mapper
 
 import com.anggit97.data.db.internal.entity.FavouriteMovieEntity
 import com.anggit97.data.db.internal.entity.MovieEntity
-import com.anggit97.model.Movie
+import com.anggit97.model.model.Movie
 
 /**
  * Created by Anggit Prayogo on 03,July,2021

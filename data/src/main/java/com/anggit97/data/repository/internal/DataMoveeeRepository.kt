@@ -6,22 +6,18 @@ import com.anggit97.data.db.MoveeeDatabase
 import com.anggit97.data.db.internal.MovieNowRemoteMediator
 import com.anggit97.data.db.internal.MoviePlanRemoteMediator
 import com.anggit97.data.db.internal.SearchMoviePagingSource
-import com.anggit97.data.db.internal.entity.MovieListEntity.Companion.TYPE_NOW
-import com.anggit97.data.db.internal.entity.MovieListEntity.Companion.TYPE_POPULAR
 import com.anggit97.data.db.internal.mapper.toMovie
 import com.anggit97.data.repository.internal.mapper.toCastList
 import com.anggit97.data.repository.internal.mapper.toMovieDetail
-import com.anggit97.data.repository.internal.mapper.toMovieList
 import com.anggit97.data.repository.internal.mapper.toMovieVideos
-import com.anggit97.model.Cast
-import com.anggit97.model.Movie
-import com.anggit97.model.MovieDetail
-import com.anggit97.model.Video
+import com.anggit97.model.model.Cast
+import com.anggit97.model.model.Movie
+import com.anggit97.model.model.MovieDetail
+import com.anggit97.model.model.Video
 import com.anggit97.model.repository.MovieeeRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.mapLatest
-
 
 /**
  * Created by Anggit Prayogo on 03,July,2021
@@ -106,12 +102,6 @@ class DataMoveeeRepository(
         ).flow
     }
 
-
-    private fun Movie.isMatchedWith(query: String): Boolean {
-        return SearchHelper.matched(title, query)
-    }
-
-
     /**
      * Movie Video
      */
@@ -124,10 +114,5 @@ class DataMoveeeRepository(
      */
     override suspend fun getMovieCredits(id: String): List<Cast> {
         return remote.getMovieCredits(id).toCastList()
-    }
-
-    companion object {
-        const val DEFAULT_PAGE_INDEX = 1
-        const val DEFAULT_PAGE_SIZE = 20
     }
 }
