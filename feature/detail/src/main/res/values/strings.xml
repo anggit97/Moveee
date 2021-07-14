@@ -14,10 +14,10 @@
     <string name="trailer_dialog_title">Use of YouTube API Services</string>
     <string name="trailer_dialog_message">This information was collected through YouTube API Services. Follow Google\'s Privacy Policy( https://policies.google.com/privacy ).</string>
     <string name="trailer_dialog_button">OK</string>
-    <string name="duration">Durasi</string>
-    <string name="nation">Negara</string>
+    <string name="duration">Duration</string>
+    <string name="nation">Nation</string>
     <string name="label">Label</string>
     <string name="rating">Rating</string>
     <string name="read_more">Read More..</string>
-    <string name="see_more">Lihat Lainnya</string>
+    <string name="see_more">See More..</string>
 </resources>

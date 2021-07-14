@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu_settings">Pengaturan</string>
+    <string name="settings_category_theater">Bioskop Favorit</string>
+    <string name="settings_theater_empty_description">Belum ada bioskop favorit</string>
+    <string name="settings_category_theme">Tema</string>
+    <string name="settings_category_theater_mode">Mode Bioskop</string>
+    <string name="settings_category_version">Versi</string>
+    <string name="settings_version_current">Saat ini %s</string>
+    <string name="settings_version_latest">Terbaru %s</string>
+    <string name="settings_version_toast">Ini adalah versi terbaru</string>
+    <string name="settings_version_update_title">Pembaruan Versi</string>
+    <string name="settings_version_update_message">Versi baru telah dirilis. Apakah Anda ingin melanjutkan pembaruan?</string>
+    <string name="settings_version_update_button_positive">Perbarui Sekarang</string>
+    <string name="settings_version_update_button_negative">Coba lagi nanti</string>
+    <string name="settings_category_feedback">Feedback</string>
+    <string name="report_bug">Laporkan bug ke developer</string>
+</resources>

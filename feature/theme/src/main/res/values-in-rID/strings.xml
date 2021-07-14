@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="theme_option_title">Pilih Tema</string>
+    <string name="theme_option_dark">Gelap</string>
+    <string name="theme_option_light">Terang</string>
+    <string name="theme_option_system">Default (Mengatur pengaturan sistem)</string>
+    <string name="theme_option_battery_saver">Default (Ditetapkan oleh penghemat baterai)</string>
+</resources>

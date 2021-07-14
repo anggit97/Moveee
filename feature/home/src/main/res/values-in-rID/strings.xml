@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu_now">Sedang Diputar</string>
+    <string name="menu_plan">Akan Datang</string>
+    <string name="menu_favorite">Favorit</string>
+    <string name="no_movies_description">Tidak ada filem</string>
+    <string name="common_network_error">Hey! Internet kamu hilang :(</string>
+    <string name="button_retry">Ulangi</string>
+    <string name="label_error">Terjadi kesalahan, silahkan coba lagi</string>
+</resources>

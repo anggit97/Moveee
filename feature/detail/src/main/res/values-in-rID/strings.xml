@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_share">Bagikan</string>
+    <string name="action_share_poster">Bagikan Poster</string>
+    <string name="action_toast_opendate_alarm">⏰ Aku kasih tau kalo release</string>
+    <string name="time_minute">%d menit.</string>
+    <string name="rank_date">%s tanggal</string>
+    <string name="trailer_search_result">\'Trailer %s\' Hasil Pencarian</string>
+    <string name="trailer_dialog_title">Penggunaan Layanan YouTube API</string>
+    <string name="trailer_dialog_message">Informasi ini dikumpulkan melalui Layanan API YouTube. Ikuti Kebijakan Privasi Google ( https://policies.google.com/privacy )</string>
+    <string name="trailer_dialog_button">Oke</string>
+    <string name="duration">Durasi</string>
+    <string name="nation">Negara</string>
+    <string name="label">Lebel</string>
+    <string name="rating">Nilai</string>
+    <string name="read_more">Baca Selengkapnya</string>
+    <string name="see_more">Lihat Lainnya</string>
+    <string name="audience">%,d</string>
+    <string name="screen_days">%d hari</string>
+    <string name="rank">%d</string>
+</resources>
