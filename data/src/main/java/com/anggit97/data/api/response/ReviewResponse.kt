@@ -5,11 +5,11 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Result(
+data class ReviewResponse(
     @SerialName("author")
     val author: String?,
     @SerialName("author_details")
-    val authorDetails: AuthorDetails?,
+    val authorDetailsResponse: AuthorDetailsResponse?,
     @SerialName("content")
     val content: String?,
     @SerialName("created_at")

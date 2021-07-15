@@ -1,4 +1,4 @@
-package com.anggit97.data.db.internal
+package com.anggit97.data.db.internal.pagingsource
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState

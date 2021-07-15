@@ -2,10 +2,10 @@ package com.anggit97.data.repository.internal
 
 import androidx.paging.*
 import com.anggit97.data.api.MovieeeApiService
-import com.anggit97.data.db.MoveeeDatabase
-import com.anggit97.data.db.internal.MovieNowRemoteMediator
-import com.anggit97.data.db.internal.MoviePlanRemoteMediator
-import com.anggit97.data.db.internal.SearchMoviePagingSource
+import com.anggit97.data.db.MovieeeDatabase
+import com.anggit97.data.db.internal.remotemediator.MovieNowRemoteMediator
+import com.anggit97.data.db.internal.remotemediator.MoviePlanRemoteMediator
+import com.anggit97.data.db.internal.pagingsource.SearchMoviePagingSource
 import com.anggit97.data.db.internal.mapper.toMovie
 import com.anggit97.data.repository.internal.mapper.toCastList
 import com.anggit97.data.repository.internal.mapper.toMovieDetail
@@ -23,8 +23,8 @@ import kotlinx.coroutines.flow.mapLatest
  * Created by Anggit Prayogo on 03,July,2021
  * GitHub : https://github.com/anggit97
  */
-class DataMoveeeRepository(
-    private val local: MoveeeDatabase,
+class MovieeeRepositoryImpl(
+    private val local: MovieeeDatabase,
     private val remote: MovieeeApiService
 ) : MovieeeRepository {
 

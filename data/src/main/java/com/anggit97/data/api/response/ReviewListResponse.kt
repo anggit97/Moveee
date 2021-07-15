@@ -11,7 +11,7 @@ data class ReviewListResponse(
     @SerialName("page")
     val page: Int?,
     @SerialName("results")
-    val results: List<Result>?,
+    val results: List<ReviewResponse>?,
     @SerialName("total_pages")
     val totalPages: Int?,
     @SerialName("total_results")

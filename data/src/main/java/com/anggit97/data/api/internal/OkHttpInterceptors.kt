@@ -34,8 +34,6 @@ object OkHttpInterceptors {
     private const val QUERY_PARAM_API_KEY = "api_key"
 
     private const val QUERY_PARAM_LANG_KEY = "language"
-    private const val LANG_ID = "id"
-    private const val LANG_EN = "en"
 
     private fun Request.useCache(): Boolean {
         return header(HEADER_USE_CACHE_PREFIX) != null

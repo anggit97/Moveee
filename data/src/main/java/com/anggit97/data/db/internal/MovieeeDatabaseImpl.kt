@@ -1,7 +1,7 @@
 package com.anggit97.data.db.internal
 
 import androidx.paging.PagingSource
-import com.anggit97.data.db.MoveeeDatabase
+import com.anggit97.data.db.MovieeeDatabase
 import com.anggit97.data.db.internal.entity.FavouriteMovieEntity
 import com.anggit97.data.db.internal.entity.MovieEntity
 import com.anggit97.data.db.internal.entity.MovieListEntity.Companion.TYPE_NOW
@@ -20,10 +20,10 @@ import timber.log.Timber
  * Created by Anggit Prayogo on 02,July,2021
  * GitHub : https://github.com/anggit97
  */
-class RoomDatabase(
+class MovieeeDatabaseImpl(
     private val cacheMovieDatabase: MovieCacheDatabase,
     private val movieDatabase: MovieDatabase
-) : MoveeeDatabase {
+) : MovieeeDatabase {
 
     override suspend fun saveNowMovieList(movieList: List<Movie>) {
         saveMovieListAs(TYPE_NOW, movieList)

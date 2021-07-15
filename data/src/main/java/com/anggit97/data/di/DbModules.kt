@@ -2,10 +2,10 @@ package com.anggit97.data.di
 
 import android.content.Context
 import androidx.room.Room
-import com.anggit97.data.db.MoveeeDatabase
+import com.anggit97.data.db.MovieeeDatabase
 import com.anggit97.data.db.internal.MovieCacheDatabase
 import com.anggit97.data.db.internal.MovieDatabase
-import com.anggit97.data.db.internal.RoomDatabase
+import com.anggit97.data.db.internal.MovieeeDatabaseImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,10 +25,10 @@ object DbModules {
     @Provides
     fun provideMoveeeDatabase(
         @ApplicationContext context: Context
-    ): MoveeeDatabase {
+    ): MovieeeDatabase {
         val movieCacheDb = createMovieCacheDatabase(context)
         val movieeeDb = createMovieeeDatabase(context)
-        return RoomDatabase(
+        return MovieeeDatabaseImpl(
             movieCacheDb,
             movieeeDb
         )

@@ -1,8 +1,8 @@
 package com.anggit97.data.repository
 
 import com.anggit97.data.api.MovieeeApiService
-import com.anggit97.data.db.MoveeeDatabase
-import com.anggit97.data.repository.internal.DataMoveeeRepository
+import com.anggit97.data.db.MovieeeDatabase
+import com.anggit97.data.repository.internal.MovieeeRepositoryImpl
 import com.anggit97.model.repository.MovieeeRepository
 import dagger.Module
 import dagger.Provides
@@ -22,10 +22,10 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideMoveeeRepository(
-        movieDatabase: MoveeeDatabase,
+        movieDatabase: MovieeeDatabase,
         movieeeApiService: MovieeeApiService
     ): MovieeeRepository {
-        return DataMoveeeRepository(
+        return MovieeeRepositoryImpl(
             local = movieDatabase,
             remote = movieeeApiService,
         )
