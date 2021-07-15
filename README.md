@@ -22,7 +22,7 @@
 - Reminder Upcoming Movie
 - Connect To Movie DB Api (Using Movie Db Authentication)
 
-## Built With
+## Tech Stack
 - [Kotlin](https://kotlinlang.org/) - First class and official programming language for Android development.
 - [Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html) - Is light wight threads for asynchronous programming
 - [Flow](https://developer.android.com/kotlin/flow) Handle the stream of data asynchronously that executes sequentially.
@@ -41,6 +41,12 @@
 - [Kotlinx Serialization](https://github.com/google/gson) Kotlin serialization consists of a compiler plugin, that generates visitor code for serializable classes, runtime library with core serialization API and support libraries with various serialization formats.
 - [Glide](https://github.com/bumptech/glide) An image loading and caching library for Android focused on smooth scrolling
 - [Material Design](https://material.io/develop/android/docs/getting-started) Material is a design system created by Google to help teams build high-quality digital experiences for Android, iOS, Flutter, and the web.
+- [MockK](https://mockk.io/) Mocking library for Kotlin
+
+#Test
+- [Unit Test](https://developer.android.com/training/testing/unit-testing/) 
+- [Integration Test](https://developer.android.com/training/testing/unit-testing/) 
+- [End to End Test](https://developer.android.com/training/testing/unit-testing/) (Up Coming) 
 
 
 ## How to support me ?
