@@ -34,6 +34,16 @@ object MovieDataFactories {
         )
     }
 
+    val movieListResponseEmpty: MovieListResponse by lazy {
+        MovieListResponse(
+            datesResponse = null,
+            page = null,
+            movies = listOf(),
+            totalPages = 0,
+            totalResults = null
+        )
+    }
+
 
     private val movieResponse1 = MovieResponse(
         adult = null,
