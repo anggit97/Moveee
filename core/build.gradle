@@ -49,6 +49,10 @@ dependencies {
     implementation Libs.timber
 
     testImplementation Libs.Test.junit
+    testImplementation Libs.Test.core
+    testImplementation Libs.Test.coroutine
+    testImplementation Libs.Test.jupiterEngine
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.7.1"
     androidTestImplementation Libs.Test.runner
     androidTestImplementation Libs.Test.espresso
 }

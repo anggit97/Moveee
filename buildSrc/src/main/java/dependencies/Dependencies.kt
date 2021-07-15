@@ -120,7 +120,12 @@ object Libs {
     object Test {
         const val junit = "junit:junit:4.13"
         const val runner = "androidx.test:runner:1.1.0"
+        const val mockk = "io.mockk:mockk:1.12.0"
         const val espresso = "androidx.test.espresso:espresso-core:3.2.0"
+        const val coroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.0"
+        const val core = "androidx.arch.core:core-testing:2.1.0"
+        const val jupiterEngine = "org.junit.jupiter:junit-jupiter-engine:5.7.1"
+        const val jupiterApi = "org.junit.jupiter:junit-jupiter-api:5.7.1"
     }
 
     object Retrofit {
