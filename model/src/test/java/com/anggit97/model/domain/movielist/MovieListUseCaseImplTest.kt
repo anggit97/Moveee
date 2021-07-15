@@ -1,6 +1,5 @@
 package com.anggit97.model.domain.movielist
 
-import androidx.paging.PagingSource
 import com.anggit97.model.TestDataFactory
 import com.anggit97.model.repository.MovieeeRepository
 import com.anggit97.model.util.collectDataForTest
@@ -8,7 +7,8 @@ import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -33,7 +33,7 @@ class MovieListUseCaseImplTest {
 
     @ExperimentalCoroutinesApi
     @Test
-    fun `success get movie list now returned correct title`() = runBlocking {
+    fun `success get movie now list returned correct title`() = runBlocking {
         val expectedTitleLast = TestDataFactory.movie3.title
         val actualLast: String
 
@@ -53,22 +53,26 @@ class MovieListUseCaseImplTest {
         assertEquals(expectedTitleFirst, actualFirst)
     }
 
-//    @ExperimentalCoroutinesApi
-//    @Test
-//    fun `error get movie list now returned correct title`() = runBlocking {
-//        val expectedTitleLast = TestDataFactory.movie3.title
-//        val actualLast: String
-//
-//        val expectedTitleFirst = TestDataFactory.movie1.title
-//        val actualFirst: String
-//
-//        //given
-//        coEvery { mockRepository.getNowMovieListPaging() }.returns(PagingSource.LoadResult.Error())
-//
-//        //when
-//        val result = sut.getNowMovieListPaging()
-//
-//        //assert
-//    }
+    @ExperimentalCoroutinesApi
+    @Test
+    fun `success get movie plan list returned correct title`() = runBlocking {
+        val expectedTitleLast = TestDataFactory.movie3.title
+        val actualLast: String
+
+        val expectedTitleFirst = TestDataFactory.movie1.title
+        val actualFirst: String
+
+        //given
+        coEvery { mockRepository.getPlanMovieList() }.returns(TestDataFactory.pagingDataMoviesFlow)
+
+        //when
+        val result = sut.getPlanMovieList()
+        actualLast = result.last().collectDataForTest().map { it.title }.last()
+        actualFirst = result.first().collectDataForTest().map { it.title }.first()
+
+        //assert
+        assertEquals(expectedTitleLast, actualLast)
+        assertEquals(expectedTitleFirst, actualFirst)
+    }
 }
 
