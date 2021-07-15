@@ -17,6 +17,7 @@ import com.anggit97.core.ext.observeEvent
 import com.anggit97.core.ui.base.consumeBackEventInChildFragment
 import com.anggit97.core.util.viewBindings
 import com.anggit97.movieee.databinding.ActivityMainBinding
+import com.anggit97.movieee.worker.GetLatestMovieWorker
 import com.anggit97.navigation.SystemEvent
 import com.anggit97.navigation.SystemViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -73,6 +74,12 @@ class MainActivity : AppCompatActivity() {
         systemViewModel.systemEvent.observeEvent(this) {
             handleEvent(it)
         }
+
+        scheduleWorker()
+    }
+
+    private fun scheduleWorker() {
+        GetLatestMovieWorker.enqueuePeriodicWork(this)
     }
 
     private fun handleEvent(event: SystemEvent) {

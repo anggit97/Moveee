@@ -112,6 +112,8 @@ dependencies {
     implementation Libs.AndroidX.Hilt.work
     kapt Libs.AndroidX.Hilt.compiler
 
+    implementation Libs.AndroidX.WorkManager.runtime
+
     implementation Libs.Glide.runtime
     kapt Libs.Glide.compiler
 

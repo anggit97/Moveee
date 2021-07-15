@@ -17,8 +17,10 @@ package com.anggit97.movieee.di
 
 import android.content.Context
 import com.anggit97.core.device.ImageUriProvider
+import com.anggit97.core.notification.NotificationBuilder
 import com.anggit97.core.settings.AppSettings
 import com.anggit97.movieee.device.ImageUriProviderImpl
+import com.anggit97.movieee.notification.NotificationBuilderImpl
 import com.anggit97.movieee.settings.AppSettingsImpl
 import com.anggit97.theme.ThemeOptionManager
 import com.anggit97.theme.ThemeOptionStore
@@ -62,4 +64,9 @@ class ApplicationModule {
     fun provideAppSettings(
         @ApplicationContext context: Context
     ): AppSettings = AppSettingsImpl(context)
+
+    @Singleton
+    @Provides
+    fun provideNotificationBuilder(@ApplicationContext context: Context): NotificationBuilder =
+        NotificationBuilderImpl(context)
 }

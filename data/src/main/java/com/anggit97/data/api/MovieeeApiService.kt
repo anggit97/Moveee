@@ -25,9 +25,6 @@ interface MovieeeApiService {
     @GET("discover/movie")
     suspend fun getDiscoverMovieList(): MovieListResponse
 
-    @GET("movie/popular")
-    suspend fun getPopularMovieList(): MovieListResponse
-
     @GET("movie/top_rated")
     suspend fun getTopRatedMovieList(): MovieListResponse
 
@@ -45,4 +42,7 @@ interface MovieeeApiService {
         @Query("query") query: String,
         @Query("page") page: String
     ): MovieListResponse
+
+    @GET("movie/latest")
+    suspend fun getLatestMovie(): MovieDetailResponse
 }

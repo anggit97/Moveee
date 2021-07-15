@@ -8,6 +8,8 @@ import com.anggit97.model.domain.movielist.MovieListUseCase
 import com.anggit97.model.domain.movielist.MovieListUseCaseImpl
 import com.anggit97.model.domain.moviesearch.MovieSearchUseCase
 import com.anggit97.model.domain.moviesearch.MovieSearchUseCaseImpl
+import com.anggit97.model.domain.moviesreminder.MoviesReminderUseCase
+import com.anggit97.model.domain.moviesreminder.MoviesReminderUseCaseImpl
 import com.anggit97.model.repository.MovieeeRepository
 import dagger.Module
 import dagger.Provides
@@ -43,4 +45,9 @@ class DomainModule {
     @Singleton
     fun provideMovieSearchUseCase(movieeeRepository: MovieeeRepository): MovieSearchUseCase =
         MovieSearchUseCaseImpl(movieeeRepository)
+
+    @Provides
+    @Singleton
+    fun provideMovieReminderUseCase(movieeeRepository: MovieeeRepository): MoviesReminderUseCase =
+        MoviesReminderUseCaseImpl(movieeeRepository)
 }

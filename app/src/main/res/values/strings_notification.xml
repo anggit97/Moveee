@@ -1,0 +1,7 @@
+<resources>
+    <string name="default_notification_channel_id" translatable="false">EVT</string>
+
+    <string name="notification_channel_notice" translatable="false">Notice</string>
+    <string name="notification_channel_event" translatable="false">Event</string>
+    <string name="notification_channel_reminder_latest_movie" translatable="false">Reminder Latest Movies</string>
+</resources>

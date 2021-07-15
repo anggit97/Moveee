@@ -27,4 +27,6 @@ interface MovieeeRepository {
     suspend fun getMovieById(id: String): MovieDetail
     suspend fun getMovieVideos(id: String): List<Video>
     suspend fun getMovieCredits(id: String): List<Cast>
+
+    suspend fun getLatestMovie(): MovieDetail
 }

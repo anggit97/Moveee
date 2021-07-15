@@ -102,6 +102,10 @@ class MovieeeRepositoryImpl(
         ).flow
     }
 
+    override suspend fun getLatestMovie(): MovieDetail {
+        return remote.getLatestMovie().toMovieDetail()
+    }
+
     /**
      * Movie Video
      */
