@@ -38,18 +38,17 @@ class GetLatestMovieWorker @AssistedInject constructor(
         }
     }
 
-    companion object{
+    companion object {
         private const val DEBUG = false
         private const val TAG = "reminder_latest_movie"
 
-        fun enqueuePeriodicWork(context: Context){
+        fun enqueuePeriodicWork(context: Context) {
             WorkManager.getInstance(context)
                 .enqueueUniquePeriodicWork(TAG, ExistingPeriodicWorkPolicy.KEEP, createRequest())
         }
 
         private fun createRequest(): PeriodicWorkRequest {
             return PeriodicWorkRequestBuilder<GetLatestMovieWorker>(1, TimeUnit.MINUTES)
-                .setInitialDelay(calculateInitialDelayMinutes(), TimeUnit.MINUTES)
                 .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 1, TimeUnit.MINUTES)
                 .build()
         }
