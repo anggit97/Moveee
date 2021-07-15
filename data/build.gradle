@@ -13,6 +13,9 @@ android {
     defaultConfig {
         buildConfigField 'String', 'API_BASE_URL_MOVIE', propOrDef("MOVIE_API_BASE_URL", "\"https://api.themoviedb.org/3/\"")
         buildConfigField 'String', 'API_KEY_MOVIE', propOrDef("MOVIE_API_KEY", "\"00fadd6af89412de4c1a3ecd7fe631f6\"")
+
+        // DexOpener's test runner
+        testInstrumentationRunner "com.anggit97.data.DexOpeningTestRunner"
     }
 }
 
@@ -46,6 +49,9 @@ dependencies {
     testImplementation Libs.Test.junit
     testImplementation Libs.Test.mockk
     testImplementation Libs.Test.coroutine
+    androidTestImplementation Libs.Test.mockkAndroid
+    androidTestImplementation 'com.github.tmurakami:dexopener:2.0.5'
     androidTestImplementation Libs.Test.runner
+    androidTestImplementation Libs.Test.junitExt
     androidTestImplementation Libs.Test.espresso
 }
