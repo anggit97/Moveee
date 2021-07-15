@@ -1,5 +1,6 @@
 package com.anggit97.model.domain.movielist
 
+import androidx.paging.PagingSource
 import com.anggit97.model.TestDataFactory
 import com.anggit97.model.repository.MovieeeRepository
 import com.anggit97.model.util.collectDataForTest
@@ -51,5 +52,23 @@ class MovieListUseCaseImplTest {
         assertEquals(expectedTitleLast, actualLast)
         assertEquals(expectedTitleFirst, actualFirst)
     }
+
+//    @ExperimentalCoroutinesApi
+//    @Test
+//    fun `error get movie list now returned correct title`() = runBlocking {
+//        val expectedTitleLast = TestDataFactory.movie3.title
+//        val actualLast: String
+//
+//        val expectedTitleFirst = TestDataFactory.movie1.title
+//        val actualFirst: String
+//
+//        //given
+//        coEvery { mockRepository.getNowMovieListPaging() }.returns(PagingSource.LoadResult.Error())
+//
+//        //when
+//        val result = sut.getNowMovieListPaging()
+//
+//        //assert
+//    }
 }
 

@@ -1,8 +1,10 @@
 package com.anggit97.model.util
 
 import androidx.paging.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 
+@ExperimentalCoroutinesApi
 suspend fun <T : Any> PagingData<T>.collectDataForTest(): List<T> {
         val dcb = object : DifferCallback {
             override fun onChanged(position: Int, count: Int) {}
