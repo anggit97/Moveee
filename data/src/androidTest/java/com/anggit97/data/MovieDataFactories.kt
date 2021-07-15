@@ -14,8 +14,22 @@ object MovieDataFactories {
         MovieListResponse(
             datesResponse = null,
             page = null,
-            movies = listOf(movieResponse1, movieResponse2),
-            totalPages = null,
+            movies = listOf(
+                movieResponse1,
+                movieResponse2,
+                movieResponse2,
+                movieResponse2,
+                movieResponse2,
+                movieResponse2,
+                movieResponse2,
+                movieResponse2,
+                movieResponse2,
+                movieResponse2,
+                movieResponse2,
+                movieResponse2,
+                movieResponse2
+            ),
+            totalPages = 2,
             totalResults = null
         )
     }

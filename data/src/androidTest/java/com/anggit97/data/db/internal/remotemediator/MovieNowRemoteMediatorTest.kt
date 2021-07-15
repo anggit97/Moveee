@@ -30,11 +30,6 @@ import java.io.IOException
 @RunWith(AndroidJUnit4::class)
 class MovieNowRemoteMediatorTest {
 
-    private val mockMovies = listOf(
-        MovieDataFactories.movie1,
-        MovieDataFactories.movie2
-    )
-
     private val mockApi: MovieeeApiService = mockk()
 
     private val context = ApplicationProvider.getApplicationContext<Context>()
@@ -80,7 +75,7 @@ class MovieNowRemoteMediatorTest {
         val result = remoteMediatorSUT.load(LoadType.REFRESH, pagingState)
 
         assertTrue(result is RemoteMediator.MediatorResult.Success)
-//        assertFalse((result as RemoteMediator.MediatorResult.Success).endOfPaginationReached)
+        assertFalse((result as RemoteMediator.MediatorResult.Success).endOfPaginationReached)
     }
 
     @After
