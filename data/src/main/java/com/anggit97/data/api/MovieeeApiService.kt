@@ -1,8 +1,7 @@
 package com.anggit97.data.api
 
 import com.anggit97.data.api.response.*
-import com.anggit97.model.domain.auth.SessionIdParam
-import kotlinx.coroutines.flow.Flow
+import com.anggit97.model.model.SessionIdParam
 import retrofit2.http.*
 
 

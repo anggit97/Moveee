@@ -1,4 +1,4 @@
-package com.anggit97.model.domain.auth
+package com.anggit97.model.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
