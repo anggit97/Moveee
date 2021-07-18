@@ -48,7 +48,7 @@ class GetLatestMovieWorker @AssistedInject constructor(
         }
 
         private fun createRequest(): PeriodicWorkRequest {
-            return PeriodicWorkRequestBuilder<GetLatestMovieWorker>(1, TimeUnit.MINUTES)
+            return PeriodicWorkRequestBuilder<GetLatestMovieWorker>(30, TimeUnit.MINUTES)
                 .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 10, TimeUnit.SECONDS)
                 .build()
         }
