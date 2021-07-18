@@ -17,6 +17,7 @@ import androidx.navigation.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.anggit97.core.ext.executeWeb
 import com.anggit97.core.ext.loadAsync
 import com.anggit97.core.ext.observeEvent
 import com.anggit97.core.ext.showToast
@@ -177,25 +178,25 @@ class DetailActivity : AppCompatActivity(), DetailViewRenderer, DetailViewAnimat
             val ctx: Context = this@DetailActivity
             when (item) {
                 is BoxOfficeItemUiModel -> {
-//                    ctx.executeWeb(item.webLink)
+                    ctx.executeWeb(item.webLink)
                 }
                 is CgvItemUiModel -> {
 //                    analytics.clickCgvInfo()
-//                    ctx.executeWeb(item.webLink)
+                    ctx.executeWeb(item.webLink)
                 }
                 is LotteItemUiModel -> {
 //                    analytics.clickLotteInfo()
-//                    ctx.executeWeb(item.webLink)
+                    ctx.executeWeb(item.webLink)
                 }
                 is MegaboxItemUiModel -> {
 //                    analytics.clickMegaboxInfo()
-//                    ctx.executeWeb(item.webLink)
+                    ctx.executeWeb(item.webLink)
                 }
                 is NaverItemUiModel -> {
-//                    ctx.executeWeb(item.webLink)
+                    ctx.executeWeb(item.webLink)
                 }
                 is ImdbItemUiModel -> {
-//                    ctx.executeWeb(item.webLink)
+                    ctx.executeWeb(item.webLink)
                 }
                 is TrailerHeaderItemUiModel -> {
                     val message = SpannableString(ctx.getText(R.string.trailer_dialog_message))
