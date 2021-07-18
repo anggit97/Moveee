@@ -40,9 +40,6 @@ class MainActivity : AppCompatActivity() {
     private val navHostFragment: Fragment
         get() = supportFragmentManager.findFragmentById(R.id.navHostFragment) as NavHostFragment
 
-    @Inject
-    lateinit var notificationBuilder: NotificationBuilder
-
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.Theme_Moop_Main)
         super.onCreate(savedInstanceState)
@@ -82,38 +79,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         scheduleWorker()
-        showNotification()
-    }
-
-    private fun showNotification() {
-        notificationBuilder.showReminderLatestMovie(MovieDetail(
-            adult = null,
-            backdrop_path = null,
-            budget = null,
-            genres = listOf(),
-            homepage = null,
-            id = null,
-            imdb_id = null,
-            original_language = null,
-            original_title = null,
-            overview = null,
-            popularity = null,
-            poster_path = null,
-            production_companies = listOf(),
-            production_countries = listOf(),
-            release_date = "12 Agustus 2021",
-            revenue = null,
-            runtime = null,
-            spoken_languages = listOf(),
-            status = null,
-            tagline = null,
-            title = "Hey Jude",
-            video = null,
-            vote_average = null,
-            vote_count = null,
-            videos = listOf(),
-            casts = listOf()
-        ))
     }
 
     private fun scheduleWorker() {
