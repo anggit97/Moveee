@@ -6,7 +6,6 @@ import com.anggit97.core.ui.MutableEventLiveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
-
 /**
  * Created by Anggit Prayogo on 04,July,2021
  * GitHub : https://github.com/anggit97
