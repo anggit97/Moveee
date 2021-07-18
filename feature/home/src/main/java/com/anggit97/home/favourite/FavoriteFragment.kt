@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.ActivityNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.RecyclerView
 import com.anggit97.core.util.autoCleared
 import com.anggit97.home.HomeFragmentDirections
@@ -27,7 +28,7 @@ import kotlinx.coroutines.launch
  * GitHub : https://github.com/anggit97
  */
 @AndroidEntryPoint
-class FavoriteFragment : HomeTabFragment(R.layout.home_tab_favourite){
+class FavoriteFragment : HomeTabFragment(R.layout.home_tab_favourite) {
 
     private var binding: HomeTabFavouriteBinding by autoCleared()
 
@@ -49,6 +50,15 @@ class FavoriteFragment : HomeTabFragment(R.layout.home_tab_favourite){
                         .makeSceneTransitionAnimation(requireActivity(), *sharedElements)
                 )
             )
+        }.also {
+            lifecycleScope.launch {
+                it.loadStateFlow.collectLatest { loadState ->
+                    noItemsView.isVisible =
+                        loadState.append is LoadState.NotLoading
+                                && loadState.append.endOfPaginationReached
+                                && it.itemCount == 0
+                }
+            }
         }
         listView.apply {
             adapter = listAdapter
