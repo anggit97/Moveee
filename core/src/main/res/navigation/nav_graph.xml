@@ -49,11 +49,6 @@
     </activity>
 
     <activity
-        android:id="@+id/authActivity"
-        android:name="com.anggit97.auth.AuthActivity"
-        android:label="DetailActivity"/>
-
-    <activity
         android:id="@+id/testPaging"
         android:name="com.anggit97.home.test.TestPaging"
         android:label="TestPaging" />

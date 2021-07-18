@@ -20,19 +20,18 @@ class AuthActivity : AppCompatActivity() {
 
     private val authViewModel: AuthViewModel by viewModels()
     private lateinit var webViewClient: WebViewClient
+    private var url: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
-        authViewModel.urlAuth.observe(this@AuthActivity) {
-            binding.initWebView(it)
-        }
+        url = intent.getStringExtra(URL_PAYLOAD)
+        binding.initWebView(url)
     }
 
-    private fun ActivityAuthBinding.initWebView(url: String) {
+    private fun ActivityAuthBinding.initWebView(url: String?) {
         webViewClient = webViewClientCallback
-        wvAuth.loadUrl(url)
+        url?.let { wvAuth.loadUrl(it) }
     }
 
     private val webViewClientCallback = object : WebViewClient() {
@@ -44,5 +43,9 @@ class AuthActivity : AppCompatActivity() {
             Timber.d(url)
             return false
         }
+    }
+
+    companion object {
+        const val URL_PAYLOAD = "url_payload"
     }
 }
