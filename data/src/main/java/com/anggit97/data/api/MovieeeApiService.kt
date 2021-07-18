@@ -1,13 +1,9 @@
 package com.anggit97.data.api
 
-import com.anggit97.data.api.response.CreditsListResponse
-import com.anggit97.data.api.response.MovieDetailResponse
-import com.anggit97.data.api.response.MovieListResponse
-import com.anggit97.data.api.response.MovieVideosResponse
+import com.anggit97.data.api.response.*
+import com.anggit97.model.domain.auth.SessionIdParam
 import kotlinx.coroutines.flow.Flow
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 
 /**
@@ -45,4 +41,10 @@ interface MovieeeApiService {
 
     @GET("movie/latest")
     suspend fun getLatestMovie(): MovieDetailResponse
+
+    @GET("authentication/token/new")
+    suspend fun getRequestToken(): RequestTokenResponse
+
+    @POST("authentication/session/new")
+    suspend fun createSessionId(@Body request: SessionIdParam): CreateSessionIdResponse
 }

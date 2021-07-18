@@ -7,9 +7,10 @@ import com.anggit97.data.db.internal.remotemediator.MovieNowRemoteMediator
 import com.anggit97.data.db.internal.remotemediator.MoviePlanRemoteMediator
 import com.anggit97.data.db.internal.pagingsource.SearchMoviePagingSource
 import com.anggit97.data.db.internal.mapper.toMovie
-import com.anggit97.data.repository.internal.mapper.toCastList
-import com.anggit97.data.repository.internal.mapper.toMovieDetail
-import com.anggit97.data.repository.internal.mapper.toMovieVideos
+import com.anggit97.data.repository.internal.mapper.*
+import com.anggit97.model.domain.auth.RequestToken
+import com.anggit97.model.domain.auth.SessionId
+import com.anggit97.model.domain.auth.SessionIdParam
 import com.anggit97.model.model.Cast
 import com.anggit97.model.model.Movie
 import com.anggit97.model.model.MovieDetail
@@ -118,5 +119,19 @@ class MovieeeRepositoryImpl(
      */
     override suspend fun getMovieCredits(id: String): List<Cast> {
         return remote.getMovieCredits(id).toCastList()
+    }
+
+
+
+
+    /**
+     * Auth
+     */
+    override suspend fun getRequestToken(): RequestToken {
+        return remote.getRequestToken().toRequestToken()
+    }
+
+    override suspend fun createSessionId(request: SessionIdParam): SessionId {
+        return remote.createSessionId(request).toSessionId()
     }
 }

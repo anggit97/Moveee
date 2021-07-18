@@ -1,6 +1,9 @@
 package com.anggit97.model.repository
 
 import androidx.paging.PagingData
+import com.anggit97.model.domain.auth.RequestToken
+import com.anggit97.model.domain.auth.SessionId
+import com.anggit97.model.domain.auth.SessionIdParam
 import com.anggit97.model.model.Cast
 import com.anggit97.model.model.Movie
 import com.anggit97.model.model.MovieDetail
@@ -29,4 +32,7 @@ interface MovieeeRepository {
     suspend fun getMovieCredits(id: String): List<Cast>
 
     suspend fun getLatestMovie(): MovieDetail
+
+    suspend fun getRequestToken(): RequestToken
+    suspend fun createSessionId(request: SessionIdParam): SessionId
 }

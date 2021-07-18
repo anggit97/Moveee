@@ -1,6 +1,9 @@
 package com.anggit97.data.repository.internal.mapper
 
 import com.anggit97.data.api.response.*
+import com.anggit97.model.domain.auth.RequestToken
+import com.anggit97.model.domain.auth.SessionId
+import com.anggit97.model.domain.auth.SessionIdParam
 import com.anggit97.model.model.Cast
 import com.anggit97.model.model.*
 
@@ -110,3 +113,16 @@ fun GenreResponse.toGenre() = Genre(
     id ?: 0,
     name ?: ""
 )
+
+fun RequestTokenResponse.toRequestToken() = RequestToken(
+    expiresAt ?: "",
+    requestToken ?: "",
+    success ?: false
+)
+
+fun CreateSessionIdResponse.toSessionId() = SessionId(
+    sessionId ?: "",
+    success ?: false
+)
+
+
