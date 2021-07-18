@@ -126,7 +126,14 @@ dependencies {
     implementation Libs.lottie
 
     testImplementation Libs.Test.junit
+    testImplementation Libs.Test.mockk
+    testImplementation Libs.Test.coroutine
+    androidTestImplementation Libs.Test.mockkAndroid
+    androidTestImplementation Libs.AndroidX.WorkManager.testing
+    androidTestImplementation Libs.Test.core
+    androidTestImplementation 'com.github.tmurakami:dexopener:2.0.5'
     androidTestImplementation Libs.Test.runner
+    androidTestImplementation Libs.Test.junitExt
     androidTestImplementation Libs.Test.espresso
 }
 
