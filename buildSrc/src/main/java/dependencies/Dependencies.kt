@@ -51,7 +51,7 @@ object Libs {
 
     object Google {
         const val gmsPlugin = "com.google.gms:google-services:4.3.4"
-        const val material = "com.google.android.material:material:1.3.0-alpha03"
+        const val material = "com.google.android.material:material:1.4.0"
         const val play = "com.google.android.play:core:1.8.3"
     }
 
