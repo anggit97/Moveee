@@ -1,9 +1,7 @@
 package com.anggit97.movieee
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -74,7 +72,12 @@ class MainActivity : AppCompatActivity() {
                 when (it.itemId) {
                     R.id.homeFragment -> navController.popBackStack(R.id.homeFragment, false)
                     R.id.authActivity -> {
-                        navigateToAuthActivity()
+                        val authenticated = sessionViewModel.isAuthenticated()
+                        if (authenticated) {
+                            showToast("Logout")
+                        } else {
+                            navigateToAuthActivity()
+                        }
                     }
                     else -> NavigationUI.onNavDestinationSelected(it, navController)
                 }
@@ -92,21 +95,18 @@ class MainActivity : AppCompatActivity() {
         scheduleWorker()
     }
 
-    private fun handleSession(session: Boolean) {
-        val result = if (session) "Udah login" else "belum login"
-        showToast(result)
-    }
-
-    var resultLauncherAuth =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val data: Intent? = result.data
-            }
+    private fun handleSession(authenticated: Boolean) {
+        val menuAuth = binding.navigationView.menu.findItem(R.id.authActivity)
+        if (authenticated) {
+            menuAuth.title = getString(R.string.menu_logout)
+        } else {
+            menuAuth.title = getString(R.string.menu_login)
         }
+    }
 
     private fun navigateToAuthActivity() {
         val intent = Intent(this, AuthActivity::class.java)
-        resultLauncherAuth.launch(intent)
+        startActivity(intent)
     }
 
     private fun scheduleWorker() {

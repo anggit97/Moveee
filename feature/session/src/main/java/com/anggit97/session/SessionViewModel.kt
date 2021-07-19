@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 /**
  * Created by Anggit Prayogo on 19,July,2021
  * GitHub : https://github.com/anggit97
@@ -35,4 +34,6 @@ class SessionViewModel @Inject constructor(
             }
         }
     }
+
+    fun isAuthenticated() = authenticated.value ?: false
 }
