@@ -10,4 +10,6 @@ import kotlinx.coroutines.flow.Flow
 interface SessionManagerStore {
     fun getSessionId(): Flow<String>
     suspend fun setSessionId(sessionId: String)
+    fun isLogin(): Flow<Boolean>
+    suspend fun setLogin(login: Boolean)
 }

@@ -134,6 +134,7 @@ class MovieeeRepositoryImpl(
     override suspend fun createSessionId(request: SessionIdParam): SessionId {
         val response = remote.createSessionId(request)
         sessionManager.setSessionId(response.sessionId ?: "-")
+        sessionManager.setLogin(true)
         return response.toSessionId()
     }
 }

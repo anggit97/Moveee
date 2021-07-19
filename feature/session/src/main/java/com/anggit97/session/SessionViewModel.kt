@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,15 +20,18 @@ class SessionViewModel @Inject constructor(
     private val sessionManagerStore: SessionManagerStore
 ) : ViewModel() {
 
-    private val _sessionId = MutableLiveData<String>()
-    val sessionId: LiveData<String>
-        get() = _sessionId
-
+    private val _authenticated = MutableLiveData<Boolean>()
+    val authenticated: LiveData<Boolean>
+        get() = _authenticated
 
     init {
         viewModelScope.launch {
-            sessionManagerStore.getSessionId().collect {
-                _sessionId.value = it
+            val sessionId = sessionManagerStore.getSessionId()
+            val login = sessionManagerStore.isLogin()
+            combine(sessionId, login) { session, login ->
+                session.isNotEmpty() && login
+            }.collect { result ->
+                _authenticated.value = result
             }
         }
     }

@@ -19,10 +19,8 @@ import com.anggit97.auth.AuthActivity
 import com.anggit97.core.ext.consume
 import com.anggit97.core.ext.observeEvent
 import com.anggit97.core.ext.showToast
-import com.anggit97.core.notification.NotificationBuilder
 import com.anggit97.core.ui.base.consumeBackEventInChildFragment
 import com.anggit97.core.util.viewBindings
-import com.anggit97.model.model.MovieDetail
 import com.anggit97.movieee.databinding.ActivityMainBinding
 import com.anggit97.movieee.worker.GetLatestMovieWorker
 import com.anggit97.navigation.SystemEvent
@@ -30,7 +28,6 @@ import com.anggit97.navigation.SystemViewModel
 import com.anggit97.session.SessionViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import dev.chrisbanes.insetter.Insetter
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -88,15 +85,16 @@ class MainActivity : AppCompatActivity() {
             handleEvent(it)
         }
 
-        sessionViewModel.sessionId.observe(this) {
+        sessionViewModel.authenticated.observe(this) {
             handleSession(it)
         }
 
         scheduleWorker()
     }
 
-    private fun handleSession(session: String?) {
-        showToast(session ?: "-")
+    private fun handleSession(session: Boolean) {
+        val result = if (session) "Udah login" else "belum login"
+        showToast(result)
     }
 
     var resultLauncherAuth =
