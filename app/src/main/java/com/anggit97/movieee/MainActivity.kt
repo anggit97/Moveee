@@ -74,7 +74,7 @@ class MainActivity : AppCompatActivity() {
                     R.id.authActivity -> {
                         val authenticated = sessionViewModel.isAuthenticated()
                         if (authenticated) {
-                            showToast("Logout")
+                            sessionViewModel.logout()
                         } else {
                             navigateToAuthActivity()
                         }
@@ -88,8 +88,12 @@ class MainActivity : AppCompatActivity() {
             handleEvent(it)
         }
 
-        sessionViewModel.authenticated.observe(this) {
+        sessionViewModel.authenticated.observeEvent(this) {
             handleSession(it)
+        }
+
+        sessionViewModel.logout.observe(this) {
+            showToast(getString(R.string.success_logout))
         }
 
         scheduleWorker()

@@ -29,4 +29,11 @@ class SessionManagerStoreImpl @Inject constructor(
     override suspend fun setLogin(login: Boolean) {
         context.dataStore.edit { it[LOGIN] = login }
     }
+
+    override suspend fun logout() {
+        context.dataStore.edit {
+            it.remove(LOGIN)
+            it.remove(SESSION_ID)
+        }
+    }
 }

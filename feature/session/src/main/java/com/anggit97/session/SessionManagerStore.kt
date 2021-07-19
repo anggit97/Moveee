@@ -12,4 +12,5 @@ interface SessionManagerStore {
     suspend fun setSessionId(sessionId: String)
     fun isLogin(): Flow<Boolean>
     suspend fun setLogin(login: Boolean)
+    suspend fun logout()
 }
