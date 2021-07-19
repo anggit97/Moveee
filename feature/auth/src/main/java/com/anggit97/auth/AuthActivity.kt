@@ -1,7 +1,6 @@
 package com.anggit97.auth
 
 import android.os.Bundle
-import android.util.Log
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -9,7 +8,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.anggit97.auth.databinding.ActivityAuthBinding
 import com.anggit97.core.util.viewBindings
-import com.anggit97.navigation.AuthViewModel
+import com.anggit97.data.BuildConfig
 import dagger.hilt.android.AndroidEntryPoint
 import timber.log.Timber
 
@@ -26,11 +25,16 @@ class AuthActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         url = intent.getStringExtra(URL_PAYLOAD)
-        binding.initWebView(url)
+
+        authViewModel.getRequestToken().observe(this) {
+            val url = BuildConfig.ASK_PERMISSION_MOVIE_URL.plus(it.requestToken)
+            binding.initWebView(url)
+        }
     }
 
     private fun ActivityAuthBinding.initWebView(url: String?) {
         webViewClient = webViewClientCallback
+        wvAuth.webViewClient = webViewClient
         url?.let { wvAuth.loadUrl(it) }
     }
 

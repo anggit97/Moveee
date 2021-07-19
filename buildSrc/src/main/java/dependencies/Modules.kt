@@ -22,6 +22,7 @@ object Modules {
     const val Navigation = ":feature:navigation"
     const val Detail = ":feature:detail"
     const val Theme = ":feature:theme"
+    const val Auth = ":feature:auth"
 
     //library
     const val StFalconImageViewer = ":library:stfalcon-imageviewer"

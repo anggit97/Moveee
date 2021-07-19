@@ -4,5 +4,5 @@
     <string name="menu_home">Beranda</string>
     <string name="menu_search">Pencarian</string>
     <string name="menu_map">Peta</string>
-    <string name="menu_settings">Pengaturan</string>
+    <string name="menu_login">Masuk/Daftar</string>
 </resources>

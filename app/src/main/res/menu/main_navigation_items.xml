@@ -28,4 +28,14 @@
             android:icon="@drawable/ic_round_settings"
             android:title="@string/menu_settings" />
     </group>
+    <group
+        android:id="@+id/group_auth"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/authActivity"
+            android:checkable="true"
+            android:icon="@drawable/ic_baseline_login_24"
+            android:title="@string/menu_login" />
+    </group>
 </menu>

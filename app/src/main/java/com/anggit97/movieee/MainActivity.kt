@@ -1,6 +1,9 @@
 package com.anggit97.movieee
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -12,6 +15,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
+import com.anggit97.auth.AuthActivity
 import com.anggit97.core.ext.consume
 import com.anggit97.core.ext.observeEvent
 import com.anggit97.core.notification.NotificationBuilder
@@ -69,6 +73,9 @@ class MainActivity : AppCompatActivity() {
                 val navController = navHostFragment.findNavController()
                 when (it.itemId) {
                     R.id.homeFragment -> navController.popBackStack(R.id.homeFragment, false)
+                    R.id.authActivity -> {
+                        navigateToAuthActivity()
+                    }
                     else -> NavigationUI.onNavDestinationSelected(it, navController)
                 }
             }
@@ -79,6 +86,18 @@ class MainActivity : AppCompatActivity() {
         }
 
         scheduleWorker()
+    }
+
+    var resultLauncherAuth =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data: Intent? = result.data
+            }
+        }
+
+    private fun navigateToAuthActivity() {
+        val intent = Intent(this, AuthActivity::class.java)
+        resultLauncherAuth.launch(intent)
     }
 
     private fun scheduleWorker() {
