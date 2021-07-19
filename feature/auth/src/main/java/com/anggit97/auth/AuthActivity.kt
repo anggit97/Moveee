@@ -11,6 +11,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.anggit97.auth.databinding.ActivityAuthBinding
+import com.anggit97.core.ext.showToast
 import com.anggit97.core.util.viewBindings
 import com.anggit97.data.BuildConfig
 import com.anggit97.session.SessionManagerStore
@@ -43,11 +44,7 @@ class AuthActivity : AppCompatActivity() {
         }
 
         authViewModel.sessionId.observe(this) {
-            lifecycleScope.launch {
-                val sessionId = sessionManagerStore.getSessionId().collect {
-                    Log.d("SESSION", "sessionId: " + it)
-                }
-            }
+            if (it.success) finish() else showToast("Gagal menyimpan session id")
         }
     }
 
