@@ -18,6 +18,7 @@
 - Support Offline Mode
 - Support Multi Language (ID & EN)
 - Reminder Latest Movie
+- Login With TMDB Api
 
 ## Upcoming Feature
 - Connect To Movie DB Api (Using Movie Db Authentication)
@@ -43,6 +44,7 @@
 - [Glide](https://github.com/bumptech/glide) An image loading and caching library for Android focused on smooth scrolling
 - [Material Design](https://material.io/develop/android/docs/getting-started) Material is a design system created by Google to help teams build high-quality digital experiences for Android, iOS, Flutter, and the web.
 - [MockK](https://mockk.io/) Mocking library for Kotlin
+- [Data Store](https://developer.android.com/topic/libraries/architecture/datastore)  data storage solution that allows you to store key-value pairs or typed objects with protocol buffers. DataStore uses Kotlin coroutines and Flow to store data asynchronously, consistently, and transactionally.
 
 #Test
 - [Unit Test](https://developer.android.com/training/testing/unit-testing/) 
