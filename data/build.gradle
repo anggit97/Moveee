@@ -24,6 +24,8 @@ dependencies {
     implementation project(Modules.Model)
     implementation project(Modules.Core)
 
+    implementation project(Modules.Session)
+
     implementation Libs.Kotlin.stdlib
     implementation Libs.Kotlin.serialization
     implementation Libs.Coroutines.core

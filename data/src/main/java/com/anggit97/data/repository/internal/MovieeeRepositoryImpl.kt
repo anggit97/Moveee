@@ -16,6 +16,7 @@ import com.anggit97.model.model.Movie
 import com.anggit97.model.model.MovieDetail
 import com.anggit97.model.model.Video
 import com.anggit97.model.repository.MovieeeRepository
+import com.anggit97.session.SessionManagerStore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.mapLatest
@@ -26,7 +27,8 @@ import kotlinx.coroutines.flow.mapLatest
  */
 class MovieeeRepositoryImpl(
     private val local: MovieeeDatabase,
-    private val remote: MovieeeApiService
+    private val remote: MovieeeApiService,
+    private val sessionManager: SessionManagerStore
 ) : MovieeeRepository {
 
     @ExperimentalCoroutinesApi
@@ -122,8 +124,6 @@ class MovieeeRepositoryImpl(
     }
 
 
-
-
     /**
      * Auth
      */
@@ -132,6 +132,8 @@ class MovieeeRepositoryImpl(
     }
 
     override suspend fun createSessionId(request: SessionIdParam): SessionId {
-        return remote.createSessionId(request).toSessionId()
+        val response = remote.createSessionId(request)
+        sessionManager.setSessionId(response.sessionId ?: "-")
+        return response.toSessionId()
     }
 }

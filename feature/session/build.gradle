@@ -11,7 +11,6 @@ apply from: rootProject.file('gradle/android.gradle')
 
 dependencies {
     implementation project(Modules.Core)
-    implementation project(Modules.Data)
 
     implementation Libs.Kotlin.stdlib
 

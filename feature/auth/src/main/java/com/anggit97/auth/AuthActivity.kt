@@ -9,11 +9,16 @@ import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.anggit97.auth.databinding.ActivityAuthBinding
 import com.anggit97.core.util.viewBindings
 import com.anggit97.data.BuildConfig
+import com.anggit97.session.SessionManagerStore
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import timber.log.Timber
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AuthActivity : AppCompatActivity() {
@@ -23,6 +28,9 @@ class AuthActivity : AppCompatActivity() {
     private val authViewModel: AuthViewModel by viewModels()
     private lateinit var webViewClientCb: WebViewClient
     private var url: String? = null
+
+    @Inject
+    lateinit var sessionManagerStore: SessionManagerStore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +43,11 @@ class AuthActivity : AppCompatActivity() {
         }
 
         authViewModel.sessionId.observe(this) {
-            Log.d("SESSION", "sessionId: " + it.sessionId)
+            lifecycleScope.launch {
+                val sessionId = sessionManagerStore.getSessionId().collect {
+                    Log.d("SESSION", "sessionId: " + it)
+                }
+            }
         }
     }
 
