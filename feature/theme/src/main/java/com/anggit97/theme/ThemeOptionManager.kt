@@ -23,7 +23,6 @@ class ThemeOptionManager(
         ThemeOption.Dark,
         defaultThemeOption
     )
-
     private fun isAtLeastQ(): Boolean {
         return Build.VERSION.SDK_INT >= 29
     }

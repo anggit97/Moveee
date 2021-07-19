@@ -103,6 +103,10 @@ object Libs {
             const val ktx = "androidx.room:room-ktx:$version"
         }
 
+        object DataStore{
+            const val preferences = "androidx.datastore:datastore-preferences:1.0.0-rc01"
+        }
+
         object Paging {
             private const val version = "3.0.0"
 

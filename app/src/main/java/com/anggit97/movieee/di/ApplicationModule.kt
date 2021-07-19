@@ -22,6 +22,8 @@ import com.anggit97.core.settings.AppSettings
 import com.anggit97.movieee.device.ImageUriProviderImpl
 import com.anggit97.movieee.notification.NotificationBuilderImpl
 import com.anggit97.movieee.settings.AppSettingsImpl
+import com.anggit97.session.SessionManagerStore
+import com.anggit97.session.SessionManagerStoreImpl
 import com.anggit97.theme.ThemeOptionManager
 import com.anggit97.theme.ThemeOptionStore
 import dagger.Module
@@ -50,6 +52,14 @@ class ApplicationModule {
             return appSettings.themeOption
         }
     })
+
+    @Singleton
+    @Provides
+    fun provideSessionManager(
+        @ApplicationContext context: Context
+    ): SessionManagerStore {
+        return SessionManagerStoreImpl(context)
+    }
 
     @Singleton
     @Provides
