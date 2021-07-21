@@ -14,6 +14,7 @@ import com.anggit97.session.SessionManagerStore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.mapLatest
 
 /**
@@ -138,10 +139,7 @@ class MovieeeRepositoryImpl(
      * Account
      */
     override suspend fun getAccount(): Account {
-        var sessionId = ""
-        sessionManager.getSessionId().collect {
-            sessionId = it
-        }
+        val sessionId = sessionManager.getSessionId().first()
         return remote.getAccount(sessionId = sessionId).toAccount()
     }
 }

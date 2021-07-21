@@ -2,6 +2,7 @@ package com.anggit97.movieee
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
@@ -88,12 +89,16 @@ class MainActivity : AppCompatActivity() {
             handleEvent(it)
         }
 
-        sessionViewModel.authenticated.observeEvent(this) {
+        sessionViewModel.authenticated.observe(this) {
             handleSession(it)
         }
 
         sessionViewModel.logout.observe(this) {
             showToast(getString(R.string.success_logout))
+        }
+
+        sessionViewModel.account.observe(this){
+            Log.d("TAG", "account: ${it.username}")
         }
 
         scheduleWorker()
