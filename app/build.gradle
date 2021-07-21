@@ -79,6 +79,7 @@ dependencies {
     implementation project(Modules.Theme)
     implementation project(Modules.Auth)
     implementation project(Modules.Session)
+    implementation project(Modules.Profile)
 
     implementation Libs.Kotlin.stdlib
     implementation Libs.Kotlin.serialization

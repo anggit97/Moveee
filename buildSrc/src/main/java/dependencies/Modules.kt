@@ -24,6 +24,7 @@ object Modules {
     const val Theme = ":feature:theme"
     const val Auth = ":feature:auth"
     const val Session = ":feature:session"
+    const val Profile = ":feature:profile"
 
     //library
     const val StFalconImageViewer = ":library:stfalcon-imageviewer"
