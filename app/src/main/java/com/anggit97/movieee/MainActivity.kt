@@ -116,7 +116,7 @@ class MainActivity : AppCompatActivity() {
         group.isVisible = true
         logo.isVisible = false
         avatar.loadAsync(account.getGravatarImageUrl())
-        username.text = account.name
+        username.text = account.username
     }
 
     private fun handleSession(authenticated: Boolean) {
