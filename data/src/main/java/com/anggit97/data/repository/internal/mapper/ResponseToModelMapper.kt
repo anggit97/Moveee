@@ -124,4 +124,15 @@ fun CreateSessionIdResponse.toSessionId() = SessionId(
     success ?: false
 )
 
+fun AccountResponse.toAccount() = Account(
+    id?:0,
+    iso6391?:"",
+    iso31661?:"",
+    name?:"",
+    includeAdult?:false,
+    username?:"",
+    avatarResponse?.gravatarResponse?.hash?:"",
+    avatarResponse?.tmdbResponse?.avatarPath?:""
+)
+
 

@@ -46,4 +46,7 @@ interface MovieeeApiService {
 
     @POST("authentication/session/new")
     suspend fun createSessionId(@Body request: SessionIdParam): CreateSessionIdResponse
+
+    @GET("account")
+    suspend fun getAccount(@Query("session_id") sessionId: String): AccountResponse
 }

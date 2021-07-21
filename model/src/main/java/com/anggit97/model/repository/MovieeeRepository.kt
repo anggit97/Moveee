@@ -1,13 +1,7 @@
 package com.anggit97.model.repository
 
 import androidx.paging.PagingData
-import com.anggit97.model.model.RequestToken
-import com.anggit97.model.model.SessionId
-import com.anggit97.model.model.SessionIdParam
-import com.anggit97.model.model.Cast
-import com.anggit97.model.model.Movie
-import com.anggit97.model.model.MovieDetail
-import com.anggit97.model.model.Video
+import com.anggit97.model.model.*
 import kotlinx.coroutines.flow.Flow
 
 
@@ -35,4 +29,6 @@ interface MovieeeRepository {
 
     suspend fun getRequestToken(): RequestToken
     suspend fun createSessionId(request: SessionIdParam): SessionId
+
+    suspend fun getAccount(): Account
 }

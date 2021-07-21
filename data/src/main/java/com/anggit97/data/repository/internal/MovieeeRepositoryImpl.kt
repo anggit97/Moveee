@@ -8,17 +8,12 @@ import com.anggit97.data.db.internal.remotemediator.MoviePlanRemoteMediator
 import com.anggit97.data.db.internal.pagingsource.SearchMoviePagingSource
 import com.anggit97.data.db.internal.mapper.toMovie
 import com.anggit97.data.repository.internal.mapper.*
-import com.anggit97.model.model.RequestToken
-import com.anggit97.model.model.SessionId
-import com.anggit97.model.model.SessionIdParam
-import com.anggit97.model.model.Cast
-import com.anggit97.model.model.Movie
-import com.anggit97.model.model.MovieDetail
-import com.anggit97.model.model.Video
+import com.anggit97.model.model.*
 import com.anggit97.model.repository.MovieeeRepository
 import com.anggit97.session.SessionManagerStore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.mapLatest
 
 /**
@@ -136,5 +131,17 @@ class MovieeeRepositoryImpl(
         sessionManager.setSessionId(response.sessionId ?: "-")
         sessionManager.setLogin(true)
         return response.toSessionId()
+    }
+
+
+    /**
+     * Account
+     */
+    override suspend fun getAccount(): Account {
+        var sessionId = ""
+        sessionManager.getSessionId().collect {
+            sessionId = it
+        }
+        return remote.getAccount(sessionId = sessionId).toAccount()
     }
 }

@@ -1,5 +1,7 @@
 package com.anggit97.model.di
 
+import com.anggit97.model.domain.account.AccountUseCase
+import com.anggit97.model.domain.account.AccountUseCaseImpl
 import com.anggit97.model.domain.auth.AuthUseCase
 import com.anggit97.model.domain.auth.AuthUseCaseImpl
 import com.anggit97.model.domain.moviedetail.MovieDetailUseCase
@@ -57,4 +59,9 @@ class DomainModule {
     @Singleton
     fun provideAuthUseCase(movieeeRepository: MovieeeRepository): AuthUseCase =
         AuthUseCaseImpl(movieeeRepository)
+
+    @Provides
+    @Singleton
+    fun provideAccountUseCase(movieeeRepository: MovieeeRepository): AccountUseCase =
+        AccountUseCaseImpl(movieeeRepository)
 }
