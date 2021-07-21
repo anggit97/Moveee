@@ -3,12 +3,13 @@ package com.anggit97.movieee
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GravityCompat
-import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.core.view.updatePadding
+import androidx.constraintlayout.widget.Group
+import androidx.core.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -16,10 +17,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.anggit97.auth.AuthActivity
 import com.anggit97.core.ext.consume
+import com.anggit97.core.ext.loadAsync
 import com.anggit97.core.ext.observeEvent
 import com.anggit97.core.ext.showToast
 import com.anggit97.core.ui.base.consumeBackEventInChildFragment
 import com.anggit97.core.util.viewBindings
+import com.anggit97.model.model.Account
 import com.anggit97.movieee.databinding.ActivityMainBinding
 import com.anggit97.movieee.worker.GetLatestMovieWorker
 import com.anggit97.navigation.SystemEvent
@@ -97,11 +100,23 @@ class MainActivity : AppCompatActivity() {
             showToast(getString(R.string.success_logout))
         }
 
-        sessionViewModel.account.observe(this){
-            Log.d("TAG", "account: ${it.username}")
+        sessionViewModel.account.observe(this) {
+            binding.navigationView.getHeaderView(0).setView(it)
         }
 
         scheduleWorker()
+    }
+
+    private fun View.setView(account: Account) {
+        val logo = findViewById<ImageView>(R.id.ivLogo)
+        val group = findViewById<Group>(R.id.groupUser)
+        val avatar = findViewById<ImageView>(R.id.ivAvatar)
+        val username = findViewById<TextView>(R.id.tvUsername)
+
+        group.isVisible = true
+        logo.isVisible = false
+        avatar.loadAsync(account.getGravatarImageUrl())
+        username.text = account.name
     }
 
     private fun handleSession(authenticated: Boolean) {
