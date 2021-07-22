@@ -42,7 +42,6 @@ class SessionViewModel @Inject constructor(
                 emit(account)
             }catch (e: Exception){
                 Timber.e(e)
-                Timber.d(e.message)
             }
         }
     }

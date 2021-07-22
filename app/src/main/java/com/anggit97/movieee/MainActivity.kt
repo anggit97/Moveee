@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.Group
 import androidx.core.view.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.distinctUntilChanged
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -91,7 +92,7 @@ class MainActivity : AppCompatActivity() {
             handleEvent(it)
         }
 
-        sessionViewModel.authenticated.observe(this) {
+        sessionViewModel.authenticated.distinctUntilChanged().observe(this) {
             handleSession(it)
         }
 
@@ -106,23 +107,32 @@ class MainActivity : AppCompatActivity() {
         scheduleWorker()
     }
 
-    private fun View.setView(account: Account) {
+    private fun View.setView(account: Account?) {
         val logo = findViewById<ImageView>(R.id.ivLogo)
         val group = findViewById<Group>(R.id.groupUser)
         val avatar = findViewById<ImageView>(R.id.ivAvatar)
         val username = findViewById<TextView>(R.id.tvUsername)
 
-        group.isVisible = true
-        logo.isVisible = false
-        avatar.loadAsyncCircle(account.getGravatarImageUrl())
-        username.text = account.username
+
+        val accountNull = account == null
+        group.isVisible = !accountNull
+        logo.isVisible = accountNull
+
+        account?.let {
+            avatar.loadAsyncCircle(account.getGravatarImageUrl())
+            username.text = account.username
+        }
     }
 
     private fun handleSession(authenticated: Boolean) {
         val menuAuth = binding.navigationView.menu.findItem(R.id.authActivity)
+        val menuProfile = binding.navigationView.menu.findItem(R.id.profileFragment)
+        menuProfile.isVisible = authenticated
+
         if (authenticated) {
             menuAuth.title = getString(R.string.menu_logout)
         } else {
+            binding.navigationView.getHeaderView(0).setView(null)
             menuAuth.title = getString(R.string.menu_login)
         }
     }
