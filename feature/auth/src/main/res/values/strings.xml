@@ -1,1 +1,3 @@
-<resources></resources>
+<resources>
+    <string name="success_login">You\'re successfully login</string>
+</resources>

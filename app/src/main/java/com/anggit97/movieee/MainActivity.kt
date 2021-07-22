@@ -16,10 +16,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.anggit97.auth.AuthActivity
-import com.anggit97.core.ext.consume
-import com.anggit97.core.ext.loadAsyncCircle
-import com.anggit97.core.ext.observeEvent
-import com.anggit97.core.ext.showToast
+import com.anggit97.core.ext.*
 import com.anggit97.core.ui.base.consumeBackEventInChildFragment
 import com.anggit97.core.util.viewBindings
 import com.anggit97.model.model.Account
@@ -97,7 +94,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         sessionViewModel.logout.observe(this) {
-            showToast(getString(R.string.success_logout))
+            showLongToast(getString(R.string.success_logout))
         }
 
         sessionViewModel.account.observe(this) {
@@ -112,7 +109,6 @@ class MainActivity : AppCompatActivity() {
         val group = findViewById<Group>(R.id.groupUser)
         val avatar = findViewById<ImageView>(R.id.ivAvatar)
         val username = findViewById<TextView>(R.id.tvUsername)
-
 
         val accountNull = account == null
         group.isVisible = !accountNull

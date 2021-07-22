@@ -21,6 +21,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.widget.Toast
+import android.widget.Toast.LENGTH_LONG
 import android.widget.Toast.LENGTH_SHORT
 import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
@@ -41,8 +42,14 @@ fun Context.getColorStateListCompat(@ColorRes colorResId: Int) =
 fun Context.showToast(msg: CharSequence) =
     Toast.makeText(this, msg, LENGTH_SHORT).show()
 
+fun Context.showLongToast(msg: CharSequence) =
+    Toast.makeText(this, msg, LENGTH_LONG).show()
+
 fun Context.showToast(@StringRes msgId: Int) =
     Toast.makeText(this, msgId, LENGTH_SHORT).show()
+
+fun Context.showLongToast(@StringRes msgId: Int) =
+    Toast.makeText(this, msgId, LENGTH_LONG).show()
 
 /** Activity */
 

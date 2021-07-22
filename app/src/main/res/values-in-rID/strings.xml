@@ -9,4 +9,5 @@
     <string name="menu_settings">Pengaturan</string>
     <string name="menu_profile">Profil</string>
     <string name="success_logout">Kamu berhasil keluar</string>
+    <string name="success_login">Kamu berhasil masuk</string>
 </resources>

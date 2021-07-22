@@ -11,6 +11,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.anggit97.auth.databinding.ActivityAuthBinding
+import com.anggit97.core.ext.showLongToast
 import com.anggit97.core.ext.showToast
 import com.anggit97.core.util.viewBindings
 import com.anggit97.data.BuildConfig
@@ -44,7 +45,10 @@ class AuthActivity : AppCompatActivity() {
         }
 
         authViewModel.sessionId.observe(this) {
-            if (it.success) finish() else showToast("Gagal menyimpan session id")
+            if (it.success) {
+                showLongToast(R.string.success_login)
+                finish()
+            } else showToast("Gagal menyimpan session id")
         }
     }
 

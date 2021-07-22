@@ -8,4 +8,5 @@
     <string name="menu_login">Login/Register</string>
     <string name="menu_logout">Logout</string>
     <string name="success_logout">You\'re successfully logout</string>
+    <string name="success_login">You\'re successfully login</string>
 </resources>
