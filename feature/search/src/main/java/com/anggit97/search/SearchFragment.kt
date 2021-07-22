@@ -7,7 +7,6 @@ import android.view.inputmethod.EditorInfo
 import android.widget.SearchView
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.WindowInsetsCompat.Type.systemBars
-import androidx.core.view.isVisible
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels

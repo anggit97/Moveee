@@ -28,7 +28,7 @@ class AccountViewModel @Inject constructor(
         getAccount()
     }
 
-    fun getAccount() {
+    private fun getAccount() {
         viewModelScope.launch {
             val response = accountUseCase.getAccount()
             _account.value = response

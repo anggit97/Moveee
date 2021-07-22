@@ -6,5 +6,7 @@
     <string name="menu_map">Peta</string>
     <string name="menu_login">Masuk/Daftar</string>
     <string name="menu_logout">Keluar</string>
+    <string name="menu_settings">Pengaturan</string>
+    <string name="menu_profile">Profil</string>
     <string name="success_logout">Kamu berhasil keluar</string>
 </resources>
