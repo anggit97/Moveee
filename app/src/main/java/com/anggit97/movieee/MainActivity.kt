@@ -2,7 +2,6 @@ package com.anggit97.movieee
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -17,7 +16,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.anggit97.auth.AuthActivity
 import com.anggit97.core.ext.consume
-import com.anggit97.core.ext.loadAsync
+import com.anggit97.core.ext.loadAsyncCircle
 import com.anggit97.core.ext.observeEvent
 import com.anggit97.core.ext.showToast
 import com.anggit97.core.ui.base.consumeBackEventInChildFragment
@@ -115,7 +114,7 @@ class MainActivity : AppCompatActivity() {
 
         group.isVisible = true
         logo.isVisible = false
-        avatar.loadAsync(account.getGravatarImageUrl())
+        avatar.loadAsyncCircle(account.getGravatarImageUrl())
         username.text = account.username
     }
 
