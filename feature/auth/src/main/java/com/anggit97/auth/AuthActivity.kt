@@ -2,7 +2,6 @@ package com.anggit97.auth
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -17,7 +16,7 @@ import com.anggit97.core.util.viewBindings
 import com.anggit97.data.BuildConfig
 import com.anggit97.session.SessionManagerStore
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -27,6 +26,7 @@ class AuthActivity : AppCompatActivity() {
 
     private val binding: ActivityAuthBinding by viewBindings(ActivityAuthBinding::inflate)
 
+    @ExperimentalCoroutinesApi
     private val authViewModel: AuthViewModel by viewModels()
     private lateinit var webViewClientCb: WebViewClient
     private var url: String? = null
@@ -34,14 +34,17 @@ class AuthActivity : AppCompatActivity() {
     @Inject
     lateinit var sessionManagerStore: SessionManagerStore
 
+    @ExperimentalCoroutinesApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         url = intent.getStringExtra(URL_PAYLOAD)
 
-        authViewModel.getRequestToken().observe(this) {
-            val url = BuildConfig.ASK_PERMISSION_MOVIE_URL.plus(it.requestToken)
-            binding.initWebView(url)
+        lifecycleScope.launch {
+            authViewModel.requestToken.observe(this@AuthActivity) {
+                val url = BuildConfig.ASK_PERMISSION_MOVIE_URL.plus(it.requestToken)
+                binding.initWebView(url)
+            }
         }
 
         authViewModel.sessionId.observe(this) {
@@ -52,6 +55,7 @@ class AuthActivity : AppCompatActivity() {
         }
     }
 
+    @ExperimentalCoroutinesApi
     @SuppressLint("SetJavaScriptEnabled")
     private fun ActivityAuthBinding.initWebView(url: String?) {
         webViewClientCb = webViewClientCallback
@@ -63,6 +67,7 @@ class AuthActivity : AppCompatActivity() {
         url?.let { wvAuth.loadUrl(it) }
     }
 
+    @ExperimentalCoroutinesApi
     private val webViewClientCallback = object : WebViewClient() {
         override fun shouldOverrideUrlLoading(
             view: WebView?,
@@ -71,7 +76,9 @@ class AuthActivity : AppCompatActivity() {
             val url = request?.url.toString()
             when (url.split("/").last()) {
                 "allow" -> {
-                    authViewModel.createSessionId()
+                    lifecycleScope.launch {
+                        authViewModel.createSessionId()
+                    }
                 }
                 "deny" -> {
                     Toast.makeText(this@AuthActivity, "Yah ditolak", Toast.LENGTH_SHORT).show()

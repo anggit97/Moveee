@@ -5,9 +5,10 @@ import androidx.hilt.work.HiltWorkerFactory
 import androidx.work.Configuration
 import com.anggit97.movieee.notification.NotificationChannels
 import com.anggit97.theme.ThemeOptionManager
-import com.google.firebase.FirebaseApp
 import com.jakewharton.threetenabp.AndroidThreeTen
 import dagger.hilt.android.HiltAndroidApp
+import timber.log.Timber
+import timber.log.Timber.DebugTree
 import javax.inject.Inject
 
 
@@ -28,7 +29,14 @@ class BaseApplication : Application(), Configuration.Provider {
         super.onCreate()
         AndroidThreeTen.init(this)
         themeOptionManager.initialize()
+        initTimber()
         NotificationChannels.initialize(this)
+    }
+
+    private fun initTimber() {
+        if (BuildConfig.DEBUG) {
+            Timber.plant(DebugTree())
+        }
     }
 
     override fun getWorkManagerConfiguration(): Configuration {

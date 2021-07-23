@@ -3,6 +3,7 @@ package com.anggit97.data.api.apiservice
 import com.anggit97.data.api.response.CreateSessionIdResponse
 import com.anggit97.data.api.response.RequestTokenResponse
 import com.anggit97.model.model.SessionIdParam
+import kotlinx.coroutines.flow.Flow
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST

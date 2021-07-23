@@ -8,6 +8,10 @@ import com.anggit97.model.model.SessionId
 import com.anggit97.model.model.SessionIdParam
 import com.anggit97.model.repository.AuthRepository
 import com.anggit97.session.SessionManagerStore
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 
 
 /**
@@ -19,14 +23,20 @@ class AuthRepositoryImpl(
     private val sessionManager: SessionManagerStore,
 ) : AuthRepository {
 
-    override suspend fun getRequestToken(): RequestToken {
-        return authApiService.getRequestToken().toRequestToken()
+    override suspend fun getRequestToken(): Flow<RequestToken> {
+        return flow {
+            emit(authApiService.getRequestToken().toRequestToken())
+        }.flowOn(Dispatchers.IO)
     }
 
-    override suspend fun createSessionId(request: SessionIdParam): SessionId {
-        val response = authApiService.createSessionId(request)
-        sessionManager.setSessionId(response.sessionId ?: "-")
-        sessionManager.setLogin(true)
-        return response.toSessionId()
+    override suspend fun createSessionId(request: SessionIdParam): Flow<SessionId> {
+        return flow {
+            val result = authApiService.createSessionId(request)
+            sessionManager.apply {
+                setSessionId(result.sessionId ?: "-")
+                setLogin(true)
+            }
+            emit(result.toSessionId())
+        }.flowOn(Dispatchers.IO)
     }
 }
