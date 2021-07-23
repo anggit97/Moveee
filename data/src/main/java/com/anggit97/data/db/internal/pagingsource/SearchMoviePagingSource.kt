@@ -2,7 +2,7 @@ package com.anggit97.data.db.internal.pagingsource
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.anggit97.data.api.MovieeeApiService
+import com.anggit97.data.api.apiservice.MovieApiService
 import com.anggit97.data.repository.internal.mapper.toMovieList
 import com.anggit97.model.model.Movie
 
@@ -12,7 +12,7 @@ import com.anggit97.model.model.Movie
  * GitHub : https://github.com/anggit97
  */
 class SearchMoviePagingSource(
-    private val networkService: MovieeeApiService,
+    private val networkService: MovieApiService,
     private val query: String
 ) : PagingSource<Int, Movie>() {
 

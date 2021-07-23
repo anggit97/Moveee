@@ -1,6 +1,8 @@
 package com.anggit97.data.repository
 
-import com.anggit97.data.api.MovieeeApiService
+import com.anggit97.data.api.apiservice.AccountApiService
+import com.anggit97.data.api.apiservice.AuthApiService
+import com.anggit97.data.api.apiservice.MovieApiService
 import com.anggit97.data.db.MovieeeDatabase
 import com.anggit97.data.repository.internal.MovieeeRepositoryImpl
 import com.anggit97.model.repository.MovieeeRepository
@@ -24,12 +26,16 @@ object RepositoryModule {
     @Singleton
     fun provideMoveeeRepository(
         movieDatabase: MovieeeDatabase,
-        movieeeApiService: MovieeeApiService,
+        movieApiService: MovieApiService,
+        authApiService: AuthApiService,
+        accountApiService: AccountApiService,
         sessionManagerStore: SessionManagerStore
     ): MovieeeRepository {
         return MovieeeRepositoryImpl(
             local = movieDatabase,
-            remote = movieeeApiService,
+            movieApiService = movieApiService,
+            authApiService = authApiService,
+            accountApiService = accountApiService,
             sessionManager = sessionManagerStore
         )
     }

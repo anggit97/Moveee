@@ -1,4 +1,4 @@
-package com.anggit97.data.api
+package com.anggit97.data.api.apiservice
 
 import com.anggit97.data.api.response.*
 import com.anggit97.model.model.SessionIdParam
@@ -9,7 +9,7 @@ import retrofit2.http.*
  * Created by Anggit Prayogo on 02,July,2021
  * GitHub : https://github.com/anggit97
  */
-interface MovieeeApiService {
+interface MovieApiService {
 
     @GET("movie/now_playing")
     suspend fun getNowPlayingMovieList(@Query("page") page: String): MovieListResponse
@@ -40,13 +40,4 @@ interface MovieeeApiService {
 
     @GET("movie/latest")
     suspend fun getLatestMovie(): MovieDetailResponse
-
-    @GET("authentication/token/new")
-    suspend fun getRequestToken(): RequestTokenResponse
-
-    @POST("authentication/session/new")
-    suspend fun createSessionId(@Body request: SessionIdParam): CreateSessionIdResponse
-
-    @GET("account")
-    suspend fun getAccount(@Query("session_id") sessionId: String): AccountResponse
 }

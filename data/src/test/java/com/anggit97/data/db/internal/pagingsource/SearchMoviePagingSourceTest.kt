@@ -1,7 +1,7 @@
 package com.anggit97.data.db.internal.pagingsource
 
 import androidx.paging.PagingSource
-import com.anggit97.data.api.MovieeeApiService
+import com.anggit97.data.api.apiservice.MovieApiService
 import com.anggit97.data.db.internal.MovieDataFactories
 import com.anggit97.model.model.Movie
 import io.mockk.MockKAnnotations
@@ -29,7 +29,7 @@ class SearchMoviePagingSourceTest {
     private lateinit var pagingSourceUAT: PagingSource<Int, Movie>
 
     @MockK
-    lateinit var apiService: MovieeeApiService
+    lateinit var apiService: MovieApiService
 
     @Before
     fun setUp() {

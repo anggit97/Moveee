@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.anggit97.data.MovieDataFactories
-import com.anggit97.data.api.MovieeeApiService
+import com.anggit97.data.api.apiservice.MovieApiService
 import com.anggit97.data.db.internal.MovieCacheDatabase
 import com.anggit97.data.db.internal.MovieDatabase
 import com.anggit97.data.db.internal.MovieeeDatabaseImpl
@@ -29,7 +29,7 @@ import java.io.IOException
 @RunWith(AndroidJUnit4::class)
 class MovieNowRemoteMediatorTest {
 
-    private val mockApi: MovieeeApiService = mockk()
+    private val mockApi: MovieApiService = mockk()
 
     private val context = ApplicationProvider.getApplicationContext<Context>()
 

@@ -5,7 +5,7 @@ import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
-import com.anggit97.data.api.MovieeeApiService
+import com.anggit97.data.api.apiservice.MovieApiService
 import com.anggit97.data.db.MovieeeDatabase
 import com.anggit97.data.db.internal.entity.MovieEntity
 import com.anggit97.data.db.internal.entity.MovieNowRemoteKeys
@@ -19,7 +19,7 @@ import java.io.InvalidObjectException
 @ExperimentalPagingApi
 internal class MovieNowRemoteMediator(
     database: MovieeeDatabase,
-    private val networkService: MovieeeApiService
+    private val networkService: MovieApiService
 ) : RemoteMediator<Int, MovieEntity>() {
 
     val db = database.getMovieCacheDatabase()

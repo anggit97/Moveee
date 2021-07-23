@@ -1,7 +1,9 @@
 package com.anggit97.data.repository.internal
 
 import androidx.paging.*
-import com.anggit97.data.api.MovieeeApiService
+import com.anggit97.data.api.apiservice.AccountApiService
+import com.anggit97.data.api.apiservice.AuthApiService
+import com.anggit97.data.api.apiservice.MovieApiService
 import com.anggit97.data.db.MovieeeDatabase
 import com.anggit97.data.db.internal.remotemediator.MovieNowRemoteMediator
 import com.anggit97.data.db.internal.remotemediator.MoviePlanRemoteMediator
@@ -13,7 +15,6 @@ import com.anggit97.model.repository.MovieeeRepository
 import com.anggit97.session.SessionManagerStore
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.mapLatest
 
@@ -23,8 +24,10 @@ import kotlinx.coroutines.flow.mapLatest
  */
 class MovieeeRepositoryImpl(
     private val local: MovieeeDatabase,
-    private val remote: MovieeeApiService,
-    private val sessionManager: SessionManagerStore
+    private val movieApiService: MovieApiService,
+    private val authApiService: AuthApiService,
+    private val accountApiService: AccountApiService,
+    private val sessionManager: SessionManagerStore,
 ) : MovieeeRepository {
 
     @ExperimentalCoroutinesApi
@@ -35,7 +38,7 @@ class MovieeeRepositoryImpl(
 
         return Pager(
             config = pageConfig,
-            remoteMediator = MovieNowRemoteMediator(local, remote),
+            remoteMediator = MovieNowRemoteMediator(local, movieApiService),
             pagingSourceFactory = pagingSourceFactory,
         ).flow.mapLatest { it.map { movieEntity -> movieEntity.toMovie() } }
     }
@@ -57,13 +60,13 @@ class MovieeeRepositoryImpl(
 
         return Pager(
             config = pageConfig,
-            remoteMediator = MoviePlanRemoteMediator(local, remote),
+            remoteMediator = MoviePlanRemoteMediator(local, movieApiService),
             pagingSourceFactory = pagingSourceFactory,
         ).flow.mapLatest { it.map { movieEntity -> movieEntity.toMovie() } }
     }
 
     override suspend fun getMovieById(id: String): MovieDetail {
-        return remote.getMovieById(id).toMovieDetail()
+        return movieApiService.getMovieById(id).toMovieDetail()
     }
 
     @ExperimentalCoroutinesApi
@@ -97,26 +100,26 @@ class MovieeeRepositoryImpl(
                 prefetchDistance = 5,
                 initialLoadSize = 40
             ),
-            pagingSourceFactory = { SearchMoviePagingSource(remote, query) }
+            pagingSourceFactory = { SearchMoviePagingSource(movieApiService, query) }
         ).flow
     }
 
     override suspend fun getLatestMovie(): MovieDetail {
-        return remote.getLatestMovie().toMovieDetail()
+        return movieApiService.getLatestMovie().toMovieDetail()
     }
 
     /**
      * Movie Video
      */
     override suspend fun getMovieVideos(id: String): List<Video> {
-        return remote.getMovieVideos(id).toMovieVideos()
+        return movieApiService.getMovieVideos(id).toMovieVideos()
     }
 
     /**
      * Movie Credits
      */
     override suspend fun getMovieCredits(id: String): List<Cast> {
-        return remote.getMovieCredits(id).toCastList()
+        return movieApiService.getMovieCredits(id).toCastList()
     }
 
 
@@ -124,11 +127,11 @@ class MovieeeRepositoryImpl(
      * Auth
      */
     override suspend fun getRequestToken(): RequestToken {
-        return remote.getRequestToken().toRequestToken()
+        return authApiService.getRequestToken().toRequestToken()
     }
 
     override suspend fun createSessionId(request: SessionIdParam): SessionId {
-        val response = remote.createSessionId(request)
+        val response = authApiService.createSessionId(request)
         sessionManager.setSessionId(response.sessionId ?: "-")
         sessionManager.setLogin(true)
         return response.toSessionId()
@@ -140,6 +143,6 @@ class MovieeeRepositoryImpl(
      */
     override suspend fun getAccount(): Account {
         val sessionId = sessionManager.getSessionId().first()
-        return remote.getAccount(sessionId = sessionId).toAccount()
+        return accountApiService.getAccount(sessionId = sessionId).toAccount()
     }
 }
