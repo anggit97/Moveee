@@ -1,9 +1,6 @@
 package com.anggit97.auth
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.anggit97.model.domain.auth.AuthUseCase
 import com.anggit97.model.model.RequestToken
 import com.anggit97.model.model.SessionId
@@ -29,9 +26,11 @@ class AuthViewModel @Inject constructor(
     val sessionId: LiveData<SessionId>
         get() = _sessionId
 
-    private val _requestToken = MutableLiveData<RequestToken>()
-    val requestToken: LiveData<RequestToken>
+    private val _requestToken = MutableLiveData<RequestTokenState>()
+    val requestToken: LiveData<RequestTokenState>
         get() = _requestToken
+
+    private var requestTokenTemp: String? = null
 
     init {
         viewModelScope.launch {
@@ -42,20 +41,30 @@ class AuthViewModel @Inject constructor(
     private fun getRequestToken() {
         viewModelScope.launch {
             authUseCase.getRequestToken()
-                .catch { Timber.e(it) }
-                .onStart { Timber.d("START : REQUEST TOKEN") }
-                .onCompletion { Timber.d("COMPLETE : ") }
-                .onEmpty { Timber.d("EMPTY : ") }
-                .collect {
-                    _requestToken.value = it
+                .catch { RequestTokenState.Error(it) }
+                .onStart { _requestToken.value = RequestTokenState.ShowLoading }
+                .onCompletion { _requestToken.value = RequestTokenState.HideLoading }
+                .collect { result ->
+                    requestTokenTemp = result.requestToken
+                    _requestToken.value = RequestTokenState.Success(result)
                 }
         }
     }
 
-    suspend fun createSessionId() =
-        authUseCase.createSessionId(request = SessionIdParam(requestToken.value?.requestToken))
-            .catch { Timber.e(it) }
-            .collect { result ->
-                _sessionId.value = result
-            }
+    suspend fun createSessionId() {
+        requestTokenTemp?.let { requestToken ->
+            authUseCase.createSessionId(request = SessionIdParam(requestToken))
+                .catch { Timber.e(it) }
+                .collect { result ->
+                    _sessionId.value = result
+                }
+        }
+    }
+}
+
+sealed class RequestTokenState {
+    data class Success(val data: RequestToken) : RequestTokenState()
+    data class Error(val error: Throwable) : RequestTokenState()
+    object ShowLoading : RequestTokenState()
+    object HideLoading : RequestTokenState()
 }
