@@ -39,21 +39,17 @@ class AuthActivity : AppCompatActivity() {
         setContentView(binding.root)
         url = intent.getStringExtra(URL_PAYLOAD)
 
-        lifecycleScope.launch {
-            authViewModel.requestToken.observe(this@AuthActivity) {
-                binding.handleState(it)
-            }
+
+        authViewModel.requestToken.observe(this@AuthActivity) {
+            binding.handleStateRequestToken(it)
         }
 
         authViewModel.sessionId.observe(this) {
-            if (it.success) {
-                showLongToast(R.string.success_login)
-                finish()
-            } else showToast("Gagal menyimpan session id")
+            handleStateSessionId(it)
         }
     }
 
-    private fun ActivityAuthBinding.handleState(state: RequestTokenState) {
+    private fun ActivityAuthBinding.handleStateRequestToken(state: RequestTokenState) {
         when (state) {
             is RequestTokenState.Error -> showToast(state.error.message ?: "error")
             is RequestTokenState.HideLoading -> showToast("Selesai sinkronisasi..")
@@ -61,6 +57,18 @@ class AuthActivity : AppCompatActivity() {
             is RequestTokenState.Success -> {
                 val url = BuildConfig.ASK_PERMISSION_MOVIE_URL.plus(state.data.requestToken)
                 initWebView(url)
+            }
+        }
+    }
+
+    private fun handleStateSessionId(state: SessionIdState) {
+        when (state) {
+            is SessionIdState.Error -> showToast("Gagal menyimpan session id")
+            is SessionIdState.HideLoading -> showToast("Selesai sinkronisasi..")
+            is SessionIdState.ShowLoading -> showToast("Request to session id")
+            is SessionIdState.Success -> {
+                showLongToast(R.string.success_login)
+                finish()
             }
         }
     }
