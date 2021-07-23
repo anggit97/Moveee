@@ -8,9 +8,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.anggit97.home.HomeContentsUiModel
 import com.anggit97.model.domain.moviefavourite.MovieFavouriteUseCase
-import com.anggit97.model.domain.movielist.MovieListUseCase
 import com.anggit97.model.model.Movie
-import com.anggit97.model.repository.MovieeeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

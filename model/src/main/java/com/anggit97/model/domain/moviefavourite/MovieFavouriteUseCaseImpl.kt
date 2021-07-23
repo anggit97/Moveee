@@ -2,12 +2,12 @@ package com.anggit97.model.domain.moviefavourite
 
 import androidx.paging.PagingData
 import com.anggit97.model.model.Movie
-import com.anggit97.model.repository.MovieeeRepository
+import com.anggit97.model.repository.MovieRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class MovieFavouriteUseCaseImpl @Inject constructor(
-    private val repository: MovieeeRepository
+    private val repository: MovieRepository
 ) : MovieFavouriteUseCase {
 
     override fun getFavoriteMovieList(): Flow<PagingData<Movie>> {

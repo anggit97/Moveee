@@ -1,14 +1,14 @@
 package com.anggit97.model.domain.moviesreminder
 
 import com.anggit97.model.model.MovieDetail
-import com.anggit97.model.repository.MovieeeRepository
+import com.anggit97.model.repository.MovieRepository
 import javax.inject.Inject
 
 class MoviesReminderUseCaseImpl @Inject constructor(
-    private val movieeeRepository: MovieeeRepository
+    private val movieRepository: MovieRepository
 ) : MoviesReminderUseCase {
 
     override suspend fun getLatestMovie(): MovieDetail {
-        return movieeeRepository.getLatestMovie()
+        return movieRepository.getLatestMovie()
     }
 }

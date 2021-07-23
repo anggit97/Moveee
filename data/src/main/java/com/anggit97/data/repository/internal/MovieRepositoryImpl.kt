@@ -1,34 +1,32 @@
 package com.anggit97.data.repository.internal
 
 import androidx.paging.*
-import com.anggit97.data.api.apiservice.AccountApiService
-import com.anggit97.data.api.apiservice.AuthApiService
 import com.anggit97.data.api.apiservice.MovieApiService
 import com.anggit97.data.db.MovieeeDatabase
+import com.anggit97.data.db.internal.mapper.toMovie
+import com.anggit97.data.db.internal.pagingsource.SearchMoviePagingSource
 import com.anggit97.data.db.internal.remotemediator.MovieNowRemoteMediator
 import com.anggit97.data.db.internal.remotemediator.MoviePlanRemoteMediator
-import com.anggit97.data.db.internal.pagingsource.SearchMoviePagingSource
-import com.anggit97.data.db.internal.mapper.toMovie
-import com.anggit97.data.repository.internal.mapper.*
-import com.anggit97.model.model.*
-import com.anggit97.model.repository.MovieeeRepository
-import com.anggit97.session.SessionManagerStore
+import com.anggit97.data.repository.internal.mapper.toCastList
+import com.anggit97.data.repository.internal.mapper.toMovieDetail
+import com.anggit97.data.repository.internal.mapper.toMovieVideos
+import com.anggit97.model.model.Cast
+import com.anggit97.model.model.Movie
+import com.anggit97.model.model.MovieDetail
+import com.anggit97.model.model.Video
+import com.anggit97.model.repository.MovieRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.mapLatest
 
 /**
  * Created by Anggit Prayogo on 03,July,2021
  * GitHub : https://github.com/anggit97
  */
-class MovieeeRepositoryImpl(
+class MovieRepositoryImpl(
     private val local: MovieeeDatabase,
     private val movieApiService: MovieApiService,
-    private val authApiService: AuthApiService,
-    private val accountApiService: AccountApiService,
-    private val sessionManager: SessionManagerStore,
-) : MovieeeRepository {
+) : MovieRepository {
 
     @ExperimentalCoroutinesApi
     @ExperimentalPagingApi
@@ -120,29 +118,5 @@ class MovieeeRepositoryImpl(
      */
     override suspend fun getMovieCredits(id: String): List<Cast> {
         return movieApiService.getMovieCredits(id).toCastList()
-    }
-
-
-    /**
-     * Auth
-     */
-    override suspend fun getRequestToken(): RequestToken {
-        return authApiService.getRequestToken().toRequestToken()
-    }
-
-    override suspend fun createSessionId(request: SessionIdParam): SessionId {
-        val response = authApiService.createSessionId(request)
-        sessionManager.setSessionId(response.sessionId ?: "-")
-        sessionManager.setLogin(true)
-        return response.toSessionId()
-    }
-
-
-    /**
-     * Account
-     */
-    override suspend fun getAccount(): Account {
-        val sessionId = sessionManager.getSessionId().first()
-        return accountApiService.getAccount(sessionId = sessionId).toAccount()
     }
 }

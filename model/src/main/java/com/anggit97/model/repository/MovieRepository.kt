@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
  * Created by Anggit Prayogo on 03,July,2021
  * GitHub : https://github.com/anggit97
  */
-interface MovieeeRepository {
+interface MovieRepository {
 
     fun getNowMovieListPaging(): Flow<PagingData<Movie>>
     fun getPlanMovieList(): Flow<PagingData<Movie>>
@@ -26,9 +26,4 @@ interface MovieeeRepository {
     suspend fun getMovieCredits(id: String): List<Cast>
 
     suspend fun getLatestMovie(): MovieDetail
-
-    suspend fun getRequestToken(): RequestToken
-    suspend fun createSessionId(request: SessionIdParam): SessionId
-
-    suspend fun getAccount(): Account
 }

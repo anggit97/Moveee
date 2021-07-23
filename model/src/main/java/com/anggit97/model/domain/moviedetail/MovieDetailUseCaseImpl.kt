@@ -1,7 +1,7 @@
 package com.anggit97.model.domain.moviedetail
 
 import com.anggit97.model.model.MovieDetail
-import com.anggit97.model.repository.MovieeeRepository
+import com.anggit97.model.repository.MovieRepository
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOf
@@ -9,14 +9,14 @@ import kotlinx.coroutines.flow.single
 import javax.inject.Inject
 
 class MovieDetailUseCaseImpl @Inject constructor(
-    private val movieeeRepository: MovieeeRepository
+    private val movieRepository: MovieRepository
 ) : MovieDetailUseCase {
 
     @InternalCoroutinesApi
     override suspend fun getMovieById(id: String): MovieDetail {
-        val detailMovieFlow = flowOf(movieeeRepository.getMovieById(id))
-        val movieVideosFlow = flowOf(movieeeRepository.getMovieVideos(id))
-        val movieCreditsFlow = flowOf(movieeeRepository.getMovieCredits(id))
+        val detailMovieFlow = flowOf(movieRepository.getMovieById(id))
+        val movieVideosFlow = flowOf(movieRepository.getMovieVideos(id))
+        val movieCreditsFlow = flowOf(movieRepository.getMovieCredits(id))
         return combine(
             detailMovieFlow,
             movieVideosFlow,

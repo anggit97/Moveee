@@ -14,13 +14,14 @@ import com.anggit97.model.domain.moviesearch.MovieSearchUseCase
 import com.anggit97.model.domain.moviesearch.MovieSearchUseCaseImpl
 import com.anggit97.model.domain.moviesreminder.MoviesReminderUseCase
 import com.anggit97.model.domain.moviesreminder.MoviesReminderUseCaseImpl
-import com.anggit97.model.repository.MovieeeRepository
+import com.anggit97.model.repository.AccountRepository
+import com.anggit97.model.repository.AuthRepository
+import com.anggit97.model.repository.MovieRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
-
 
 /**
  * Created by Anggit Prayogo on 14,July,2021
@@ -32,36 +33,36 @@ class DomainModule {
 
     @Provides
     @Singleton
-    fun provideMovieListUseCase(movieeeRepository: MovieeeRepository): MovieListUseCase =
-        MovieListUseCaseImpl(movieeeRepository)
+    fun provideMovieListUseCase(movieRepository: MovieRepository): MovieListUseCase =
+        MovieListUseCaseImpl(movieRepository)
 
     @Provides
     @Singleton
-    fun provideMovieDetailUseCase(movieeeRepository: MovieeeRepository): MovieDetailUseCase =
-        MovieDetailUseCaseImpl(movieeeRepository)
+    fun provideMovieDetailUseCase(movieRepository: MovieRepository): MovieDetailUseCase =
+        MovieDetailUseCaseImpl(movieRepository)
 
     @Provides
     @Singleton
-    fun provideMovieFavouriteUseCase(movieeeRepository: MovieeeRepository): MovieFavouriteUseCase =
-        MovieFavouriteUseCaseImpl(movieeeRepository)
+    fun provideMovieFavouriteUseCase(movieRepository: MovieRepository): MovieFavouriteUseCase =
+        MovieFavouriteUseCaseImpl(movieRepository)
 
     @Provides
     @Singleton
-    fun provideMovieSearchUseCase(movieeeRepository: MovieeeRepository): MovieSearchUseCase =
-        MovieSearchUseCaseImpl(movieeeRepository)
+    fun provideMovieSearchUseCase(movieRepository: MovieRepository): MovieSearchUseCase =
+        MovieSearchUseCaseImpl(movieRepository)
 
     @Provides
     @Singleton
-    fun provideMovieReminderUseCase(movieeeRepository: MovieeeRepository): MoviesReminderUseCase =
-        MoviesReminderUseCaseImpl(movieeeRepository)
+    fun provideMovieReminderUseCase(movieRepository: MovieRepository): MoviesReminderUseCase =
+        MoviesReminderUseCaseImpl(movieRepository)
 
     @Provides
     @Singleton
-    fun provideAuthUseCase(movieeeRepository: MovieeeRepository): AuthUseCase =
-        AuthUseCaseImpl(movieeeRepository)
+    fun provideAuthUseCase(authRepository: AuthRepository): AuthUseCase =
+        AuthUseCaseImpl(authRepository)
 
     @Provides
     @Singleton
-    fun provideAccountUseCase(movieeeRepository: MovieeeRepository): AccountUseCase =
-        AccountUseCaseImpl(movieeeRepository)
+    fun provideAccountUseCase(accountRepository: AccountRepository): AccountUseCase =
+        AccountUseCaseImpl(accountRepository)
 }

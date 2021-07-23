@@ -2,7 +2,7 @@ package com.anggit97.model.domain.moviedetail
 
 import com.anggit97.model.TestDataFactory
 import com.anggit97.model.model.MovieDetail
-import com.anggit97.model.repository.MovieeeRepository
+import com.anggit97.model.repository.MovieRepository
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
@@ -19,7 +19,7 @@ import org.junit.Test
 class MovieDetailUseCaseImplTest {
 
     @MockK
-    lateinit var mockRepository: MovieeeRepository
+    lateinit var mockRepository: MovieRepository
 
     private lateinit var sut: MovieDetailUseCase
 

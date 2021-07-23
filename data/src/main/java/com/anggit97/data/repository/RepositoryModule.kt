@@ -4,8 +4,12 @@ import com.anggit97.data.api.apiservice.AccountApiService
 import com.anggit97.data.api.apiservice.AuthApiService
 import com.anggit97.data.api.apiservice.MovieApiService
 import com.anggit97.data.db.MovieeeDatabase
-import com.anggit97.data.repository.internal.MovieeeRepositoryImpl
-import com.anggit97.model.repository.MovieeeRepository
+import com.anggit97.data.repository.internal.AccountRepositoryImpl
+import com.anggit97.data.repository.internal.AuthRepositoryImpl
+import com.anggit97.data.repository.internal.MovieRepositoryImpl
+import com.anggit97.model.repository.AccountRepository
+import com.anggit97.model.repository.AuthRepository
+import com.anggit97.model.repository.MovieRepository
 import com.anggit97.session.SessionManagerStore
 import dagger.Module
 import dagger.Provides
@@ -24,19 +28,37 @@ object RepositoryModule {
 
     @Provides
     @Singleton
-    fun provideMoveeeRepository(
+    fun provideMovieRepository(
         movieDatabase: MovieeeDatabase,
         movieApiService: MovieApiService,
-        authApiService: AuthApiService,
-        accountApiService: AccountApiService,
-        sessionManagerStore: SessionManagerStore
-    ): MovieeeRepository {
-        return MovieeeRepositoryImpl(
+    ): MovieRepository {
+        return MovieRepositoryImpl(
             local = movieDatabase,
             movieApiService = movieApiService,
-            authApiService = authApiService,
-            accountApiService = accountApiService,
-            sessionManager = sessionManagerStore
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideAuthRepository(
+        authApiService: AuthApiService,
+        sessionManagerStore: SessionManagerStore
+    ): AuthRepository {
+        return AuthRepositoryImpl(
+            authApiService,
+            sessionManagerStore
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideAccountRepository(
+        accountApiService: AccountApiService,
+        sessionManagerStore: SessionManagerStore
+    ): AccountRepository {
+        return AccountRepositoryImpl(
+            accountApiService,
+            sessionManagerStore
         )
     }
 }
