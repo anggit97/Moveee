@@ -1,4 +1,4 @@
-package com.anggit97.data.repository
+package com.anggit97.data.di
 
 import com.anggit97.data.api.apiservice.AccountApiService
 import com.anggit97.data.api.apiservice.AuthApiService
@@ -7,6 +7,7 @@ import com.anggit97.data.db.MovieeeDatabase
 import com.anggit97.data.repository.internal.AccountRepositoryImpl
 import com.anggit97.data.repository.internal.AuthRepositoryImpl
 import com.anggit97.data.repository.internal.MovieRepositoryImpl
+import com.anggit97.data.repository.internal.mapper.auth.RequestTokenMapper
 import com.anggit97.model.repository.AccountRepository
 import com.anggit97.model.repository.AuthRepository
 import com.anggit97.model.repository.MovieRepository
@@ -42,11 +43,13 @@ object RepositoryModule {
     @Singleton
     fun provideAuthRepository(
         authApiService: AuthApiService,
-        sessionManagerStore: SessionManagerStore
+        sessionManagerStore: SessionManagerStore,
+        requestTokenMapper: RequestTokenMapper
     ): AuthRepository {
         return AuthRepositoryImpl(
             authApiService,
-            sessionManagerStore
+            sessionManagerStore,
+            requestTokenMapper
         )
     }
 

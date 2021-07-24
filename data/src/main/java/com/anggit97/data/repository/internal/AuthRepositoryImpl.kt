@@ -1,6 +1,7 @@
 package com.anggit97.data.repository.internal
 
 import com.anggit97.data.api.apiservice.AuthApiService
+import com.anggit97.data.repository.internal.mapper.auth.RequestTokenMapper
 import com.anggit97.data.repository.internal.mapper.toRequestToken
 import com.anggit97.data.repository.internal.mapper.toSessionId
 import com.anggit97.model.model.RequestToken
@@ -21,11 +22,12 @@ import kotlinx.coroutines.flow.flowOn
 class AuthRepositoryImpl(
     private val authApiService: AuthApiService,
     private val sessionManager: SessionManagerStore,
+    private val mapper: RequestTokenMapper
 ) : AuthRepository {
 
     override suspend fun getRequestToken(): Flow<RequestToken> {
         return flow {
-            emit(authApiService.getRequestToken().toRequestToken())
+            emit(mapper.mapToRequestToken(authApiService.getRequestToken()))
         }.flowOn(Dispatchers.IO)
     }
 
